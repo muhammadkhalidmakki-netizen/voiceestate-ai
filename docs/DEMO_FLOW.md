@@ -38,3 +38,4 @@ Bitrix24
 AI Agent assigned
    ↓
 n8n webhook
+```
