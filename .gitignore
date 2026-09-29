@@ -32,6 +32,12 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# ...except the names-only template, which is safe and meant to be committed
+!.env.example
+
+# local-only project context: contains production IDs, webhook tokens and
+# other credentials. Never commit or deploy this folder.
+/project-context/
 
 # vercel
 .vercel

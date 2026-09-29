@@ -1,26 +1,140 @@
 @import "tailwindcss";
 
+/* Brand palette — sampled from public/assets/Logo.png */
 :root {
+  color-scheme: light;
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1e2c3e; /* brand navy */
+  --muted: #5b6776;
+  --border: #e8eaed;
+  --surface: #f8f9fa;
+  --accent: #09c19a; /* brand green */
+  --accent-strong: #07a582;
+  --brand-blue: #2d9bfe;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-surface: var(--surface);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-brand-blue: var(--brand-blue);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Voice orb animations (CSS only) */
+@keyframes ve-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes ve-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 0.15;
+  }
+}
+
+@keyframes ve-bar {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+/* "Call now" attention cues: ringing-phone wiggle + a thin expanding ring */
+@keyframes ve-phone-ring {
+  0%,
+  46%,
+  100% {
+    transform: rotate(0);
+  }
+  6% {
+    transform: rotate(-16deg);
+  }
+  12% {
+    transform: rotate(14deg);
+  }
+  18% {
+    transform: rotate(-12deg);
+  }
+  24% {
+    transform: rotate(10deg);
+  }
+  30% {
+    transform: rotate(-6deg);
+  }
+  36% {
+    transform: rotate(4deg);
+  }
+}
+
+@keyframes ve-cta-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    transform: scale(1.22, 1.5);
+    opacity: 0;
+  }
+}
+
+.ve-phone-ring {
+  transform-origin: 50% 50%;
+  animation: ve-phone-ring 2.6s ease-in-out infinite;
+}
+.ve-cta-ring {
+  animation: ve-cta-ring 2.6s ease-out infinite;
+}
+
+.ve-ring {
+  animation: ve-ring 2.4s ease-out infinite;
+}
+.ve-pulse {
+  animation: ve-pulse 1.4s ease-in-out infinite;
+}
+.ve-bar {
+  transform-origin: center;
+  animation: ve-bar 1s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ve-ring,
+  .ve-pulse,
+  .ve-bar,
+  .ve-phone-ring,
+  .ve-cta-ring {
+    animation: none;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-blue);
+  outline-offset: 2px;
 }
