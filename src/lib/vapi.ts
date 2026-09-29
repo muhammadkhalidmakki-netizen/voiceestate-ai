@@ -1,5 +1,10 @@
 import Vapi from "@vapi-ai/web";
 
+// @vapi-ai/web is CommonJS (`exports.default = Vapi`). Next.js unwraps that,
+// but the Vite build used for Cloudflare hands back the module object instead.
+const VapiClass: typeof Vapi =
+  (Vapi as unknown as { default?: typeof Vapi }).default ?? Vapi;
+
 const publicKey = process.env.NEXT_PUBLIC_VAPI_PUBLIC_KEY;
 const assistantId = process.env.NEXT_PUBLIC_VAPI_ASSISTANT_ID;
 
@@ -25,7 +30,7 @@ export function getVapiClient(): Vapi {
     throw new Error("NEXT_PUBLIC_VAPI_PUBLIC_KEY is not set in .env.local");
   }
   if (!client) {
-    client = new Vapi(publicKey);
+    client = new VapiClass(publicKey);
   }
   return client;
 }
