@@ -14,7 +14,16 @@ export type Qualification = {
   preferredArea: string;
 };
 
-export type LeadStage = "New Lead" | "Qualified" | "Follow-up" | "Not Interested";
+export type LeadStage =
+  | "New Lead"
+  | "Qualified"
+  | "Follow-up"
+  | "Not Interested"
+  | "Junk · Job Enquiry"
+  | "Wrong Number";
+
+export const JOB_STAGE: LeadStage = "Junk · Job Enquiry";
+export const WRONG_NUMBER_STAGE: LeadStage = "Wrong Number";
 
 export const NOT_PROVIDED = "Not provided";
 
@@ -352,6 +361,24 @@ const AREAS: [RegExp, string][] = [
   [/\bal barsha\b/i, "Al Barsha"],
   [/\bal rowaiyah\b/i, "Al Rowaiyah"],
 ];
+// The assistant's third question is "Any area or lifestyle preference in mind,
+// or are you open to suggestions?", so "open" is a real answer.
+export const OPEN_AREA = "Open to suggestions";
+const OPEN_AREA_RE =
+  /\b(?:open\s+(?:to|for)\s+(?:any\s+|all\s+|your\s+|some\s+|the\s+)?(?:suggestions?|options?|ideas?|recommendations?|areas?|locations?)|no\s+(?:particular\s+|specific\s+)?(?:area\s+)?preference|any\s+(?:area|location)|(?<!not\s)(?<!n't\s)anywhere(?:\s+in\s+dubai)?|not\s+sure\s+(?:yet\s+)?(?:about\s+)?(?:the\s+)?(?:area|location)|up\s+to\s+you|whatever\s+you\s+(?:suggest|recommend|think)|flexible\s+on\s+(?:the\s+)?(?:area|location))\b/i;
+// a short bare answer ("open", "not sure", "no") to the area question
+const ASKED_AREA_RE =
+  /\b(?:area|location|lifestyle)\b[^.?!]{0,40}\b(?:preference|in\s+mind)\b|open\s+to\s+suggestions|which\s+area|where\s+in\s+dubai/i;
+// A short reply to the area question that means "no fixed area".
+const OPEN_REPLY_RE =
+  /\bopen\b|\bnot\s+sure\b|\bno\s+(?:particular\s+|specific\s+)?preference\b|\bnothing\s+(?:specific|in\s+particular)\b|\bflexible\b|\bwhatever\b|\bany(?:thing|where|\s+area)?\b|\byou\s+(?:suggest|recommend|decide|choose|tell\s+me)\b|\bup\s+to\s+you\b|^\W*no\W*$/i;
+const NOT_OPEN_RE = /\bnot\s+open\b|\bno\s+way\b/i;
+
+function isOpenAreaReply(text: string): boolean {
+  const t = text.trim();
+  return t.split(/\s+/).length <= 9 && OPEN_REPLY_RE.test(t) && !NOT_OPEN_RE.test(t);
+}
+
 const AREA_NEGATION_RE =
   /\b(?:not|except|avoid|other than|anywhere but|instead of|rather than)\b[^.?!]{0,20}$/i;
 
@@ -364,7 +391,8 @@ export function extractArea(text: string): string | null {
     if (AREA_NEGATION_RE.test(before)) continue;
     hits.add(label);
   }
-  if (hits.size !== 1) return null; // none, or several areas: don't guess
+  if (hits.size === 0 && OPEN_AREA_RE.test(text)) return OPEN_AREA;
+  if (hits.size !== 1) return null; // several areas: don't guess
   return [...hits][0];
 }
 
@@ -419,19 +447,46 @@ const INTENT_RES: RegExp[] = [
   /\blet'?s\s+(?:do\s+it|go|proceed|move\s+forward)\b/i,
 ];
 
+// The lead is asking about work, not a property (a junk lead, not a refusal).
+const JOB_RES: RegExp[] = [
+  /\b(?:looking\s+for|need|want|seeking|searching\s+for)\s+(?:a\s+|any\s+)?(?:job|work|employment|vacanc(?:y|ies)|position)\b/i,
+  /\bany\s+(?:job|vacanc(?:y|ies)|openings?|positions?)\b/i,
+  /\bare\s+you\s+hiring\b/i,
+  /\b(?:job|hiring|vacanc(?:y|ies)|recruitment|career)\s+(?:opening|enquiry|inquiry|position|opportunit(?:y|ies))\b/i,
+  /\b(?:is\s+this|was\s+this)\s+(?:about|for|regarding)\s+(?:a\s+)?job\b/i,
+  /\b(?:applied|apply|applying)\s+(?:for|to)[^.?!]{0,30}\b(?:job|position|vacancy)\b/i,
+  /\b(?:send|share|email)\s+(?:you\s+)?(?:my\s+)?(?:cv|resume)\b/i,
+];
+
+// A wrong number / wrong person.
+const WRONG_NUMBER_RES: RegExp[] = [
+  /\bwrong\s+(?:number|person)\b/i,
+  /\byou(?:'ve|\s+have|\s+got|'ve\s+got)\s+(?:got\s+)?the\s+wrong\b/i,
+  /\bno\s+one\s+(?:here\s+)?(?:by|with)\s+that\s+name\b/i,
+  /\bi(?:'m|\s+am)\s+not\s+james\b/i,
+];
+
 export type StageSignals = {
   notInterested: boolean;
   followUp: boolean;
   intent: boolean;
+  jobEnquiry: boolean;
+  wrongNumber: boolean;
 };
 
 export function detectStageSignals(text: string): StageSignals {
   const soft = SOFT_NO_RE.test(text);
   const followUp = soft || FOLLOW_UP_RES.some((re) => re.test(text));
   const notInterested = !soft && NOT_INTERESTED_RES.some((re) => re.test(text));
+  const jobEnquiry = JOB_RES.some((re) => re.test(text));
+  const wrongNumber = WRONG_NUMBER_RES.some((re) => re.test(text));
   const intent =
-    !notInterested && !soft && INTENT_RES.some((re) => re.test(text));
-  return { notInterested, followUp, intent };
+    !notInterested &&
+    !soft &&
+    !jobEnquiry &&
+    !wrongNumber &&
+    INTENT_RES.some((re) => re.test(text));
+  return { notInterested, followUp, intent, jobEnquiry, wrongNumber };
 }
 
 // ---------- live lead state (browser-side) ----------
@@ -452,13 +507,49 @@ export const INITIAL_LIVE_LEAD: LiveLead = {
   intentSeen: false,
 };
 
-/** Purpose, a currency-confirmed budget, and a property or area. */
+/**
+ * The core of qualification, as the assistant actually collects it: the
+ * purpose and a currency-confirmed budget. Area and property are welcome extras
+ * (the lead may say "open to suggestions", and property type is never asked).
+ */
 export function isCoreQualified(q: Qualification, pendingAmount: number | null) {
   return (
     q.purpose !== NOT_PROVIDED &&
     q.budget !== NOT_PROVIDED &&
-    pendingAmount === null &&
-    (q.property !== NOT_PROVIDED || q.preferredArea !== NOT_PROVIDED)
+    pendingAmount === null
+  );
+}
+
+/** Keeps the assistant's last two finished sentences as reply context. */
+export function rememberAssistant(previous: string, sentence: string): string {
+  const parts = previous.split("\n").filter(Boolean);
+  parts.push(sentence.trim());
+  return parts.slice(-2).join("\n");
+}
+
+/** What the assistant said just before the lead replied. Used only to READ the
+ *  lead's reply ("yes" to what?), never to decide a stage by itself. */
+export type ReplyContext = { assistantText?: string };
+
+// The assistant asked the lead something that a "yes" means interest in:
+// "Does that sound interesting?", "Want me to send you the details?",
+// "Is WhatsApp okay?", "how does that sound?".
+const OFFER_RE =
+  /whats\s?app|send\s+(?:you|it|the|everything|over)|full\s+details|share\s+(?:the\s+)?details|brochure|sound(?:s)?\s+(?:interesting|good|great)|how\s+does\s+that\s+sound|work\s+for\s+you|want\s+me\s+to|would\s+you\s+like|shall\s+i|are\s+you\s+interested/i;
+
+export function assistantMadeOffer(assistantText: string | undefined): boolean {
+  return !!assistantText && assistantText.includes("?") && OFFER_RE.test(assistantText);
+}
+
+const AFFIRMATIVE_START_RE =
+  /^\W*(?:yes|yeah|yep|yup|yea|sure|okay|ok|please|go\s+ahead|sounds\s+(?:good|great)|that\s+works|of\s+course|absolutely|definitely|perfect|great|fine|alright|why\s+not|do\s+it|send\s+it)\b/i;
+const NEGATION_RE = /\b(?:no|not|don'?t|do\s+not|never|later|busy|maybe|but)\b/i;
+
+/** A short, clean "yes": "Yes please", "Sure, go ahead" (not "yes but later"). */
+export function isAffirmativeReply(text: string): boolean {
+  const t = text.trim();
+  return (
+    t.split(/\s+/).length <= 12 && AFFIRMATIVE_START_RE.test(t) && !NEGATION_RE.test(t)
   );
 }
 
@@ -469,14 +560,30 @@ const BUDGET_REVISION_CUE_RE =
   /\b(?:budget|actually|instead|rather|more\s+like|make\s+it|up\s+to|go\s+up|can\s+go|spend|afford|maxim\w*|it(?:'s|\s+is)|that(?:'s|\s+is))\b/i;
 
 /** Applies ONE finished user utterance. Never call this with assistant text. */
-export function applyUserMessage(state: LiveLead, text: string): LiveLead {
+export function applyUserMessage(
+  state: LiveLead,
+  text: string,
+  context: ReplyContext = {},
+): LiveLead {
   const q: Qualification = { ...state.qualification };
   let pendingAmount = state.pendingAmount;
 
   const updates = extractQualification(text);
   if (updates.purpose) q.purpose = updates.purpose;
   if (updates.property) q.property = updates.property;
-  if (updates.preferredArea) q.preferredArea = updates.preferredArea;
+  // "Open to suggestions" is a real answer, but never replaces a specific area.
+  let areaUpdate = updates.preferredArea;
+  if (areaUpdate === OPEN_AREA && q.preferredArea !== NOT_PROVIDED) areaUpdate = undefined;
+  if (
+    !areaUpdate &&
+    q.preferredArea === NOT_PROVIDED &&
+    context.assistantText &&
+    ASKED_AREA_RE.test(context.assistantText) &&
+    isOpenAreaReply(text)
+  ) {
+    areaUpdate = OPEN_AREA; // a bare "open" / "not sure" to the area question
+  }
+  if (areaUpdate) q.preferredArea = areaUpdate;
 
   const budget = analyzeBudget(text);
   const budgetConfirmed = q.budget !== NOT_PROVIDED && pendingAmount === null;
@@ -506,17 +613,30 @@ export function applyUserMessage(state: LiveLead, text: string): LiveLead {
   }
 
   const signals = detectStageSignals(text);
-  const intentSeen = state.intentSeen || signals.intent;
+  // A bare "yes" counts as interest when it answers the assistant's offer.
+  const saidYesToOffer =
+    isAffirmativeReply(text) &&
+    assistantMadeOffer(context.assistantText) &&
+    !signals.notInterested &&
+    !signals.followUp &&
+    !signals.jobEnquiry &&
+    !signals.wrongNumber;
+  const intentNow = signals.intent || saidYesToOffer;
+  const intentSeen = state.intentSeen || intentNow;
 
   let stage = state.stage;
-  if (signals.notInterested) {
+  if (signals.jobEnquiry) {
+    stage = JOB_STAGE;
+  } else if (signals.wrongNumber) {
+    stage = WRONG_NUMBER_STAGE;
+  } else if (signals.notInterested) {
     stage = "Not Interested";
   } else if (signals.followUp) {
     stage = "Follow-up";
   } else if (
     isCoreQualified(q, pendingAmount) &&
     intentSeen &&
-    (stage === "New Lead" || signals.intent)
+    (stage === "New Lead" || intentNow)
   ) {
     stage = "Qualified";
   }

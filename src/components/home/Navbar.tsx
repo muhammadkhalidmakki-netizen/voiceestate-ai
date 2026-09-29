@@ -4,7 +4,7 @@ import Link from "next/link";
 const LINKS = [
   { label: "How It Works", href: "#how-it-works" },
   { label: "Technology", href: "#technology" },
-  { label: "Live Demo", href: "/demo" },
+  { label: "Live Demo", href: "#live-demo" },
 ];
 
 const linkClass =
@@ -21,6 +21,7 @@ export default function Navbar() {
             width={1782}
             height={340}
             priority
+            sizes="(min-width: 640px) 231px, 168px"
             className="h-8 w-auto sm:h-11"
           />
         </Link>

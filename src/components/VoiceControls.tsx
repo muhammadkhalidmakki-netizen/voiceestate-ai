@@ -17,6 +17,7 @@ import {
   saveHistory,
 } from "../lib/demoLimits";
 import { classifyVapiError } from "../lib/vapiErrors";
+import { startRingTone } from "../lib/ringTone";
 import CallSummary from "./CallSummary";
 import VoiceOrb from "./VoiceOrb";
 import {
@@ -58,6 +59,8 @@ const STATUS_LABEL: Record<CallStatus, string> = {
 type VoiceControlsProps = {
   /** Called with the text of each finished user utterance. */
   onUserFinal?: (text: string) => void;
+  /** Called with each finished assistant sentence (context for the next reply). */
+  onAssistantFinal?: (text: string) => void;
   /** Called when a new call is started, before connecting. */
   onCallStart?: () => void;
   /** Live qualification + stage, used only to build the post-call summary. */
@@ -66,6 +69,7 @@ type VoiceControlsProps = {
 
 export default function VoiceControls({
   onUserFinal,
+  onAssistantFinal,
   onCallStart,
   lead,
 }: VoiceControlsProps) {
@@ -82,6 +86,10 @@ export default function VoiceControls({
   const onUserFinalRef = useRef(onUserFinal);
   useEffect(() => {
     onUserFinalRef.current = onUserFinal;
+  });
+  const onAssistantFinalRef = useRef(onAssistantFinal);
+  useEffect(() => {
+    onAssistantFinalRef.current = onAssistantFinal;
   });
 
   useEffect(() => {
@@ -117,6 +125,7 @@ export default function VoiceControls({
       const text = m.transcript;
       const final = m.transcriptType === "final";
       if (final && role === "user") onUserFinalRef.current?.(text);
+      if (final && role === "assistant") onAssistantFinalRef.current?.(text);
       setTranscript((prev) => {
         const last = prev[prev.length - 1];
         if (last && last.role === role && !last.final) {
@@ -157,6 +166,14 @@ export default function VoiceControls({
       endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
     }
   }, [hasSummary]);
+
+  // A ringing tone while connecting, so the wait before the AI answers isn't
+  // silent. It stops the moment the call goes active, ends, or fails.
+  useEffect(() => {
+    if (status !== "connecting") return;
+    const tone = startRingTone();
+    return () => tone.stop();
+  }, [status]);
 
   // Demo limits, part 1: when a call ends (for any reason), record its end time
   // so the cooldown counts from then.
@@ -235,9 +252,10 @@ export default function VoiceControls({
 
   return (
     <div className="flex h-full w-full flex-col">
-      <div className="border-b border-border px-5 py-4 sm:px-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5 rounded-full border border-border px-4 py-2 text-[15px]">
+      {/* the call: state, voice and controls */}
+      <div className="border-b border-border px-5 pb-6 pt-5 sm:px-8">
+        <div className="flex items-center justify-between gap-3">
+          <div className="inline-flex items-center gap-2.5 rounded-full border border-border px-4 py-1.5 text-[14px]">
             <span
               aria-hidden="true"
               className={`h-2 w-2 rounded-full ${
@@ -249,7 +267,7 @@ export default function VoiceControls({
               }`}
             />
             <span className="text-muted">Call status</span>
-            <span aria-live="polite" className="font-medium">
+            <span aria-live="polite" className="font-semibold text-foreground">
               {STATUS_LABEL[status]}
             </span>
             {status === "active" && (
@@ -258,111 +276,129 @@ export default function VoiceControls({
               </span>
             )}
           </div>
+          <span className="hidden text-xs text-muted sm:inline">
+            Demo calls last up to {MAX_CALL_SECONDS / 60} minutes
+          </span>
+        </div>
 
-          <div className="flex items-center gap-2">
+        <div className="mt-4">
+          <VoiceOrb status={status} />
+        </div>
+
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+          <span className="relative inline-flex">
+            {canCall && (
+              <span
+                aria-hidden="true"
+                className="ve-cta-ring pointer-events-none absolute inset-0 rounded-full border-2 border-brand-blue"
+              />
+            )}
             <button
               type="button"
-              onClick={stop}
-              disabled={idle}
-              className="cursor-pointer rounded-full border border-border bg-background px-5 py-2.5 text-[15px] font-medium text-foreground transition-colors hover:bg-surface disabled:cursor-not-allowed disabled:text-muted/60"
+              onClick={start}
+              disabled={!canCall}
+              className="relative inline-flex cursor-pointer items-center gap-2 rounded-full border border-transparent bg-linear-to-r from-[#1f7ae0] to-[#0a9d7c] px-7 py-3 text-base font-medium text-white transition-[filter] hover:brightness-95 disabled:cursor-default"
             >
-              Stop Conversation
-            </button>
-            <span className="relative inline-flex">
-              {canCall && (
-                <span
-                  aria-hidden="true"
-                  className="ve-cta-ring pointer-events-none absolute inset-0 rounded-full border-2 border-brand-blue"
-                />
-              )}
-              <button
-                type="button"
-                onClick={start}
-                disabled={!canCall}
-                className="relative inline-flex cursor-pointer items-center gap-2 rounded-full bg-linear-to-r from-[#1f7ae0] to-[#0a9d7c] px-6 py-2.5 text-[15px] font-medium text-white transition-[filter] hover:brightness-95 disabled:cursor-default"
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className={`h-[18px] w-[18px] ${canCall ? "ve-phone-ring" : ""}`}
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 24 24"
-                  className={`h-[18px] w-[18px] ${canCall ? "ve-phone-ring" : ""}`}
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z" />
-                </svg>
-                {START_LABEL[status]}
-              </button>
-            </span>
-          </div>
+                <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z" />
+              </svg>
+              {START_LABEL[status]}
+            </button>
+          </span>
+          <button
+            type="button"
+            onClick={stop}
+            disabled={idle}
+            className="cursor-pointer rounded-full border border-border bg-background px-6 py-3 text-base font-medium text-foreground transition-colors hover:bg-surface disabled:cursor-not-allowed disabled:text-muted/60"
+          >
+            Stop Conversation
+          </button>
         </div>
 
         {!configured && (
-          <p className="mt-2 text-xs text-muted">
+          <p className="m-0 mt-3 text-center text-xs text-muted">
             Add your Vapi public key and assistant ID to .env.local, then
             restart the server.
           </p>
         )}
         {limitMessage && (
-          <p role="status" className="mt-2 text-sm text-amber-800">
+          <p role="status" className="m-0 mt-3 text-center text-sm text-amber-800">
             {limitMessage}
           </p>
         )}
-        {error && <p className="mt-2 text-xs text-red-600">{error}</p>}
+        {error && (
+          <p className="m-0 mt-3 text-center text-xs text-red-600">{error}</p>
+        )}
       </div>
 
-      <VoiceOrb status={status} />
-
-      <div
-        role="log"
-        aria-label="Conversation transcript"
-        className="flex flex-1 flex-col gap-4 overflow-y-auto px-5 py-6 sm:px-6"
-      >
-        {transcript.length === 0 ? (
-          <div className="m-auto flex flex-col items-center gap-2 text-center">
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 24 24"
-              className="h-8 w-8 text-border"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z" />
-            </svg>
-            <p className="text-[15px] text-muted">
-              The conversation will appear here.
-            </p>
-          </div>
-        ) : (
-          transcript.map((m) => (
-            <div
-              key={m.id}
-              className={`flex flex-col gap-1 ${
-                m.role === "user" ? "items-end" : "items-start"
-              }`}
-            >
-              <span className="px-1 text-xs text-muted">
-                {m.role === "user" ? "You" : "Agent"}
-              </span>
-              <div
-                className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-[15px] leading-relaxed ${
-                  m.role === "user"
-                    ? "bg-foreground text-white"
-                    : "border border-border bg-surface"
-                } ${m.final ? "" : "opacity-70"}`}
+      {/* the live transcript */}
+      <div className="flex min-h-0 flex-1 flex-col">
+        <p className="m-0 px-5 pb-1 pt-4 text-xs font-semibold uppercase tracking-[0.12em] text-muted sm:px-8">
+          Live transcript
+        </p>
+        <div
+          role="log"
+          aria-label="Conversation transcript"
+          className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto px-5 pb-6 pt-3 sm:px-8"
+        >
+          {transcript.length === 0 ? (
+            <div className="m-auto flex max-w-[26rem] flex-col items-center gap-3 text-center">
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className="h-8 w-8 text-border"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                {m.text}
-              </div>
+                <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z" />
+              </svg>
+              <p className="m-0 text-[15px] font-medium text-foreground">
+                The conversation will appear here.
+              </p>
+              <p className="m-0 text-sm leading-relaxed text-muted">
+                Try saying: &ldquo;I&rsquo;m looking to invest around four
+                million dirhams in Dubai Marina.&rdquo; Your browser will ask
+                to use the microphone.
+              </p>
             </div>
-          ))
-        )}
-        {summary && lead && <CallSummary data={summary} stage={lead.stage} />}
-        <div ref={endRef} />
+          ) : (
+            transcript.map((m) => (
+              <div
+                key={m.id}
+                className={`ve-rise flex flex-col gap-1 ${
+                  m.role === "user" ? "items-end" : "items-start"
+                }`}
+              >
+                <span className="px-1 text-xs font-medium text-muted">
+                  {m.role === "user" ? "You" : "VoiceEstate AI"}
+                </span>
+                <div
+                  className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-[15px] leading-relaxed transition-opacity duration-300 ${
+                    m.role === "user"
+                      ? "bg-foreground text-white"
+                      : "border border-border bg-surface text-foreground"
+                  } ${m.final ? "" : "opacity-70"}`}
+                >
+                  {m.text}
+                </div>
+              </div>
+            ))
+          )}
+          {summary && lead && <CallSummary data={summary} stage={lead.stage} />}
+          <div ref={endRef} />
+        </div>
       </div>
     </div>
   );

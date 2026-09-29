@@ -52,12 +52,14 @@ function describeRequirement(q: SummaryLead["qualification"]): string | null {
   let text = `looking for ${
     q.property !== NOT_PROVIDED ? withArticle(q.property) : "a property"
   }`;
-  if (q.preferredArea !== NOT_PROVIDED) text += ` in ${q.preferredArea}`;
+  const openArea = q.preferredArea === "Open to suggestions";
+  if (!openArea && q.preferredArea !== NOT_PROVIDED) text += ` in ${q.preferredArea}`;
   if (q.purpose === "Investment") text += " as an investment";
   else if (q.purpose === "Own Home") text += " as their own home";
   if (q.budget !== NOT_PROVIDED) {
     text += `, with a budget of ${describeBudget(q.budget)}`;
   }
+  if (openArea) text += " and is open to area suggestions";
   return text;
 }
 
@@ -126,12 +128,48 @@ function detectWhatsApp(entries: SummaryEntry[]): boolean {
   return false;
 }
 
+// A follow-up call that was booked during the conversation: the assistant asks
+// when, the lead names a time; or the assistant confirms "Expect a call ...".
+const SCHEDULE_Q_RE =
+  /\b(?:morning\s+or\s+afternoon|what\s+(?:day|time)|best\s+time|when\s+(?:works|would|is\s+good)|which\s+(?:day|time))\b/i;
+const WHEN_RE =
+  /\b(morning|afternoon|evening|tomorrow|tonight|monday|tuesday|wednesday|thursday|friday|saturday|sunday|\d{1,2}(?::\d{2})?\s*(?:am|pm))\b/i;
+const EXPECT_CALL_RE = /\b(?:expect\s+a\s+call|will\s+(?:call|ring)\s+you|give\s+you\s+a\s+call)\b/i;
+
+function detectScheduledCall(entries: SummaryEntry[]): string | null {
+  for (let i = 0; i < entries.length; i++) {
+    const e = entries[i];
+    if (e.role !== "assistant") continue;
+    if (SCHEDULE_Q_RE.test(e.text)) {
+      // the lead's next real answer (skip nothing: first user turn after the question)
+      const reply = entries.slice(i + 1).find((x) => x.role === "user");
+      const when = reply && !NEGATIVE_RE.test(reply.text.replace(/bnot\s+sureb/i, "")) ? WHEN_RE.exec(reply.text)?.[1] : undefined;
+      if (when) return `Follow-up call · ${when.toLowerCase()}`;
+    }
+    if (EXPECT_CALL_RE.test(e.text)) {
+      const when = WHEN_RE.exec(e.text)?.[1] ?? TIMING_RE.exec(e.text)?.[1];
+      if (when) return `Follow-up call · ${when.toLowerCase().replace(/^in the /, "")}`;
+    }
+  }
+  return null;
+}
+
 function nextStep(entries: SummaryEntry[], stage: string): string {
-  if (stage === "Not Interested") return "No follow-up requested";
+  if (
+    stage === "Not Interested" ||
+    stage === "Junk · Job Enquiry" ||
+    stage === "Wrong Number"
+  ) {
+    return "No follow-up requested";
+  }
   const users = entries.filter((e) => e.role === "user");
   const steps: string[] = [];
   const callback = detectCallback(users, stage);
   if (callback) steps.push(callback);
+  else {
+    const scheduled = detectScheduledCall(entries);
+    if (scheduled) steps.push(scheduled);
+  }
   if (detectWhatsApp(entries)) steps.push("WhatsApp details");
   return steps.length ? steps.join(" · ") : "Follow-up required";
 }
@@ -148,7 +186,11 @@ export function buildCallSummary(
   const requirement = describeRequirement(qualification);
 
   const sentences: string[] = [];
-  if (stage === "Not Interested") {
+  if (stage === "Junk · Job Enquiry") {
+    sentences.push("The lead was asking about a job, not a property.");
+  } else if (stage === "Wrong Number") {
+    sentences.push("This looks like a wrong number.");
+  } else if (stage === "Not Interested") {
     sentences.push("The lead said they are not interested.");
     if (requirement) sentences.push(`They had been ${requirement}.`);
   } else {
@@ -160,8 +202,18 @@ export function buildCallSummary(
     if (stage === "Follow-up") {
       sentences.push("They asked to be contacted again later.");
     } else if (stage === "Qualified") {
-      sentences.push("They showed interest and shared the key details.");
-    } else if (requirement) {
+      const agreed = nextStep(entries, stage);
+      const wa = /WhatsApp/.test(agreed);
+      const bits: string[] = [];
+      if (wa) bits.push("to receive the details on WhatsApp");
+      if (/^Follow-up call/.test(agreed)) bits.push(`for a follow-up call (${agreed.split(" · ")[1] ?? "time agreed"})`);
+      else if (/^Callback/.test(agreed)) bits.push("to be called back");
+      sentences.push(
+        bits.length
+          ? `They showed interest and agreed ${bits.join(" and ")}.`
+          : "They showed interest and shared the key details.",
+      );
+    } else if (requirement && nextStep(entries, stage) === "Follow-up required") {
       sentences.push("The call ended before a clear next step was agreed.");
     }
   }

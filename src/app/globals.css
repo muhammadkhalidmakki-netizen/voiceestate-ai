@@ -121,6 +121,120 @@ body {
   animation: ve-cta-ring 2.6s ease-out infinite;
 }
 
+/* Homepage "Live demo" hint chips: each lights up in turn, like cues the
+   assistant is listening for (only the homepage uses this class). */
+@keyframes ve-chip {
+  0%,
+  20% {
+    border-color: #09c19a;
+    background-color: #e6f9f4;
+    color: #067a63;
+  }
+  28%,
+  100% {
+    border-color: var(--border);
+    background-color: var(--background);
+    color: var(--muted);
+  }
+}
+
+.ve-chip {
+  animation: ve-chip 8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ve-chip {
+    animation: none;
+  }
+}
+
+/* Homepage "Technology" flow (only the homepage uses these classes): a dot
+   travels down the rail, and each layer's icon lights up in turn. */
+@keyframes ve-descend {
+  0% {
+    top: 0;
+    opacity: 0;
+  }
+  8%,
+  92% {
+    opacity: 1;
+  }
+  100% {
+    top: calc(100% - 7px);
+    opacity: 0;
+  }
+}
+
+@keyframes ve-node {
+  0%,
+  14% {
+    border-color: #09c19a;
+    background-color: #e6f9f4;
+    color: #067a63;
+  }
+  22%,
+  100% {
+    border-color: var(--border);
+    background-color: var(--background);
+    color: var(--muted);
+  }
+}
+
+.ve-descend {
+  animation: ve-descend 7s ease-in-out infinite;
+}
+.ve-node {
+  animation: ve-node 10s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ve-descend,
+  .ve-node {
+    animation: none;
+  }
+}
+
+/* Homepage "How it works" previews (only the homepage uses these classes) */
+@keyframes ve-rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ve-travel {
+  0% {
+    left: 0;
+    opacity: 0;
+  }
+  15%,
+  85% {
+    opacity: 1;
+  }
+  100% {
+    left: calc(100% - 8px);
+    opacity: 0;
+  }
+}
+
+.ve-rise {
+  animation: ve-rise 0.5s ease-out both;
+}
+.ve-travel {
+  animation: ve-travel 2.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ve-rise,
+  .ve-travel {
+    animation: none;
+  }
+}
+
 /* Homepage "Live workflow": the active step moves along the line, one step
    every 2s, looping every 10s. Only the homepage uses these classes. */
 @keyframes ve-flow-dot {
