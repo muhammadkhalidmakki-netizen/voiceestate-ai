@@ -26,6 +26,14 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Homepage only (wrapped in <div class="home"> at "/"): near-black headings and
+   dark body text, with gray kept for borders and surfaces. Scoped on purpose so
+   the /demo page keeps its original colors. */
+.home {
+  --foreground: #0b1220;
+  --muted: #2b3648;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -111,6 +119,46 @@ body {
 }
 .ve-cta-ring {
   animation: ve-cta-ring 2.6s ease-out infinite;
+}
+
+/* Homepage "Live workflow": the active step moves along the line, one step
+   every 2s, looping every 10s. Only the homepage uses these classes. */
+@keyframes ve-flow-dot {
+  0%,
+  16% {
+    background-color: #09c19a;
+    transform: scale(1.5);
+  }
+  24%,
+  100% {
+    background-color: #cbd5e1;
+    transform: scale(1);
+  }
+}
+
+@keyframes ve-flow-label {
+  0%,
+  16% {
+    color: #067a63;
+  }
+  24%,
+  100% {
+    color: var(--muted);
+  }
+}
+
+.ve-flow-dot {
+  animation: ve-flow-dot 10s ease-in-out infinite;
+}
+.ve-flow-label {
+  animation: ve-flow-label 10s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ve-flow-dot,
+  .ve-flow-label {
+    animation: none;
+  }
 }
 
 .ve-ring {

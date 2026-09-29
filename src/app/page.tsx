@@ -1,13 +1,20 @@
-import DemoWorkspace from "../components/DemoWorkspace";
-import Header from "../components/Header";
+import type { Metadata } from "next";
+import Hero from "../components/home/Hero";
+import Navbar from "../components/home/Navbar";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "VoiceEstate AI | AI voice sales agent for real estate",
+  description:
+    "VoiceEstate AI calls new property enquiries, qualifies the buyer, matches Dubai projects, updates your CRM and hands ready buyers to a human closer.",
+};
+
+export default function HomePage() {
   return (
-    <>
-      <Header />
-      <main className="mx-auto grid w-full max-w-5xl grid-cols-1 content-start gap-6 px-5 py-8 sm:px-8 sm:py-10 lg:grid-cols-[20rem_1fr]">
-        <DemoWorkspace />
+    <div className="home">
+      <Navbar />
+      <main>
+        <Hero />
       </main>
-    </>
+    </div>
   );
 }
