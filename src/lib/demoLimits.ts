@@ -8,7 +8,7 @@
 //
 // No relative imports, so it can be tested directly with `node --test`.
 
-export const MAX_CALL_SECONDS = 180; // 3 minutes
+export const MAX_CALL_SECONDS = 120; // 2 minutes
 export const COOLDOWN_SECONDS = 60;
 export const MAX_CALLS_PER_DAY = 5; // rolling 24 hours
 

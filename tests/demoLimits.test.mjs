@@ -32,8 +32,8 @@ const fakeStorage = () => {
   };
 };
 
-test("limits are 3 minutes, 60 seconds, 5 per day", () => {
-  assert.equal(MAX_CALL_SECONDS, 180);
+test("limits are 2 minutes, 60 seconds, 5 per day", () => {
+  assert.equal(MAX_CALL_SECONDS, 120);
   assert.equal(COOLDOWN_SECONDS, 60);
   assert.equal(MAX_CALLS_PER_DAY, 5);
 });
