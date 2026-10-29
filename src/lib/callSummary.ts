@@ -78,6 +78,12 @@ const NOT_A_PROJECT_START =
 const NOT_A_DEVELOPER =
   /^(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Tomorrow|Tonight|Morning|Afternoon|Evening|Phone|WhatsApp|Email|Text|Message|Yes|No|Me|You|Us|Them|Then|Now|Today|Next|Noon)\b/;
 
+// A capitalised name (allowing "at the", "of the", "by") right after a pitch cue.
+const PITCH_NAME_RE =
+  /(?:great\s+fit|perfect\s+fit|(?:project|development|community)\s+(?:called|named)|(?:first|second|third|next)\s+(?:one|option|project)\s+is|(?:one|option|project)\s+is|[Ii]\s+(?:would\s+)?(?:recommend|suggest))\W{0,4}((?:[A-Z][\w'’&-]*)(?:\s+(?:(?:at|of|by)\s+(?:the\s+)?)?[A-Z][\w'’&-]*){0,4})/g;
+const NOT_A_PITCH_NAME =
+  /^(?:It|Its|The|This|That|These|Those|I|We|You|A|An|Dubai|Great|Perfect|Yes|Sure|Well|So|Prices?|Payment|Handover)\b/;
+
 export function findProjects(entries: SummaryEntry[]): string[] {
   const seen = new Map<string, number>(); // canonical name -> first position
   const text = entries.map((e) => e.text).join("\n");
@@ -93,6 +99,20 @@ export function findProjects(entries: SummaryEntry[]): string[] {
     const alreadyKnown = KNOWN_PROJECTS.some(([re]) => re.test(full));
     if (!alreadyKnown && !seen.has(full)) seen.set(full, m.index ?? 0);
   }
+  // Names the assistant introduces in its pitch without "by <Developer>",
+  // e.g. "a project ... could be a great fit, Rivera at the Valley".
+  const assistantText = entries
+    .filter((e) => e.role === "assistant")
+    .map((e) => e.text)
+    .join("\n");
+  for (const m of assistantText.matchAll(PITCH_NAME_RE)) {
+    const name = m[1].trim();
+    if (NOT_A_PITCH_NAME.test(name)) continue;
+    const covered = [...seen.keys()].some(
+      (k) => k.toLowerCase().includes(name.toLowerCase()) || name.toLowerCase().includes(k.toLowerCase()),
+    );
+    if (!covered) seen.set(name, text.indexOf(name));
+  }
   return [...seen.entries()].sort((a, b) => a[1] - b[1]).map(([n]) => n);
 }
 
@@ -103,6 +123,9 @@ const CALLBACK_RE =
 const TIMING_RE =
   /\b(tomorrow|tonight|next\s+week|next\s+month|this\s+(?:evening|afternoon|weekend)|in\s+the\s+(?:morning|afternoon|evening)|on\s+(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday)|later)\b/i;
 const WHATSAPP_RE = /\bwhats\s?app\b/i;
+// WhatsApp listed next to other channels ("WhatsApp, email, or a call?").
+const WHATSAPP_CHOICE_RE =
+  /\bwhats\s?app\s*(?:,|\bor\b)|(?:,|\bor\b)\s*(?:a\s+|via\s+|by\s+)?whats\s?app\b/i;
 const AFFIRMATIVE_RE =
   /\b(?:yes|yeah|yep|sure|ok(?:ay)?|please|fine|go\s+ahead|that\s+works|of\s+course|absolutely)\b/i;
 const NEGATIVE_RE = /\b(?:no|nope|don'?t|do\s+not|not)\b/i;
@@ -121,7 +144,14 @@ function detectWhatsApp(entries: SummaryEntry[]): boolean {
     if (e.role === "user") return !NEGATIVE_RE.test(e.text) || AFFIRMATIVE_RE.test(e.text);
     // assistant offered WhatsApp: needs an affirmative user reply right after
     const reply = entries.slice(i + 1).find((x) => x.role === "user");
-    if (reply && AFFIRMATIVE_RE.test(reply.text) && !/^\s*no\b/i.test(reply.text)) {
+    if (!reply) continue;
+    // "WhatsApp, email, or a regular call?" is a choice, not a yes/no question:
+    // an "okay" doesn't pick WhatsApp, only naming it does.
+    if (WHATSAPP_CHOICE_RE.test(e.text)) {
+      if (WHATSAPP_RE.test(reply.text) && !NEGATIVE_RE.test(reply.text)) return true;
+      continue;
+    }
+    if (AFFIRMATIVE_RE.test(reply.text) && !/^\s*no\b/i.test(reply.text)) {
       return true;
     }
   }
@@ -206,7 +236,7 @@ export function buildCallSummary(
       const wa = /WhatsApp/.test(agreed);
       const bits: string[] = [];
       if (wa) bits.push("to receive the details on WhatsApp");
-      if (/^Follow-up call/.test(agreed)) bits.push(`for a follow-up call (${agreed.split(" · ")[1] ?? "time agreed"})`);
+      if (/^Follow-up call/.test(agreed)) bits.push(`to a follow-up call (${agreed.split(" · ")[1] ?? "time agreed"})`);
       else if (/^Callback/.test(agreed)) bits.push("to be called back");
       sentences.push(
         bits.length

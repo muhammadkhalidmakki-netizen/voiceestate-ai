@@ -97,3 +97,33 @@ test("a dollar budget is captured and still qualifies", () => {
   assert.match(r.lead.qualification.budget, /USD 500,000/);
   assert.equal(r.lead.stage, "Qualified");
 });
+
+test("real call 2, verbatim: project without 'by <Developer>', and 'regular call' is not WhatsApp", () => {
+  const r = simulate(loadFixture("real-call-2.txt"));
+  assert.equal(r.lead.stage, "Qualified");
+  assert.equal(r.lead.qualification.budget, "AED 5,000,000");
+  assert.equal(r.lead.qualification.preferredArea, OPEN_AREA);
+  assert.equal(r.summary.project, "Rivera at the Valley");
+  assert.equal(r.summary.nextStep, "Follow-up call · afternoon");
+  assert.doesNotMatch(r.summary.summary, /WhatsApp/);
+  assert.match(r.summary.summary, /follow-up call \(afternoon\)/);
+});
+
+test("WhatsApp offered as one of several channels counts only when the lead names it", () => {
+  const ask = A("What's the best way to reach you, WhatsApp, email, or a regular call?");
+  for (const reply of ["Okay", "Regular call will be okay", "Email is fine", "Yes"]) {
+    assert.doesNotMatch(simulate([Q_PURPOSE, U("Investment"), ask, U(reply)]).summary.nextStep, /WhatsApp/, reply);
+  }
+  assert.match(simulate([Q_PURPOSE, U("Investment"), ask, U("WhatsApp please")]).summary.nextStep, /WhatsApp/);
+  // a plain yes/no WhatsApp question still works
+  assert.match(simulate([Q_PURPOSE, U("Investment"), A("Is WhatsApp okay to send the details?"), U("Yes sure")]).summary.nextStep, /WhatsApp/);
+});
+
+test("project names are found from the pitch wording, and ordinary words are not", () => {
+  const proj = (t) => simulate([Q_PURPOSE, U("Investment"), A(t), U("ok")]).summary.project;
+  assert.equal(proj("There's a project that could be a great fit, Rivera at the Valley in the Valley. It offers a lifestyle."), "Rivera at the Valley");
+  assert.equal(proj("The first one is Tilal by Binghatti in Al Rowaya."), "Tilal by Binghatti");
+  assert.equal(proj("I would suggest Marina Vista Residences for you."), "Marina Vista Residences");
+  assert.equal(proj("This could be a great fit. It offers a nice lifestyle."), "Not discussed");
+  assert.equal(proj("Thanks, that is a great fit for what you need."), "Not discussed");
+});
