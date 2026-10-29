@@ -1,4 +1,5 @@
 import Vapi from "@vapi-ai/web";
+import { DEMO_ENABLED } from "./demoSwitch";
 
 // @vapi-ai/web is CommonJS (`exports.default = Vapi`). Next.js unwraps that,
 // but the Vite build used for Cloudflare hands back the module object instead.
@@ -11,7 +12,7 @@ const assistantId = process.env.NEXT_PUBLIC_VAPI_ASSISTANT_ID;
 let client: Vapi | null = null;
 
 export function isVapiConfigured(): boolean {
-  return Boolean(publicKey && assistantId);
+  return DEMO_ENABLED && Boolean(publicKey && assistantId);
 }
 
 export function getVapiAssistantId(): string {
@@ -23,6 +24,9 @@ export function getVapiAssistantId(): string {
 
 // Browser-only singleton. Creating the client does not start a call.
 export function getVapiClient(): Vapi {
+  if (!DEMO_ENABLED) {
+    throw new Error("The voice demo is switched off (src/lib/demoSwitch.ts)");
+  }
   if (typeof window === "undefined") {
     throw new Error("The Vapi client can only be used in the browser");
   }

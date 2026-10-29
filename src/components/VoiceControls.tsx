@@ -18,6 +18,7 @@ import {
 } from "../lib/demoLimits";
 import { classifyVapiError } from "../lib/vapiErrors";
 import { startRingTone } from "../lib/ringTone";
+import { DEMO_ENABLED } from "../lib/demoSwitch";
 import CallSummary from "./CallSummary";
 import VoiceOrb from "./VoiceOrb";
 import {
@@ -324,11 +325,18 @@ export default function VoiceControls({
           </button>
         </div>
 
-        {!configured && (
+        {!DEMO_ENABLED ? (
           <p className="m-0 mt-3 text-center text-xs text-muted">
-            Add your Vapi public key and assistant ID to .env.local, then
-            restart the server.
+            The live voice demo is temporarily unavailable. Please check back
+            soon.
           </p>
+        ) : (
+          !configured && (
+            <p className="m-0 mt-3 text-center text-xs text-muted">
+              Add your Vapi public key and assistant ID to .env.local, then
+              restart the server.
+            </p>
+          )
         )}
         {limitMessage && (
           <p role="status" className="m-0 mt-3 text-center text-sm text-amber-800">
