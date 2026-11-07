@@ -220,8 +220,9 @@ export default function SavedPlansMenu({ notify, compact = false }: { notify: (m
         <BookmarkPlus size={16} aria-hidden="true" />
         <span className={`${compact ? "" : v.btnText} ${h.planName}`}>{label}</span>
         {current && dirty ? <span className={h.dirtyDot} title="Unsaved changes" /> : null}
-        {current ? <span className={h.editingTag}>Editing</span> : null}
+        {current ? <span className={`${h.editingTag} ${compact ? "" : v.btnText}`}>Editing</span> : null}
         <ChevronDown size={16} aria-hidden="true" className={v.btnText} />
+        <span className={h.dockLabel}>{current ? (dirty ? "Unsaved" : "Editing") : "Save plan"}</span>
       </Popover.Trigger>
       <Popover.Portal container={portalContainer()}>
         <Popover.Content className={`${v.popover} ${h.plansPop}`} align="end" sideOffset={10}>

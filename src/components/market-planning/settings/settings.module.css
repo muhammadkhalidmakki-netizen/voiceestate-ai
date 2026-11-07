@@ -1481,3 +1481,39 @@
   display: block;
   width: 6px;
 }
+
+/* ---------- Phone: dialogs are bottom sheets ---------- */
+@media (max-width: 719px) {
+  .panel, .panelWide {
+    top: auto; bottom: 0; left: 0;
+    width: 100%; max-width: 100%;
+    max-height: 90dvh;
+    border-radius: 24px 24px 0 0;
+    transform: none;
+    animation: sheetUp 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @keyframes sheetUp { from { transform: translateY(100%); } }
+  .head { padding: 14px 12px 2px 16px; }
+  .title { font-size: 1.0625rem; }
+  .lead { font-size: 0.8125rem; }
+  .body { padding: 8px 16px 14px; gap: 12px; }
+  .foot { padding: 10px 16px calc(12px + env(safe-area-inset-bottom)); }
+  .amountInput { font-size: 1.5rem !important; }
+  .resultValue { font-size: 1.25rem; }
+  .channelPct { font-size: 1.5rem; }
+}
+
+@media (max-width: 719px) {
+  .panel, .panelWide { zoom: 0.92; }
+  .marketsSide { display: none; }
+  .searchCount { display: none; }
+  .country { flex-wrap: wrap; row-gap: 4px; padding: 8px 8px; }
+  .countryText { flex: 1 1 120px; min-width: 0; }
+  .countrySub { font-size: 0.75rem; }
+  .cov, .signal { font-size: 0.625rem; padding: 2px 7px; max-width: 100%; white-space: normal; }
+  .filters { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .filterChip { flex: none; }
+  .mineChips { max-height: 110px; }
+  .foot { flex-wrap: wrap; }
+  .foot > * { flex: 1 1 auto; justify-content: center; }
+}

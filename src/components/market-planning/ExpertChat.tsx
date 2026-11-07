@@ -38,7 +38,7 @@ export default function ExpertChat({ context }: { context?: string }) {
   }, [open]);
 
   return (
-    <div className={styles.dock}>
+    <div className={`${styles.dock} ${context ? styles.aboveDock : ""}`}>
       <AnimatePresence>
         {open ? (
           <motion.section key="card" className={styles.card} role="dialog" aria-label={`Chat with ${NAME} on WhatsApp`} initial={{ opacity: 0, y: 18, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 12, scale: 0.97 }} transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}>

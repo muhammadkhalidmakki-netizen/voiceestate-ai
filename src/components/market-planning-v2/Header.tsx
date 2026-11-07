@@ -86,13 +86,15 @@ export function Actions({ notify }: { notify: (m: string) => void }) {
 
   return (
     <>
-      <HistoryMenu />
-      <SavedPlansMenu notify={notify} />
-      <ShareButton notify={notify} />
+      <span className={v.wideOnly}>
+        <HistoryMenu />
+        <SavedPlansMenu notify={notify} />
+        <ShareButton notify={notify} />
+      </span>
 
       <button
         type="button"
-        className={`${v.ghostBtn} ${customized ? v.ghostBtnAlert : ""}`}
+        className={`${v.ghostBtn} ${v.wideOnlyBtn} ${customized ? v.ghostBtnAlert : ""}`}
         onClick={() => dispatch({ type: "restore" })}
         disabled={!customized}
         aria-label="Reset to the recommended plan"

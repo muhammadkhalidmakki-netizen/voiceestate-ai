@@ -1608,3 +1608,94 @@
   filter: grayscale(1);
 }
 .editingTag { padding: 1px 8px; font-size: 0.6875rem; font-weight: 800; letter-spacing: 0.03em; color: #fff; background: var(--mp-blue); border-radius: 999px; }
+
+/* ---------- Responsive tabs content ---------- */
+@media (max-width: 719px) {
+  .mapFrame { aspect-ratio: 1.5 / 1; }
+  .cards { grid-template-columns: minmax(0, 1fr); }
+  .langCards { grid-template-columns: minmax(0, 1fr); }
+  .countryGrid { grid-template-columns: minmax(0, 1fr); }
+  .tools { flex-direction: column; align-items: stretch; }
+  .search { flex: 1 1 auto; }
+  .chips, .reachSeg { width: 100%; }
+  .segOpt { flex: 1 1 auto; justify-content: center; padding: 0 10px; }
+  .chipBtn { flex: 1 1 auto; }
+  .langTabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+  .langTab { flex: none; }
+  .mapInfo { flex-wrap: wrap; }
+  .sharePop, .plansPop { width: calc(100vw - 24px); }
+  .table td, .table th { padding: 8px 6px; }
+}
+@media (max-width: 520px) {
+  .expertDock { right: 12px; bottom: 12px; }
+}
+
+/* ---------- Dock items (phone) ---------- */
+.dockLabel { display: none; }
+.dockReset span { display: inline; }
+@media (max-width: 719px) {
+  .dockLabel { display: block; font-size: 0.625rem; font-weight: 700; line-height: 1; }
+  .planCompact, .undoCompact, .dockReset, .dockBtn {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    width: 100% !important;
+    height: 44px !important;
+    min-height: 44px;
+    padding: 3px 2px !important;
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: var(--mp-ink-2);
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 18px;
+    box-shadow: none !important;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  .planCompact:active, .undoCompact:active, .dockReset:active, .dockBtn:active { transform: scale(0.92); background: var(--mp-blue-soft) !important; }
+  .planCompact .planName, .planCompact .editingTag, .planCompact svg:last-of-type:not(:first-of-type) { display: none; }
+  .planCompact .dirtyDot { position: absolute; top: 6px; right: calc(50% - 16px); }
+  .planCompact { position: relative; }
+  .planActive { color: var(--mp-blue-deep) !important; background: var(--mp-blue-soft) !important; }
+  .undoCompact .undoText { font-size: 0.6875rem; }
+  .undoCount { position: absolute; top: 2px; right: calc(50% - 20px); min-width: 16px; height: 16px; font-size: 0.625rem; }
+  .undoCompact { position: relative; }
+  .dockReset { color: var(--mp-ink-2); }
+  .dockReset:disabled { opacity: 0.4; }
+  .dockReset.ghostBtnAlert, .dockReset[class*="ghostBtnAlert"] { color: #b3262e; }
+  .shareIconOn { color: #14633f !important; }
+}
+
+/* ---------- Phone dock: five slots with a raised round "new plan" button in the middle ---------- */
+.dockNew { display: none; }
+@media (max-width: 719px) {
+  .dockNew { display: block; position: relative; height: 44px; }
+  .dockPlus {
+    position: absolute; top: -23px; left: 50%; transform: translateX(-50%);
+    display: grid; place-items: center; width: 48px; height: 48px;
+    color: #fff; background: linear-gradient(180deg, var(--mp-btn-a) 0%, var(--mp-btn-b) 100%);
+    border: 0; border-radius: 50%;
+    box-shadow: 0 10px 20px -8px var(--mp-btn-shadow);
+    cursor: pointer; transition: transform 0.18s ease;
+  }
+  .dockPlus:active { transform: translateX(-50%) scale(0.9); }
+  .dockNewLabel { position: absolute; right: 0; bottom: 6px; left: 0; text-align: center; font-size: 0.6875rem; font-weight: 800; color: var(--mp-blue-deep); line-height: 1; }
+  /* phone popovers: roomy, scrollable, readable */
+  .plansPop, .sharePop { width: calc(100vw - 24px) !important; max-height: 70dvh; overflow-y: auto; font-size: 0.9375rem; }
+}
+
+/* ---------- Phone: the save / plans popup ---------- */
+@media (max-width: 719px) {
+  .plansPop { padding: 16px 14px 14px; border-radius: 22px; box-shadow: 0 -14px 40px -12px rgba(16, 24, 90, 0.5); }
+  .menuHead { margin-bottom: 12px; }
+  .menuTitle b { font-size: 1.0625rem; }
+  .newBtn { min-height: 38px; padding: 0 16px; }
+  .plansPop input { min-height: 48px; font-size: 1rem; border-radius: 14px; }
+  .plansPop [class*="pillBtnPrimary"] { min-height: 48px; padding: 0 22px; font-size: 0.9375rem; }
+  .plansPop [class*="savedList"] { margin-top: 12px; gap: 6px; }
+  .plansPop [class*="savedItem"] { padding: 4px 4px 4px 2px; background: var(--mp-tint); border-radius: 14px; }
+  .plansPop [class*="savedLoad"] { padding: 8px 10px; }
+  .plansPop [class*="emptyNote"] { font-size: 0.75rem; text-align: center; }
+}

@@ -373,3 +373,49 @@
 .whoText small { color: var(--mp-ink-3); font-size: 0.75rem; }
 .menuLink { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; padding: 8px 6px; font-size: 0.875rem; font-weight: 700; color: var(--mp-ink); text-decoration: none; border-radius: 10px; }
 .menuLink:hover { background: var(--mp-tint); }
+
+/* ---------- Responsive top bar ---------- */
+@media (max-width: 899px) {
+  .top { flex-wrap: wrap; row-gap: 10px; padding: 2px 0 12px; }
+  .end { order: 1; flex: 1 1 100%; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+  .capsule { order: 2; flex: 1 1 100%; justify-content: space-between; margin: 0; }
+  .navItem { flex: 1 1 0; min-width: 0; padding: 0 10px; }
+  .navItemOn { flex: 1.6 1 0; }
+  .navItemOn .navLabel { display: inline; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+@media (max-width: 420px) {
+  .circle, .avatar { width: 40px; height: 40px; }
+  .navItem { height: 40px; }
+}
+
+/* ---------- Phone: the three section buttons float on the right edge ---------- */
+@media (max-width: 719px) {
+  .top { padding: 2px 0 6px; }
+  .end { justify-content: flex-end; }
+  .capsule {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    z-index: 55;
+    flex: none;
+    flex-direction: column;
+    gap: 6px;
+    width: auto;
+    padding: 6px 5px 6px 6px;
+    background: color-mix(in srgb, var(--mp-surface) 94%, transparent);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--mp-line);
+    border-right: 0;
+    border-radius: 18px 0 0 18px;
+    box-shadow: -8px 12px 28px -14px rgba(16, 24, 90, 0.55);
+    transform: translateY(-50%);
+  }
+  .navItem, .navItemOn { flex: none; width: 36px; height: 36px; min-width: 0; padding: 0; border-radius: 12px; }
+  .capsule { gap: 4px; padding: 5px 4px 5px 5px; }
+  .navItemOn .navLabel { display: none; }
+  .navItemOn { color: #ffffff; }
+}
+
+.navPhoneOnly { display: none; }
+@media (max-width: 719px) { .navPhoneOnly { display: inline-flex; } }

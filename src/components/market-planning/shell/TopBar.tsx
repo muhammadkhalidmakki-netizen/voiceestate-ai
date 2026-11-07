@@ -21,7 +21,7 @@ const SECTIONS = [
   { id: "timeline", label: "Timeline", Icon: Clock },
 ] as const;
 
-export type NavItem = { id: string; label: string; Icon: LucideIcon };
+export type NavItem = { id: string; label: string; Icon: LucideIcon; /** Only shown in the phone side strip. */ phoneOnly?: boolean };
 
 function useActiveSection(): string {
   const [active, setActive] = useState<string>("plan");
@@ -88,7 +88,7 @@ export default function TopBar({
             <button
               key={id}
               type="button"
-              className={`${s.navItem} ${on ? s.navItemOn : ""}`}
+              className={`${s.navItem} ${on ? s.navItemOn : ""} ${(items.find((x) => x.id === id) as NavItem | undefined)?.phoneOnly ? s.navPhoneOnly : ""}`}
               aria-current={on ? "true" : undefined}
               aria-label={label}
               onClick={() => go(id)}

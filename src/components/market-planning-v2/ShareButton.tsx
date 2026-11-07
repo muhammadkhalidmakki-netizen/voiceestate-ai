@@ -71,13 +71,14 @@ export default function ShareButton({ notify, compact = false }: { notify: (m: s
   return (
     <Popover.Root open={open && !disabled} onOpenChange={setOpen}>
       <Popover.Trigger
-        className={`${compact ? h.rowIcon : v.pillBtn} ${isPublic ? h.shareIconOn : ""} ${disabled ? h.shareDisabled : ""}`}
+        className={`${compact ? `${h.rowIcon} ${h.dockBtn}` : v.pillBtn} ${isPublic ? h.shareIconOn : ""} ${disabled ? h.shareDisabled : ""}`}
         disabled={disabled}
         aria-label={disabled ? "Share: open or save a plan first" : `Share ${current?.name}`}
         title={disabled ? "Open or save a plan to share it" : "Share this plan"}
         style={compact ? { width: 34, height: 34, background: "var(--mp-tint)" } : undefined}
       >
         <Share2 size={16} aria-hidden="true" />
+        <span className={h.dockLabel}>Share</span>
       </Popover.Trigger>
       <Popover.Portal container={portalContainer()}>
         <Popover.Content className={h.sharePop} align="end" sideOffset={10} collisionPadding={12}>

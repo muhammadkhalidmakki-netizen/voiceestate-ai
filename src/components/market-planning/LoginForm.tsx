@@ -18,6 +18,7 @@ export default function LoginForm() {
   return (
     <motion.form action={formAction} className={styles.form} variants={container} initial="hidden" animate="show">
       <motion.div variants={item}>
+        <p className={styles.mobileLine}>Plan where your next Dubai buyer comes from.</p>
         <p className={styles.eyebrow}>Sign in</p>
         <h1 id="signin-title" className={styles.heading}>
           Welcome back

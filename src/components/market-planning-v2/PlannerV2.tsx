@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Languages, Scale, Table2 } from "lucide-react";
+import { LayoutDashboard, Languages, Scale, Table2 } from "lucide-react";
 import { PlannerProvider, type Detail, type Focus, type PlannerView } from "../market-planning/planner-context";
 import { initialState, reducer, type PlannerState } from "../market-planning/planner-state";
 import { buildDerived } from "../market-planning/planner-view";
@@ -34,6 +34,7 @@ type TabId = (typeof TABS)[number]["id"];
 
 // The pill navigation: the three workspace tabs.
 const NAV: NavItem[] = [
+  { id: "summary", label: "Summary", Icon: LayoutDashboard, phoneOnly: true },
   { id: "breakdown", label: "Breakdown", Icon: Table2 },
   { id: "comparison", label: "Comparison", Icon: Scale },
   { id: "language", label: "Languages", Icon: Languages },
@@ -118,6 +119,10 @@ export default function PlannerV2({ isAdmin = false, greetingName, shared }: { i
 
   const navigate = useCallback(
     (id: string) => {
+      if (id === "summary") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
       if (id === "breakdown" || id === "comparison" || id === "language") {
         goTab(id);
         document.getElementById("v2-workspace")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -186,7 +191,7 @@ export default function PlannerV2({ isAdmin = false, greetingName, shared }: { i
                       {on ? <motion.span layoutId="v2-tab" className={v.tabPill} transition={{ type: "spring", stiffness: 420, damping: 34 }} /> : null}
                       <span className={v.tabText}>
                         <Icon size={16} aria-hidden="true" />
-                        {label}
+                        <span className={v.tabLabel}>{label}</span>
                       </span>
                     </button>
                   );
