@@ -48,3 +48,6 @@ next-env.d.ts
 /dist/
 .vinext/
 .cloudflare/
+
+# local development data (saved plans when running without Cloudflare)
+/.data/

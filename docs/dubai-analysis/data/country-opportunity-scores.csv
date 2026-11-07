@@ -1,0 +1,251 @@
+iso2,country,dubai_demand,financial_capacity,investment_motivations,cross_border_readiness,addressable_audience,acquisition_economics,client_boost,notes
+_WEIGHTS,"Weights (percent, edit here)",25,20,15,10,10,20,,Dimension weights. Should add up to 100.
+AF,Afghanistan,,16,40,5,21,80,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances; capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+AX,Åland Islands,,,,,,,,
+AL,Albania,,59,40,62,73,80,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+DZ,Algeria,,50,40,56,81,70,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+AS,American Samoa,,,,84,0,,,
+AD,Andorra,,73,40,80,66,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+AO,Angola,,41,40,45,58,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+AI,Anguilla,,,,,,,,
+AQ,Antarctica,,,,,,,,
+AG,Antigua and Barbuda,,40,40,82,51,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+AR,Argentina,,64,40,25,92,75,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances; capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+AM,Armenia,,59,40,60,71,79,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+AW,Aruba,,63,40,84,67,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+AU,Australia,43,79,40,68,98,5,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+AT,Austria,,74,40,61,90,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+AZ,Azerbaijan,,61,40,55,83,79,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+BS,Bahamas,,62,40,77,70,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+BH,Bahrain,,76,40,61,84,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+BD,Bangladesh,,48,40,30,69,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances; capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+BB,Barbados,,49,40,80,53,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+BY,Belarus,,56,40,15,86,78,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances; capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+BE,Belgium,,73,40,60,93,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+BZ,Belize,,36,40,74,55,83,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+BJ,Benin,,28,40,62,35,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+BM,Bermuda,,63,40,73,68,40,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+BT,Bhutan,,55,40,81,66,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+BO,"Bolivia, Plurinational State of",,52,40,44,72,84,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+BQ,"Bonaire, Sint Eustatius and Saba",,,,,,,,
+BA,Bosnia and Herzegovina,,58,40,52,74,81,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+BW,Botswana,,52,40,70,57,80,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+BV,Bouvet Island,,,,,,,,
+BR,Brazil,,77,40,51,92,79,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+IO,British Indian Ocean Territory,,,,,,,,
+BN,Brunei Darussalam,,61,40,78,77,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+BG,Bulgaria,,71,40,61,80,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+BF,Burkina Faso,,22,40,43,29,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+BI,Burundi,,13,46,37,4,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+CV,Cabo Verde,,43,40,76,52,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+KH,Cambodia,,51,40,70,62,87,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+CM,Cameroon,,32,40,38,51,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+CA,Canada,46,93,40,71,97,30,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+KY,Cayman Islands,,45,40,82,60,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+CF,Central African Republic,,7,40,43,7,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+TD,Chad,,13,40,46,20,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+CL,Chile,,81,40,61,92,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+CN,China,80,67,40,67,96,,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances; demand from reported Dubai buyer share ~14% (broker analyses of DLD data)"
+CX,Christmas Island,,,,,,,,
+CC,Cocos (Keeling) Islands,,,,,,,,
+CO,Colombia,,68,40,46,85,80,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+KM,Comoros,,10,42,57,17,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+CG,Congo,,34,40,55,44,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+CD,"Congo, The Democratic Republic of the",,27,40,30,32,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+CK,Cook Islands,,,,,,,,
+CR,Costa Rica,,63,40,81,79,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+CI,Côte d'Ivoire,,42,40,58,51,87,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+HR,Croatia,,60,40,67,79,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+CU,Cuba,,,,0,70,,,"capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+CW,Curaçao,,46,40,94,51,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+CY,Cyprus,,77,40,69,78,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+CZ,Czechia,,81,40,72,88,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+DK,Denmark,,91,40,72,92,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+DJ,Djibouti,,29,40,63,48,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+DM,Dominica,,33,40,75,50,80,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+DO,Dominican Republic,,54,40,64,84,78,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+EC,Ecuador,,62,40,57,76,82,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+EG,Egypt,48,60,40,30,85,81,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances; capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+SV,El Salvador,,56,40,67,63,83,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+GQ,Equatorial Guinea,,37,40,50,56,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+ER,Eritrea,,3,40,54,14,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+EE,Estonia,,65,40,64,78,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+SZ,Eswatini,,32,40,54,53,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+ET,Ethiopia,,31,40,20,36,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances; capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+FK,Falkland Islands (Malvinas),,,,,,,,
+FO,Faroe Islands,,63,40,60,66,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+FJ,Fiji,,53,40,76,57,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+FI,Finland,,84,40,70,88,64,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+FR,France,42,92,40,57,94,50,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+GF,French Guiana,,,,,,,,
+PF,French Polynesia,,38,40,62,73,46,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+TF,French Southern Territories,,,,,,,,
+GA,Gabon,,51,40,63,63,80,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+GM,Gambia,,12,40,58,32,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+GE,Georgia,,65,40,58,75,63,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+DE,Germany,34,91,40,60,97,70,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+GH,Ghana,,37,40,54,70,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+GI,Gibraltar,,,,,94,,,
+GR,Greece,,76,40,63,85,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+GL,Greenland,,62,,70,52,46,,
+GD,Grenada,,37,40,82,47,80,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+GP,Guadeloupe,,,,,,,,
+GU,Guam,,,,80,81,46,,
+GT,Guatemala,,59,40,63,67,83,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+GG,Guernsey,,,,,,,,
+GN,Guinea,,23,40,52,35,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+GW,Guinea-Bissau,,9,40,60,16,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+GY,Guyana,,61,40,68,74,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+HT,Haiti,,9,68,26,34,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+HM,Heard Island and McDonald Islands,,,,,,,,
+VA,Holy See (Vatican City State),,,,,,,,
+HN,Honduras,,51,40,53,57,87,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+HK,Hong Kong,,93,40,74,91,58,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+HU,Hungary,,59,40,60,89,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+IS,Iceland,,64,40,70,77,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+IN,India,100,65,40,58,85,55,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+ID,Indonesia,,65,40,56,86,82,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+IR,"Iran, Islamic Republic of",,50,40,5,89,,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances; capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+IQ,Iraq,,48,40,25,80,83,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances; capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+IE,Ireland,,84,40,75,93,63,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+IM,Isle of Man,,,,,,67,,
+IL,Israel,,84,40,47,87,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+IT,Italy,43,84,40,64,95,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances; demand from reported Dubai buyer share ~4% (broker analyses of DLD data)"
+JM,Jamaica,,40,40,61,69,84,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+JP,Japan,,92,40,74,93,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+JE,Jersey,,,,,,,,
+JO,Jordan,31,51,40,60,79,84,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+KZ,Kazakhstan,,65,40,52,92,74,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+KE,Kenya,,44,40,46,50,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+KI,Kiribati,,10,40,74,45,80,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+KP,"Korea, Democratic People's Republic of",,,,0,0,,,"capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+KR,"Korea, Republic of",,92,40,70,99,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+KW,Kuwait,,66,40,68,89,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+KG,Kyrgyzstan,,36,40,61,70,86,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+LA,Lao People's Democratic Republic,,42,40,66,59,85,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+LV,Latvia,,62,40,67,79,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+LB,Lebanon,43,58,40,15,66,85,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances; demand from reported Dubai buyer share ~4% (broker analyses of DLD data); capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+LS,Lesotho,,18,42,57,34,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+LR,Liberia,,18,40,53,16,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+LY,Libya,,43,40,10,72,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances; capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+LI,Liechtenstein,,,,80,98,,,
+LT,Lithuania,,63,40,70,81,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+LU,Luxembourg,,86,40,72,83,40,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+MO,Macao,,84,40,80,78,62,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+MG,Madagascar,,20,40,50,18,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+MW,Malawi,,15,41,40,17,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+MY,Malaysia,,84,40,68,97,73,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+MV,Maldives,,49,40,66,65,78,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+ML,Mali,,25,40,32,35,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+MT,Malta,,77,40,75,76,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+MH,Marshall Islands,,14,50,79,33,,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+MQ,Martinique,,,,,,,,
+MR,Mauritania,,27,40,54,42,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+MU,Mauritius,,58,40,72,65,76,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+YT,Mayotte,,,,,,,,
+MX,Mexico,,70,40,46,92,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+FM,"Micronesia, Federated States of",,8,40,77,20,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+MD,"Moldova, Republic of",,50,40,53,65,82,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+MC,Monaco,,,,81,99,,,
+MN,Mongolia,,48,40,66,72,80,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+ME,Montenegro,,58,40,63,69,76,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+MS,Montserrat,,,,,,,,
+MA,Morocco,,58,40,57,81,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+MZ,Mozambique,,24,40,33,28,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+MM,Myanmar,,39,,6,51,89,,"capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+NA,Namibia,,47,40,67,58,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+NR,Nauru,,43,40,73,42,,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+NP,Nepal,,41,40,57,49,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+NL,Netherlands,34,94,40,64,97,10,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+NC,New Caledonia,,60,40,51,82,46,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+NZ,New Zealand,,73,40,71,86,10,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+NI,Nicaragua,,39,40,67,55,86,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+NE,Niger,,12,40,45,15,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+NG,Nigeria,,50,40,25,64,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances; capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+NU,Niue,,,,,,,,
+NF,Norfolk Island,,,,,,,,
+MK,North Macedonia,,63,40,63,75,78,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+MP,Northern Mariana Islands,,,,,0,,,
+NO,Norway,,87,40,70,93,70,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+OM,Oman,,62,40,71,85,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+PK,Pakistan,58,39,40,30,67,70,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances; capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+PW,Palau,,28,40,85,44,,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+PS,"Palestine, State of",,31,40,27,57,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+PA,Panama,,61,40,69,73,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+PG,Papua New Guinea,,34,40,53,27,77,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+PY,Paraguay,,58,40,66,74,81,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+PE,Peru,,60,40,56,82,81,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+PH,Philippines,,60,40,56,77,84,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+PN,Pitcairn,,,,,,,,
+PL,Poland,,77,40,67,94,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+PT,Portugal,,83,40,68,87,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+PR,Puerto Rico,,75,,60,80,66,,
+QA,Qatar,,88,40,77,89,56,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+RE,Réunion,,,,,,,,
+RO,Romania,,66,40,55,92,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+RU,Russian Federation,64,59,40,15,97,,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances; demand from reported Dubai buyer share ~9% (broker analyses of DLD data); capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+RW,Rwanda,,26,40,60,35,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+BL,Saint Barthélemy,,,,,,,,
+SH,"Saint Helena, Ascension and Tristan da Cunha",,,,,,,,
+KN,Saint Kitts and Nevis,,53,40,75,49,,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+LC,Saint Lucia,,51,40,73,50,78,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+MF,Saint Martin (French part),,,,,,,,
+PM,Saint Pierre and Miquelon,,,,,,,,
+VC,Saint Vincent and the Grenadines,,34,40,80,49,80,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+WS,Samoa,,30,40,81,17,72,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+SM,San Marino,,67,40,82,63,,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+ST,Sao Tome and Principe,,15,40,57,32,89,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+SA,Saudi Arabia,52,91,40,66,100,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+SN,Senegal,,30,40,65,52,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+RS,Serbia,,66,40,53,81,78,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+SC,Seychelles,,33,40,82,60,40,5,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances; client sales confirmed (Seychelles): counts as proven Dubai demand"
+SL,Sierra Leone,,12,40,49,24,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+SG,Singapore,39,96,40,83,92,30,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+SX,Sint Maarten (Dutch part),,46,40,84,27,,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+SK,Slovakia,,74,40,63,84,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+SI,Slovenia,,70,40,69,80,69,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+SB,Solomon Islands,,20,40,70,15,81,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+SO,Somalia,,3,,21,17,90,,
+ZA,South Africa,30,58,40,52,83,60,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+GS,South Georgia and the South Sandwich Islands,,,,,,,,
+SS,South Sudan,,0,65,10,7,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances; capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+ES,Spain,,89,40,62,98,62,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+LK,Sri Lanka,,49,40,25,65,65,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances; capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+SD,Sudan,,12,,10,23,90,,"capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+SR,Suriname,,38,40,56,65,80,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+SJ,Svalbard and Jan Mayen,,,,,,,,
+SE,Sweden,,87,40,69,93,65,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+CH,Switzerland,,94,40,73,94,10,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+SY,Syrian Arab Republic,,30,,0,38,,,"capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+TW,"Taiwan, Province of China",,,,,,,,
+TJ,Tajikistan,,32,40,58,48,89,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+TZ,"Tanzania, United Republic of",,31,40,55,44,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+TH,Thailand,,80,40,53,93,78,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+TL,Timor-Leste,,25,40,77,23,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+TG,Togo,,32,40,56,34,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+TK,Tokelau,,,,,,,,
+TO,Tonga,,23,40,74,34,73,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+TT,Trinidad and Tobago,,52,40,64,70,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+TN,Tunisia,,50,40,47,71,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+TR,Türkiye,34,76,40,31,95,63,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+TM,Turkmenistan,,60,,66,44,80,,
+TC,Turks and Caicos Islands,,45,40,98,11,,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+TV,Tuvalu,,12,40,75,18,,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+UG,Uganda,,23,40,52,26,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+UA,Ukraine,,48,40,47,83,67,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+AE,United Arab Emirates,,89,40,76,96,35,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+GB,United Kingdom,81,84,40,60,98,23,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+US,United States,89,94,40,56,97,10,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+UM,United States Minor Outlying Islands,,,,,,,,
+UY,Uruguay,,64,40,72,80,66,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+UZ,Uzbekistan,,48,40,62,82,84,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+VU,Vanuatu,,21,40,76,11,78,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+VE,"Venezuela, Bolivarian Republic of",,49,40,5,77,80,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances; capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+VN,Viet Nam,,67,40,66,88,81,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+VG,"Virgin Islands, British",,,,,78,,,
+VI,"Virgin Islands, U.S.",,54,,77,50,66,,
+WF,Wallis and Futuna,,,,,,,,
+EH,Western Sahara,,,,,,,,
+YE,Yemen,,9,,0,17,90,,"capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"
+ZM,Zambia,,27,40,53,35,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances"
+ZW,Zimbabwe,,31,48,10,50,90,,"motivations estimated: stock market size (half weight), inflation, currency change, outward investment, remittances; capital access: low readiness set from known capital controls, sanctions or currency crisis (my judgement; edit freely)"

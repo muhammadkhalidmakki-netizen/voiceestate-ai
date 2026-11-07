@@ -1,0 +1,10 @@
+{
+  "sources": [
+    {"id": "SRC_CLIENT_BENCHMARK_2026_11", "type": "client_supplied", "label": "Client-provided regional CPL, channel and sales-cycle facts", "date": "2026-11", "url": null},
+    {"id": "SRC_DXBINTERACT_SECONDARY_2026", "type": "directional_external", "label": "DXBinteract-derived international Dubai property-interest data as reported by Palmstone Properties and V Capital Research", "period": "2026-06 to 2026-08", "urls": ["https://www.palmstone.ae/en/insights/articles/buyer-nationalities-dubai-2026", "https://vcapital.ae/research/top-10-nationalities-buying-dubai-property-2026"]},
+    {"id": "SRC_KNIGHT_FRANK_DUBAI_2025", "type": "external_research", "label": "Knight Frank Destination Dubai 2025 HNWI survey", "date": "2025-05", "urls": ["https://www.knightfrank.ae/research/reports/destination-series/destination-dubai", "https://www.knightfrank.ae/research/reports/destination-series/destination-dubai/discover-the-data", "https://www.knightfrank.ae/site-assets/research/destination-dubai/destination-dubai-2025---key-insights.pdf"]},
+    {"id": "SRC_UN_MIGRANT_STOCK_2024", "type": "external_official", "label": "UN DESA International Migrant Stock 2024", "date": "2024", "url": "https://www.un.org/development/desa/pd/content/international-migrant-stock"},
+    {"id": "SRC_EUROSTAT_MIGR_POP_2025", "type": "external_official", "label": "Eurostat population by citizenship/country of birth tables", "last_updated": "2026-09-25", "urls": ["https://ec.europa.eu/eurostat/databrowser/view/migr_pop5ctz/default/table", "https://ec.europa.eu/eurostat/databrowser/view/migr_pop6ctb/default/table"]},
+    {"id": "SRC_OECD_MIGRATION", "type": "external_official", "label": "OECD migration flows and migrant population data", "url": "https://www.oecd.org/en/data/datasets/overview-data-on-migration-flows-and-migrant-populations.html"}
+  ]
+}

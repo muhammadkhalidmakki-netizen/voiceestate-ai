@@ -1,0 +1,482 @@
+/* Dubai Real Estate Market Planning: design tokens (light + dark) and workspace shell.
+   Tokens live on .root and cascade into every Market Planning component.
+   Nothing here touches global styles. */
+
+.root {
+  /* Light theme: Zassk-style blue canvas, white floating panels. */
+  --mp-surface: #ffffff;
+  --mp-surface-2: #f6f8fe;
+  --mp-tint: #f3f6fd;
+  --mp-tint-2: #e8eefb;
+  --mp-ink: #0f1330;
+  --mp-ink-2: #46506f;
+  --mp-ink-3: #5b6684;
+  --mp-line: #e2e8f7;
+  --mp-line-strong: #c9d3ea;
+  --mp-blue: #2f6bff;
+  --mp-blue-deep: #1b3fb8;
+  --mp-blue-soft: #e8eeff;
+  --mp-blue-mid: #8fa9f7;
+  --mp-violet: #7c6cf6;
+  --mp-violet-soft: #ece9ff;
+  --mp-navy: #101533;
+  --mp-on-navy: #ffffff;
+  --mp-formula: #14308f;
+  --mp-amber: #8a5a00;
+  --mp-amber-soft: #fff2d3;
+  --mp-green: #0a7a55;
+  --mp-green-soft: #e1f4ec;
+  --mp-red: #a42323;
+  --mp-red-soft: #fdeaea;
+  --mp-focus: #1a47d1;
+  --mp-hatch: rgba(47, 107, 255, 0.2);
+  --mp-glass: rgba(255, 255, 255, 0.55);
+  --mp-glass-line: rgba(255, 255, 255, 0.75);
+  --mp-scrim: rgba(15, 19, 48, 0.42);
+  --mp-canvas:
+    radial-gradient(900px 520px at 12% -6%, rgba(214, 232, 255, 0.95), transparent 62%),
+    radial-gradient(1000px 640px at 104% 108%, rgba(24, 82, 226, 0.78), transparent 62%),
+    radial-gradient(800px 520px at 100% -10%, rgba(118, 150, 246, 0.55), transparent 62%),
+    linear-gradient(150deg, #d3e5fc 0%, #a9c8f7 46%, #7ea6f0 100%);
+
+  --mp-login-bg:
+    radial-gradient(640px 420px at 50% 38%, rgba(110, 120, 255, 0.2), transparent 70%),
+    radial-gradient(520px 360px at 82% 12%, rgba(90, 160, 255, 0.18), transparent 70%),
+    radial-gradient(520px 360px at 14% 92%, rgba(150, 130, 255, 0.14), transparent 70%),
+    linear-gradient(180deg, #f9fbff 0%, #f1f5fc 100%);
+  --mp-login-grid: rgba(60, 80, 140, 0.07);
+
+  /* Accent gradients and focus ring as tokens, so a variant can re-skin them. */
+  --mp-ring: rgba(42, 86, 223, 0.14);
+  --mp-btn-a: #3563ec;
+  --mp-btn-b: #2a50d0;
+  --mp-btn-shadow: rgba(42, 86, 223, 0.55);
+  --mp-bar-a: #6f90f5;
+  --mp-bar-b: #2a56df;
+  --mp-bar-c: #3a55b8;
+  --mp-bar-d: #14308f;
+
+  --mp-r-xl: 28px;
+  --mp-r-lg: 22px;
+  --mp-r-md: 14px;
+  --mp-shadow: 0 1px 2px rgba(18, 42, 110, 0.05), 0 18px 40px -20px rgba(24, 58, 150, 0.38);
+  --mp-shadow-pop: 0 2px 4px rgba(18, 42, 110, 0.08), 0 28px 56px -22px rgba(24, 58, 150, 0.5);
+
+  min-height: 100vh;
+  color: var(--mp-ink);
+  color-scheme: light;
+  font-family: var(--font-manrope), var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-feature-settings: "tnum" 0;
+  -webkit-font-smoothing: antialiased;
+  background: var(--mp-canvas);
+  background-attachment: fixed;
+}
+
+/* Dark theme: deliberate deep navy, not an inversion. */
+.root[data-theme="dark"] {
+  --mp-surface: #111938;
+  --mp-surface-2: #151e44;
+  --mp-tint: #172048;
+  --mp-tint-2: #1d2757;
+  --mp-ink: #eaf0ff;
+  --mp-ink-2: #b4c0e6;
+  --mp-ink-3: #94a2cf;
+  --mp-line: rgba(145, 165, 255, 0.14);
+  --mp-line-strong: rgba(145, 165, 255, 0.28);
+  --mp-blue: #5b8cff;
+  --mp-blue-deep: #a9c0ff;
+  --mp-blue-soft: rgba(91, 140, 255, 0.18);
+  --mp-blue-mid: #4a6bd6;
+  --mp-violet: #9a8bff;
+  --mp-violet-soft: rgba(154, 139, 255, 0.18);
+  --mp-navy: #2a3a86;
+  --mp-on-navy: #ffffff;
+  --mp-formula: #b9caff;
+  --mp-amber: #f0c06a;
+  --mp-amber-soft: rgba(240, 192, 106, 0.14);
+  --mp-green: #62d3a4;
+  --mp-green-soft: rgba(98, 211, 164, 0.14);
+  --mp-red: #ff9a9a;
+  --mp-red-soft: rgba(255, 120, 120, 0.14);
+  --mp-focus: #8fb0ff;
+  --mp-hatch: rgba(200, 215, 255, 0.14);
+  --mp-glass: rgba(20, 28, 66, 0.6);
+  --mp-glass-line: rgba(145, 165, 255, 0.2);
+  --mp-scrim: rgba(3, 6, 20, 0.6);
+  --mp-canvas:
+    radial-gradient(900px 560px at 92% -8%, rgba(70, 104, 255, 0.28), transparent 62%),
+    radial-gradient(800px 520px at -6% 8%, rgba(110, 90, 255, 0.16), transparent 62%),
+    linear-gradient(160deg, #070b1f 0%, #0b1230 55%, #0e1638 100%);
+  --mp-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 18px 40px -22px rgba(0, 0, 0, 0.7);
+  --mp-shadow-pop: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 30px 60px -24px rgba(0, 0, 0, 0.85);
+  --mp-login-bg:
+    radial-gradient(640px 420px at 50% 38%, rgba(91, 110, 255, 0.28), transparent 70%),
+    radial-gradient(520px 360px at 82% 12%, rgba(70, 130, 255, 0.2), transparent 70%),
+    radial-gradient(520px 360px at 14% 92%, rgba(140, 110, 255, 0.18), transparent 70%),
+    linear-gradient(180deg, #070b1f 0%, #0b1230 100%);
+  --mp-login-grid: rgba(150, 170, 255, 0.08);
+  color-scheme: dark;
+}
+
+/* No saved choice: follow the system setting. */
+@media (prefers-color-scheme: dark) {
+  .root:not([data-theme="light"]):not([data-theme="dark"]) {
+    --mp-surface: #111938;
+    --mp-surface-2: #151e44;
+    --mp-tint: #172048;
+    --mp-tint-2: #1d2757;
+    --mp-ink: #eaf0ff;
+    --mp-ink-2: #b4c0e6;
+    --mp-ink-3: #94a2cf;
+    --mp-line: rgba(145, 165, 255, 0.14);
+    --mp-line-strong: rgba(145, 165, 255, 0.28);
+    --mp-blue: #5b8cff;
+    --mp-blue-deep: #a9c0ff;
+    --mp-blue-soft: rgba(91, 140, 255, 0.18);
+    --mp-blue-mid: #4a6bd6;
+    --mp-violet: #9a8bff;
+    --mp-violet-soft: rgba(154, 139, 255, 0.18);
+    --mp-navy: #2a3a86;
+    --mp-formula: #b9caff;
+    --mp-amber: #f0c06a;
+    --mp-amber-soft: rgba(240, 192, 106, 0.14);
+    --mp-green: #62d3a4;
+    --mp-green-soft: rgba(98, 211, 164, 0.14);
+    --mp-red: #ff9a9a;
+    --mp-red-soft: rgba(255, 120, 120, 0.14);
+    --mp-focus: #8fb0ff;
+    --mp-hatch: rgba(200, 215, 255, 0.14);
+    --mp-glass: rgba(20, 28, 66, 0.6);
+    --mp-glass-line: rgba(145, 165, 255, 0.2);
+    --mp-scrim: rgba(3, 6, 20, 0.6);
+    --mp-canvas:
+      radial-gradient(900px 560px at 92% -8%, rgba(70, 104, 255, 0.28), transparent 62%),
+      radial-gradient(800px 520px at -6% 8%, rgba(110, 90, 255, 0.16), transparent 62%),
+      linear-gradient(160deg, #070b1f 0%, #0b1230 55%, #0e1638 100%);
+    --mp-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 18px 40px -22px rgba(0, 0, 0, 0.7);
+    --mp-shadow-pop: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 30px 60px -24px rgba(0, 0, 0, 0.85);
+    --mp-login-bg:
+      radial-gradient(640px 420px at 50% 38%, rgba(91, 110, 255, 0.28), transparent 70%),
+      radial-gradient(520px 360px at 82% 12%, rgba(70, 130, 255, 0.2), transparent 70%),
+      radial-gradient(520px 360px at 14% 92%, rgba(140, 110, 255, 0.18), transparent 70%),
+      linear-gradient(180deg, #070b1f 0%, #0b1230 100%);
+    --mp-login-grid: rgba(150, 170, 255, 0.08);
+    color-scheme: dark;
+  }
+}
+
+.root *:focus-visible {
+  /* A clear but light keyboard ring that follows each element's own shape (pills stay pills). */
+  outline: 2px solid color-mix(in srgb, var(--mp-focus) 75%, transparent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- Workspace shell ---------- */
+
+.page {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 12px 12px 80px;
+}
+
+/* ---------- Floating summary dock (appears once the hero scrolls away) ---------- */
+
+.liveBar {
+  position: sticky;
+  top: 8px;
+  z-index: 30;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0 0 14px;
+  padding: 6px;
+  background: var(--mp-glass);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--mp-glass-line);
+  border-radius: 999px;
+  box-shadow: var(--mp-shadow-pop);
+  transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.liveBarHidden {
+  opacity: 0;
+  transform: translateY(-14px);
+  pointer-events: none;
+  position: absolute;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.liveItem {
+  min-width: 0;
+  display: block;
+  font: inherit;
+  text-align: left;
+  color: var(--mp-ink);
+  background: transparent;
+  border: 0;
+  border-left: 1px solid var(--mp-line);
+  border-radius: 999px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.liveItem:first-child {
+  border-left: 0;
+}
+
+.liveItem:nth-child(4) {
+  display: none;
+}
+
+.liveItem:hover {
+  background: var(--mp-surface);
+}
+
+.liveLabel {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mp-ink-3);
+  line-height: 1.25;
+}
+
+.liveValue {
+  display: block;
+  margin-top: 2px;
+  font-size: clamp(0.875rem, 3.4vw, 1.125rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.liveHint {
+  display: none;
+}
+
+/* ---------- Two-pane workspace ---------- */
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.builder {
+  min-width: 0;
+  background: var(--mp-surface);
+  border-radius: var(--mp-r-xl);
+  box-shadow: var(--mp-shadow);
+}
+
+.builderToggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 58px;
+  padding: 0 20px;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--mp-ink);
+  background: transparent;
+  border: 0;
+  border-radius: var(--mp-r-xl);
+  cursor: pointer;
+}
+
+.builderToggleHint {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--mp-blue-deep);
+}
+
+.builderBody {
+  padding: 4px 16px 22px;
+}
+
+.builderClosed {
+  display: none;
+}
+
+.rule {
+  height: 1px;
+  margin: 26px 0;
+  border: 0;
+  background: var(--mp-line);
+}
+
+/* Asymmetric analysis grid: wide panels and narrower companions. */
+.forecast {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  min-width: 0;
+}
+
+.span2 {
+  min-width: 0;
+}
+
+@media (min-width: 720px) {
+  .page {
+    padding: 16px 20px 96px;
+  }
+  .builderBody {
+    padding: 6px 24px 26px;
+  }
+}
+
+@media (min-width: 900px) {
+  .liveBar {
+    top: 10px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: 8px;
+    margin-bottom: 18px;
+  }
+  .liveItem {
+    padding: 6px 20px;
+  }
+  .liveItem:nth-child(4) {
+    display: block;
+  }
+  .liveHint {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.75rem;
+    color: var(--mp-ink-3);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Desktop: the builder floats beside the forecast and stays in view. */
+@media (min-width: 1100px) {
+  .workspace {
+    grid-template-columns: 440px minmax(0, 1fr);
+    gap: 20px;
+  }
+  .builder {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 116px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--mp-line-strong) transparent;
+  }
+  .builderToggle {
+    display: none;
+  }
+  .builderBody,
+  .builderClosed {
+    display: block;
+    padding-top: 24px;
+  }
+  .forecast {
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1560px) {
+  .forecast {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .span2 {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Compact, solid summary dock: no blur, so nothing shows through from the page below */
+.liveBar {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+  align-items: center;
+  padding: 4px 6px;
+  background: var(--mp-surface);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border-radius: 20px;
+}
+
+.liveItem {
+  padding: 4px 14px;
+}
+
+.liveItem:nth-child(4) {
+  display: block;
+}
+
+.liveHint {
+  display: none;
+}
+
+.liveUndo {
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+  border-left: 1px solid var(--mp-line);
+}
+
+@media (max-width: 760px) {
+  .liveBar {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) auto;
+    border-radius: 18px;
+  }
+}
+
+/* Sticky bar v2: score boards on the left, plan tools on the right */
+.liveBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 8px 6px 6px;
+}
+.liveScores { display: flex; gap: 6px; min-width: 0; }
+.liveItem { position: relative; display: grid; padding: 4px 38px 4px 14px; border-left: 0; min-width: 0; }
+.liveArrow {
+  position: absolute; top: 50%; right: 6px; transform: translateY(-50%);
+  display: grid; place-items: center; width: 26px; height: 26px;
+  color: var(--mp-ink-2); background: var(--mp-tint); border: 0; border-radius: 50%; cursor: pointer;
+}
+.liveArrow:hover { background: var(--mp-blue-soft); color: var(--mp-blue-deep); }
+.liveTools { display: flex; align-items: center; gap: 6px; flex: none; }
+.liveIcon {
+  display: grid; place-items: center; width: 34px; height: 34px;
+  color: var(--mp-ink-2); background: var(--mp-tint); border: 0; border-radius: 50%; cursor: pointer;
+}
+.liveIcon:hover:not(:disabled) { background: var(--mp-blue-soft); color: var(--mp-blue-deep); }
+.liveIcon:disabled { opacity: 0.4; cursor: default; }
+@media (max-width: 900px) { .liveBar { flex-wrap: wrap; border-radius: 18px; } .liveItem { padding-right: 34px; } }
+
+/* Sticky tools: a small white pill on the right, not a full-width bar */
+.liveBar {
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  margin-left: auto;
+  padding: 6px;
+  gap: 6px;
+  background: var(--mp-surface);
+  border-radius: 999px;
+}
+@media (max-width: 900px) { .liveBar { flex-wrap: wrap; border-radius: 18px; } }

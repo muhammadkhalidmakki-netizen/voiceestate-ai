@@ -9,6 +9,8 @@ export default defineConfig({
     assets: { notFoundHandling: "none" },
     env: {
       ASSETS: bindings.assets(),
+      // Saved plans for the Dubai planner (shared by everyone who signs in; survives browser changes).
+      PLANS: bindings.kv(),
     },
   }),
 });

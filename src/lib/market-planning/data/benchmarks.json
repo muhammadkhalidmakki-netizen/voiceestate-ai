@@ -1,0 +1,122 @@
+{
+  "dataset_version": "2026-11-06-client-benchmarks-v1",
+  "currency": "AED",
+  "default_month_days": 30,
+  "regional_cpl_benchmarks": [
+    {
+      "id": "europe_mature",
+      "region_key": "europe",
+      "countries": ["CH", "DE", "FR", "LU", "NL", "NO"],
+      "cpl_relation": "point",
+      "cpl_point_aed": 50,
+      "campaign_stage": "mature",
+      "source_type": "client_supplied",
+      "source_label": "Client-provided blended anonymized regional CPL benchmark",
+      "source_date": "2026-11",
+      "confidence": "medium",
+      "scope_note": "Regional blended benchmark. Not a measured individual country CPL."
+    },
+    {
+      "id": "europe_learning",
+      "region_key": "europe",
+      "countries": ["CH", "DE", "FR", "LU", "NL", "NO"],
+      "cpl_relation": "point",
+      "cpl_point_aed": 120,
+      "campaign_stage": "learning",
+      "source_type": "client_supplied",
+      "source_label": "Client-provided blended anonymized regional CPL benchmark",
+      "source_date": "2026-11",
+      "confidence": "medium",
+      "scope_note": "Only Europe has a supplied learning-phase value. Not a maturity-duration forecast."
+    },
+    {
+      "id": "south_asia_africa_mature",
+      "region_key": "south_asia_africa",
+      "countries": ["IN", "PK"],
+      "coverage_note": "Africa broad was also named, but is not mapped to every African country by default.",
+      "cpl_relation": "at_most",
+      "cpl_high_aed": 30,
+      "campaign_stage": "mature",
+      "source_type": "client_supplied",
+      "source_label": "Client-provided blended anonymized regional CPL benchmark",
+      "source_date": "2026-11",
+      "confidence": "low",
+      "scope_note": "Reported as AED 30 or less. Do not treat as an exact country-level CPL. Confirm country-level applicability before assigning to all African markets."
+    },
+    {
+      "id": "north_america_mature",
+      "region_key": "north_america",
+      "countries": ["US", "CA"],
+      "cpl_relation": "point",
+      "cpl_point_aed": 70,
+      "campaign_stage": "mature",
+      "source_type": "client_supplied",
+      "source_label": "Client-provided blended anonymized regional CPL benchmark",
+      "source_date": "2026-11",
+      "confidence": "medium",
+      "scope_note": "Regional blended benchmark. Not an individual country CPL."
+    },
+    {
+      "id": "oceania_mature",
+      "region_key": "oceania",
+      "countries": ["AU", "NZ"],
+      "cpl_relation": "point",
+      "cpl_point_aed": 70,
+      "campaign_stage": "mature",
+      "source_type": "client_supplied",
+      "source_label": "Client-provided blended anonymized regional CPL benchmark",
+      "source_date": "2026-11",
+      "confidence": "medium",
+      "scope_note": "Regional blended benchmark. Not an individual country CPL."
+    },
+    {
+      "id": "uae_mature_reference",
+      "region_key": "uae",
+      "countries": ["AE"],
+      "cpl_relation": "range",
+      "cpl_low_aed": 80,
+      "cpl_high_aed": 100,
+      "campaign_stage": "unspecified",
+      "source_type": "client_supplied",
+      "source_label": "Client-provided blended anonymized campaign benchmark",
+      "source_date": "2026-11",
+      "confidence": "low",
+      "scope_note": "Varies by campaign. Do not imply a stable mature/learning comparison."
+    }
+  ],
+  "europe_observed_operating_pattern": {
+    "meta_daily_aed": 200,
+    "google_daily_aed": 200,
+    "month_days_assumption": 30,
+    "meta_monthly_aed": 6000,
+    "google_monthly_aed": 6000,
+    "total_monthly_aed": 12000,
+    "source_type": "client_supplied",
+    "scope_note": "Observed campaign budget pattern, not universal minimum or proof of optimal channel mix."
+  },
+  "channel_working_lead_rates": {
+    "meta_percent_or_above": 15,
+    "google_percent_or_above": 20,
+    "definition_status": "unresolved",
+    "allowed_for_sales_forecast": false,
+    "possible_definitions": ["raw_to_working_lead", "raw_to_sale"],
+    "source_type": "client_supplied"
+  },
+  "sales_cycle_observations": {
+    "sample_size": 19,
+    "median_days": 78,
+    "checkpoints": [
+      {"day": 30, "share_percent": 21, "count": 4},
+      {"day": 60, "share_percent": 42, "count": 8},
+      {"day": 90, "share_percent": 53, "count": 10},
+      {"day": 120, "share_percent": 74, "count": 14},
+      {"day": 270, "share_percent": 89, "count": 17}
+    ],
+    "long_tail": {"from_month": 9, "to_month": 26, "share_percent": 11, "count": 2},
+    "definition_status": "unresolved",
+    "allowed_as_timing_insight": true,
+    "allowed_as_lead_to_sale_probability": false,
+    "source_type": "client_supplied",
+    "scope_note": "Use 78-day median and sample size as a historical timing insight. Do not forecast sales counts until denominator and meaning are confirmed."
+  }
+}

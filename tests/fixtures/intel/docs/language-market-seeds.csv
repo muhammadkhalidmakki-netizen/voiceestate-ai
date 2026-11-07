@@ -1,0 +1,54 @@
+language_code,language_name,country_iso2,country_name,relationship_type,speaker_share_pct,speaker_count,denominator_population,is_diaspora_proxy,research_status,source_id,confidence,notes
+ar,Arabic,SA,Saudi Arabia,official_or_dominant,,,,false,research_pending,,low,Primary-language market candidate; do not infer a percentage without a current source.
+ar,Arabic,AE,United Arab Emirates,official_or_dominant,,,,false,research_pending,,low,Primary-language market candidate; expatriate language mix requires separate evidence.
+ar,Arabic,EG,Egypt,official_or_dominant,,,,false,research_pending,,low,Primary-language market candidate.
+ar,Arabic,IQ,Iraq,official_or_dominant,,,,false,research_pending,,low,Primary-language market candidate.
+ar,Arabic,JO,Jordan,official_or_dominant,,,,false,research_pending,,low,Primary-language market candidate.
+ar,Arabic,LB,Lebanon,official_or_dominant,,,,false,research_pending,,low,Primary-language market candidate.
+ar,Arabic,KW,Kuwait,official_or_dominant,,,,false,research_pending,,low,Primary-language market candidate.
+ar,Arabic,QA,Qatar,official_or_dominant,,,,false,research_pending,,low,Primary-language market candidate.
+ar,Arabic,BH,Bahrain,official_or_dominant,,,,false,research_pending,,low,Primary-language market candidate.
+ar,Arabic,OM,Oman,official_or_dominant,,,,false,research_pending,,low,Primary-language market candidate.
+ar,Arabic,YE,Yemen,official_or_dominant,,,,false,research_pending,,low,Primary-language market candidate.
+ar,Arabic,MA,Morocco,official_or_dominant,,,,false,research_pending,,low,Primary-language market candidate; multilingual share needs a defined source.
+ar,Arabic,DZ,Algeria,official_or_dominant,,,,false,research_pending,,low,Primary-language market candidate; multilingual share needs a defined source.
+ar,Arabic,TN,Tunisia,official_or_dominant,,,,false,research_pending,,low,Primary-language market candidate; multilingual share needs a defined source.
+ar,Arabic,LY,Libya,official_or_dominant,,,,false,research_pending,,low,Primary-language market candidate.
+ar,Arabic,SD,Sudan,official_or_dominant,,,,false,research_pending,,low,Primary-language market candidate; current demographic coverage may be affected by data gaps.
+ar,Arabic,FR,France,diaspora_origin_proxy,,,,true,research_pending,,low,Research Arabic language census/community data separately; migrant origin is a proxy only.
+ar,Arabic,DE,Germany,diaspora_origin_proxy,,,,true,research_pending,,low,Research Arabic language census/community data separately; migrant origin is a proxy only.
+ar,Arabic,GB,United Kingdom,diaspora_origin_proxy,,,,true,research_pending,,low,Research Arabic language census/community data separately; migrant origin is a proxy only.
+ar,Arabic,NL,Netherlands,diaspora_origin_proxy,,,,true,research_pending,,low,Research Arabic language census/community data separately; migrant origin is a proxy only.
+ar,Arabic,BE,Belgium,diaspora_origin_proxy,,,,true,research_pending,,low,Research Arabic language census/community data separately; migrant origin is a proxy only.
+ar,Arabic,SE,Sweden,diaspora_origin_proxy,,,,true,research_pending,,low,Research Arabic language census/community data separately; migrant origin is a proxy only.
+ar,Arabic,CH,Switzerland,diaspora_origin_proxy,,,,true,research_pending,,low,Research Arabic language census/community data separately; migrant origin is a proxy only.
+ar,Arabic,CA,Canada,diaspora_origin_proxy,,,,true,research_pending,,low,Research Arabic language census/community data separately; migrant origin is a proxy only.
+ar,Arabic,US,United States,diaspora_origin_proxy,,,,true,research_pending,,low,Research Arabic language census/community data separately; migrant origin is a proxy only.
+ar,Arabic,AU,Australia,diaspora_origin_proxy,,,,true,research_pending,,low,Research Arabic language census/community data separately; migrant origin is a proxy only.
+en,English,US,United States,official_or_dominant,,,,false,research_pending,,low,Language share must define first-language versus speaks-English proficiency.
+en,English,GB,United Kingdom,official_or_dominant,,,,false,research_pending,,low,Language share must define first-language versus speaks-English proficiency.
+en,English,CA,Canada,official_or_dominant,,,,false,research_pending,,low,Country has multiple official languages; use a clear language denominator.
+en,English,AU,Australia,official_or_dominant,,,,false,research_pending,,low,Language share must define home language versus proficiency.
+en,English,NZ,New Zealand,official_or_dominant,,,,false,research_pending,,low,Language share must define home language versus proficiency.
+en,English,SG,Singapore,official_or_dominant,,,,false,research_pending,,low,Multilingual market; do not assume all English speakers have equal ad response.
+en,English,ZA,South Africa,official_or_dominant,,,,false,research_pending,,low,Multilingual market; define the census measure.
+fr,French,FR,France,official_or_dominant,,,,false,research_pending,,low,Research local first-language and additional-language use separately.
+fr,French,BE,Belgium,official_or_dominant,,,,false,research_pending,,low,Language share differs by region; use regional data where possible.
+fr,French,CH,Switzerland,official_or_dominant,,,,false,research_pending,,low,Language share differs by canton; avoid one national percentage without definition.
+fr,French,CA,Canada,official_or_dominant,,,,false,research_pending,,low,Focus on French-speaking regions and census language measures.
+de,German,DE,Germany,official_or_dominant,,,,false,research_pending,,low,Research country-specific first-language/spoken-language measures.
+de,German,CH,Switzerland,official_or_dominant,,,,false,research_pending,,low,Language share differs by canton.
+de,German,AT,Austria,official_or_dominant,,,,false,research_pending,,low,Research current source and exact language definition.
+es,Spanish,ES,Spain,official_or_dominant,,,,false,research_pending,,low,Regional languages also matter.
+es,Spanish,US,United States,spoken_language,,,,false,research_pending,,low,Use census self-reported home-language data and denominator.
+zh,Chinese,SG,Singapore,official_or_dominant,,,,false,research_pending,,low,Clarify Mandarin vs Chinese-language grouping.
+zh,Chinese,HK,Hong Kong,daily_use_or_official,,,,false,research_pending,,low,Language distinction needed: Cantonese, Mandarin and written Chinese are not identical measures.
+hi,Hindi,IN,India,spoken_language,,,,false,research_pending,,low,Use census language tables; India is multilingual and percentage depends on mother tongue/second language.
+ur,Urdu,PK,Pakistan,official_or_dominant,,,,false,research_pending,,low,Use census and spoken-language data; Urdu lingua-franca reach differs from mother tongue.
+ru,Russian,RU,Russian Federation,official_or_dominant,,,,false,research_pending,,low,Research speaker/use definitions and relevant source markets separately.
+tr,Turkish,TR,Türkiye,official_or_dominant,,,,false,research_pending,,low,Research diaspora candidates separately.
+pt,Portuguese,PT,Portugal,official_or_dominant,,,,false,research_pending,,low,Research Brazil separately if the target is global Portuguese coverage.
+id,Indonesian,ID,Indonesia,official_or_dominant,,,,false,research_pending,,low,Distinguish Bahasa Indonesia from local languages.
+bn,Bengali,BD,Bangladesh,official_or_dominant,,,,false,research_pending,,low,Research diaspora candidates separately.
+pa,Punjabi,IN,India,spoken_language,,,,false,research_pending,,low,Specify script/dialect and country census definition.
+pa,Punjabi,PK,Pakistan,spoken_language,,,,false,research_pending,,low,Specify dialect and census definition.

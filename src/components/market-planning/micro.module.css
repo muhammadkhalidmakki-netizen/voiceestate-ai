@@ -1,0 +1,416 @@
+/* Compact, Zassk-style micro-visualizations. Every one is driven by real data. */
+
+.ring {
+  display: block;
+  width: 100%;
+  max-width: 240px;
+  margin: 0 auto;
+}
+
+.ringValue {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  fill: var(--mp-ink);
+}
+
+.capsules {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  min-width: 0;
+}
+
+.capCol {
+  flex: 1;
+  min-width: 0;
+  max-width: 34px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.capLabel {
+  height: 12px;
+  font-size: 0.625rem;
+  line-height: 12px;
+  font-weight: 700;
+  color: var(--mp-ink-2);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.capTrack {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  height: 56px;
+}
+
+.capCaption {
+  font-size: 0.625rem;
+  line-height: 1;
+  font-weight: 600;
+  color: var(--mp-ink-3);
+}
+
+.capsDense .capLabel,
+.capsDense .capCaption {
+  visibility: hidden;
+}
+
+.capsule {
+  width: 100%;
+  max-width: 14px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--mp-blue) 0%, var(--mp-blue-mid) 100%);
+  cursor: default;
+}
+
+button.capsule {
+  cursor: pointer;
+}
+
+button.capsule:hover {
+  filter: brightness(1.15);
+}
+
+.capsulePending {
+  background: repeating-linear-gradient(135deg, var(--mp-hatch) 0 3px, transparent 3px 6px);
+  box-shadow: inset 0 0 0 1.5px var(--mp-amber);
+}
+
+.capsuleActive {
+  background: linear-gradient(180deg, var(--mp-violet) 0%, var(--mp-blue) 100%);
+}
+
+.range {
+  position: relative;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--mp-tint-2);
+  overflow: hidden;
+}
+
+.rangeHi,
+.rangeLo {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 999px;
+  transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rangeHi {
+  background: var(--mp-blue-mid);
+  opacity: 0.55;
+}
+
+.rangeHi[data-open="true"] {
+  background: repeating-linear-gradient(135deg, var(--mp-blue-mid) 0 4px, transparent 4px 8px);
+}
+
+.rangeLo {
+  background: linear-gradient(90deg, var(--mp-blue-mid), var(--mp-blue));
+}
+
+.dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  max-width: 120px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.hex {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.hexCell {
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.hexCell:hover {
+  opacity: 0.7;
+}
+
+.hexLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.75rem;
+  color: var(--mp-ink-2);
+}
+
+.hexLegend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hexLegend i {
+  width: 11px;
+  height: 11px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.hexHatch {
+  background: repeating-linear-gradient(135deg, var(--mp-amber) 0 2px, var(--mp-surface) 2px 4px);
+}
+
+.ringTick {
+  font-size: 9px;
+  font-weight: 700;
+  fill: var(--mp-ink-3);
+}
+
+.mBars {
+  display: flex;
+  align-items: stretch;
+  gap: 5px;
+}
+
+.mCol {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.mFlag {
+  white-space: nowrap;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  height: 14px;
+  padding: 0 5px;
+  font-size: 0.5625rem;
+  line-height: 14px;
+  font-weight: 800;
+  color: #ffffff;
+  background: var(--mp-navy);
+  border-radius: 999px;
+}
+
+.mTrack {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 64px;
+}
+
+.mBar {
+  display: block;
+  width: 100%;
+  border-radius: 8px 8px 4px 4px;
+  background: linear-gradient(180deg, var(--mp-blue-mid) 0%, color-mix(in srgb, var(--mp-blue-mid) 45%, transparent) 100%);
+}
+
+.mBarFirst {
+  background: linear-gradient(180deg, var(--mp-blue) 0%, var(--mp-blue-deep) 100%);
+}
+
+.mLabel {
+  height: 14px;
+  font-size: 0.6875rem;
+  line-height: 14px;
+  font-weight: 700;
+  color: var(--mp-ink-3);
+}
+
+.mCol {
+  position: relative;
+  cursor: default;
+  border-radius: 8px;
+}
+
+.mCol:hover .mBar,
+.mCol:focus-visible .mBar {
+  filter: brightness(0.92);
+}
+
+.mTip {
+  position: absolute;
+  z-index: 5;
+  bottom: calc(100% - 4px);
+  left: 50%;
+  transform: translate(-50%, 6px);
+  width: 188px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  text-align: left;
+  color: var(--mp-ink);
+  background: var(--mp-surface);
+  border: 1px solid var(--mp-line);
+  border-radius: 14px;
+  box-shadow: var(--mp-shadow-pop);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.mTip strong {
+  font-size: 0.8125rem;
+}
+
+.mTip em {
+  margin-top: 4px;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--mp-blue-deep);
+}
+
+.tipLeft {
+  left: 0;
+  transform: translate(0, 6px);
+}
+
+.tipRight {
+  left: auto;
+  right: 0;
+  transform: translate(0, 6px);
+}
+
+.mCol:hover .mTip,
+.mCol:focus-visible .mTip,
+.mCol:focus-within .mTip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+.mCol:hover .tipLeft,
+.mCol:focus-visible .tipLeft,
+.mCol:hover .tipRight,
+.mCol:focus-visible .tipRight {
+  transform: translate(0, 0);
+}
+
+.mRing {
+  position: relative;
+  width: min(100%, 280px);
+  margin: 0 auto;
+}
+
+.mRingSvg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.mRingCap {
+  cursor: default;
+  outline: none;
+}
+
+.mRingCap:hover rect:last-of-type,
+.mRingCap:focus-visible rect:last-of-type {
+  filter: brightness(0.9);
+}
+
+.mRingCenter {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  pointer-events: none;
+  text-align: center;
+}
+
+.mRingCap1 {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--mp-ink-3);
+}
+
+.mRingVal {
+  font-size: 1.5rem;
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.mRingCap2 {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--mp-ink-2);
+}
+
+/* 26 months of bars: tighter gaps and smaller numbers so every month still gets a number. */
+.mBarsDense {
+  gap: 1px;
+}
+
+.mBarsDense .mLabel {
+  font-size: 0.5rem;
+  letter-spacing: -0.03em;
+}
+
+.mBarsDense .mFlag {
+  font-size: 0.5rem;
+  padding: 0 4px;
+}
+
+.mMore {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  min-width: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  color: var(--mp-blue-deep);
+  background: var(--mp-blue-soft);
+  border: 1.5px dashed var(--mp-blue-mid);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.mMore:hover {
+  background: color-mix(in srgb, var(--mp-blue) 22%, transparent);
+  transform: translateY(-1px);
+}
+
+.mBarsTall .mTrack {
+  height: 150px;
+}
+
+/* The flag floats above its bar, so it never widens the column. */
+.mCol {
+  padding-top: 18px;
+}
+
+.mBarsDense .mMore svg {
+  width: 10px;
+  height: 10px;
+}

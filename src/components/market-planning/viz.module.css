@@ -1,0 +1,118 @@
+/* Small visualization primitives. */
+
+.splitBar {
+  display: flex;
+  gap: 3px;
+  width: 100%;
+  background: transparent;
+}
+
+.seg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-basis: 0;
+  min-width: 3px;
+  border: 0;
+  padding: 0;
+  border-radius: 6px;
+  transition: filter 0.15s ease;
+}
+
+.segButton {
+  cursor: pointer;
+}
+
+.segButton:hover {
+  filter: brightness(1.12);
+}
+
+.swap {
+  animation: swapIn 0.3s ease;
+}
+
+@keyframes swapIn {
+  from {
+    opacity: 0.3;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.unknown {
+  font-weight: 500;
+  color: var(--mp-ink-3);
+}
+
+/* ---------- Meter rows ---------- */
+
+.meterRow {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8125rem;
+}
+
+.meterLabel {
+  color: var(--mp-ink-2);
+  font-weight: 500;
+}
+
+.meterTrack {
+  display: block;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--mp-tint-2);
+  overflow: hidden;
+}
+
+.meterDashed {
+  background: repeating-linear-gradient(135deg, var(--mp-line), var(--mp-line) 4px, var(--mp-tint) 4px, var(--mp-tint) 8px);
+}
+
+.meterFill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.blue {
+  background: linear-gradient(90deg, var(--mp-bar-a), var(--mp-bar-b));
+}
+
+.navy {
+  background: linear-gradient(90deg, var(--mp-bar-c), var(--mp-bar-d));
+}
+
+.soft {
+  background: var(--mp-blue-mid);
+}
+
+.meterValue {
+  min-width: 64px;
+  text-align: right;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--mp-ink);
+}
+
+.segText {
+  padding: 0 6px;
+  font-size: 0.6875rem;
+  line-height: 1;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.segText b {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}

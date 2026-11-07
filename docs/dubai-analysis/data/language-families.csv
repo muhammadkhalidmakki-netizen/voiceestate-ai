@@ -1,0 +1,38 @@
+﻿selectable_language,member_language_code,relation,weight,evidence,note
+pa,pnb,same_language_variant,1.0,linguistic_literature_planning_assumption,Western Panjabi (Lahnda) is the Punjabi of Pakistan.
+pa,lah,same_language_variant,1.0,linguistic_literature_planning_assumption,Western Panjabi (CLDR code lah).
+pa,skr,related_language,0.7,linguistic_literature_planning_assumption,Saraiki: described as a Punjabi variant in the Factbook; counted separately in Pakistan's census. Partly intelligible.
+pa,hno,related_language,0.7,linguistic_literature_planning_assumption,Hindko: Punjabi-related; partly intelligible.
+ar,arz,dialect_continuum,0.8,linguistic_literature_planning_assumption,Egyptian Arabic. Standard/Gulf Arabic agents are widely understood; diglossia lowers the fit.
+ar,apc,dialect_continuum,0.8,linguistic_literature_planning_assumption,Levantine Arabic.
+ar,apd,dialect_continuum,0.8,linguistic_literature_planning_assumption,Sudanese Arabic.
+ar,arq,dialect_continuum,0.7,linguistic_literature_planning_assumption,Algerian Arabic (Maghrebi: furthest from Gulf Arabic).
+ar,ary,dialect_continuum,0.7,linguistic_literature_planning_assumption,Moroccan Arabic (Maghrebi).
+ar,aeb,dialect_continuum,0.7,linguistic_literature_planning_assumption,Tunisian Arabic (Maghrebi).
+ar,acm,dialect_continuum,0.8,linguistic_literature_planning_assumption,Mesopotamian (Iraqi) Arabic.
+ar,ayl,dialect_continuum,0.7,linguistic_literature_planning_assumption,Libyan Arabic.
+ar,afb,dialect_continuum,0.9,linguistic_literature_planning_assumption,Gulf Arabic.
+ar,ars,dialect_continuum,0.9,linguistic_literature_planning_assumption,Najdi Arabic.
+ar,acw,dialect_continuum,0.9,linguistic_literature_planning_assumption,Hijazi Arabic.
+ar,ayp,dialect_continuum,0.8,linguistic_literature_planning_assumption,North Mesopotamian Arabic.
+hi,ur,mutual_intelligibility,0.8,linguistic_literature_planning_assumption,Spoken Hindi and Urdu are largely mutually intelligible (Hindustani); scripts differ.
+ur,hi,mutual_intelligibility,0.8,linguistic_literature_planning_assumption,Spoken Urdu and Hindi are largely mutually intelligible (Hindustani); scripts differ.
+hi,bho,related_language,0.6,linguistic_literature_planning_assumption,Bhojpuri: Hindi-belt language; many speakers also use Hindi.
+hi,awa,related_language,0.6,linguistic_literature_planning_assumption,Awadhi: Hindi-belt language.
+hi,mai,related_language,0.5,linguistic_literature_planning_assumption,Maithili: Hindi-belt language; less intelligible.
+hi,mag,related_language,0.6,linguistic_literature_planning_assumption,Magahi: Hindi-belt language.
+hi,bgc,related_language,0.7,linguistic_literature_planning_assumption,Haryanvi: close to Hindi.
+hi,hne,related_language,0.6,linguistic_literature_planning_assumption,Chhattisgarhi: Hindi-belt language.
+hi,mwr,related_language,0.6,linguistic_literature_planning_assumption,Marwari: Rajasthani; many speakers also use Hindi.
+zh,wuu,related_language,0.5,linguistic_literature_planning_assumption,Wu Chinese: Mandarin is the standard and widely understood second language but is not mutually intelligible.
+zh,hak,related_language,0.5,linguistic_literature_planning_assumption,Hakka: as for Wu.
+zh,nan,related_language,0.5,linguistic_literature_planning_assumption,Min Nan: as for Wu.
+zh,hsn,related_language,0.5,linguistic_literature_planning_assumption,Xiang: as for Wu.
+zh,gan,related_language,0.5,linguistic_literature_planning_assumption,Gan: as for Wu.
+ms,id,mutual_intelligibility,0.8,linguistic_literature_planning_assumption,Malay and Indonesian are largely mutually intelligible.
+id,ms,mutual_intelligibility,0.8,linguistic_literature_planning_assumption,Malay and Indonesian are largely mutually intelligible.
+fa,prs,same_language_variant,0.9,linguistic_literature_planning_assumption,Dari (Afghan Persian).
+nb,nn,same_language_variant,1.0,linguistic_literature_planning_assumption,Nynorsk: the other written standard of Norwegian.
+sr,hr,mutual_intelligibility,0.9,linguistic_literature_planning_assumption,Serbian and Croatian are mutually intelligible.
+hr,sr,mutual_intelligibility,0.9,linguistic_literature_planning_assumption,Serbian and Croatian are mutually intelligible.
+de,bar,related_language,0.9,linguistic_literature_planning_assumption,Bavarian: speakers use Standard German.

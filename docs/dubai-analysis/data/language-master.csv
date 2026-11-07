@@ -1,0 +1,63 @@
+﻿language_code,iso639_3,language_name,native_name,script,direction,selectable_in_current_ui,default_agent_language,note,source_id,last_researched_at
+en,eng,English,English,Latn,ltr,true,true,,SRC_ISO_639,2026-11-06
+ar,ara,Arabic,العربية,Arab,rtl,true,false,,SRC_ISO_639,2026-11-06
+fr,fra,French,Français,Latn,ltr,true,false,,SRC_ISO_639,2026-11-06
+de,deu,German,Deutsch,Latn,ltr,true,false,,SRC_ISO_639,2026-11-06
+ru,rus,Russian,Русский,Cyrl,ltr,true,false,,SRC_ISO_639,2026-11-06
+ur,urd,Urdu,اردو,Arab,rtl,true,false,,SRC_ISO_639,2026-11-06
+hi,hin,Hindi,हिन्दी,Deva,ltr,true,false,,SRC_ISO_639,2026-11-06
+zh,cmn,Chinese (Mandarin),中文,Hans,ltr,true,false,Mandarin only; Cantonese is listed separately as yue.,SRC_ISO_639,2026-11-06
+es,spa,Spanish,Español,Latn,ltr,true,false,,SRC_ISO_639,2026-11-06
+it,ita,Italian,Italiano,Latn,ltr,true,false,,SRC_ISO_639,2026-11-06
+tr,tur,Turkish,Türkçe,Latn,ltr,true,false,,SRC_ISO_639,2026-11-06
+pt,por,Portuguese,Português,Latn,ltr,true,false,,SRC_ISO_639,2026-11-06
+bn,ben,Bengali,বাংলা,Beng,ltr,true,false,,SRC_ISO_639,2026-11-06
+pa,pan,Punjabi,ਪੰਜਾਬੀ,Guru/Arab,ltr,true,false,Spoken Punjabi is written in Gurmukhi (India) and Shahmukhi (Pakistan).,SRC_ISO_639,2026-11-06
+id,ind,Indonesian,Bahasa Indonesia,Latn,ltr,true,false,,SRC_ISO_639,2026-11-06
+ja,jpn,Japanese,日本語,Jpan,ltr,false,false,,SRC_ISO_639,2026-11-06
+ko,kor,Korean,한국어,Kore,ltr,false,false,,SRC_ISO_639,2026-11-06
+nl,nld,Dutch,Nederlands,Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+fa,fas,Persian,فارسی,Arab,rtl,false,false,,SRC_ISO_639,2026-11-06
+pl,pol,Polish,Polski,Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+uk,ukr,Ukrainian,Українська,Cyrl,ltr,false,false,,SRC_ISO_639,2026-11-06
+ro,ron,Romanian,Română,Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+el,ell,Greek,Ελληνικά,Grek,ltr,false,false,,SRC_ISO_639,2026-11-06
+he,heb,Hebrew,עברית,Hebr,rtl,false,false,,SRC_ISO_639,2026-11-06
+th,tha,Thai,ไทย,Thai,ltr,false,false,,SRC_ISO_639,2026-11-06
+vi,vie,Vietnamese,Tiếng Việt,Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+ms,msa,Malay,Bahasa Melayu,Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+ta,tam,Tamil,தமிழ்,Taml,ltr,false,false,,SRC_ISO_639,2026-11-06
+te,tel,Telugu,తెలుగు,Telu,ltr,false,false,,SRC_ISO_639,2026-11-06
+mr,mar,Marathi,मराठी,Deva,ltr,false,false,,SRC_ISO_639,2026-11-06
+gu,guj,Gujarati,ગુજરાતી,Gujr,ltr,false,false,,SRC_ISO_639,2026-11-06
+ml,mal,Malayalam,മലയാളം,Mlym,ltr,false,false,,SRC_ISO_639,2026-11-06
+kn,kan,Kannada,ಕನ್ನಡ,Knda,ltr,false,false,,SRC_ISO_639,2026-11-06
+sw,swa,Swahili,Kiswahili,Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+am,amh,Amharic,አማርኛ,Ethi,ltr,false,false,,SRC_ISO_639,2026-11-06
+ha,hau,Hausa,Hausa,Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+yo,yor,Yoruba,Yorùbá,Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+zu,zul,Zulu,isiZulu,Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+af,afr,Afrikaans,Afrikaans,Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+fil,fil,Filipino,Filipino,Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+cs,ces,Czech,Čeština,Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+hu,hun,Hungarian,Magyar,Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+sv,swe,Swedish,Svenska,Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+da,dan,Danish,Dansk,Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+nb,nob,Norwegian (Bokmål),Norsk bokmål,Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+fi,fin,Finnish,Suomi,Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+sr,srp,Serbian,Српски,Cyrl/Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+hr,hrv,Croatian,Hrvatski,Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+bg,bul,Bulgarian,Български,Cyrl,ltr,false,false,,SRC_ISO_639,2026-11-06
+kk,kaz,Kazakh,Қазақша,Cyrl,ltr,false,false,,SRC_ISO_639,2026-11-06
+uz,uzb,Uzbek,Oʻzbek,Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+az,aze,Azerbaijani,Azərbaycan,Latn,ltr,false,false,,SRC_ISO_639,2026-11-06
+ka,kat,Georgian,ქართული,Geor,ltr,false,false,,SRC_ISO_639,2026-11-06
+hy,hye,Armenian,Հայերեն,Armn,ltr,false,false,,SRC_ISO_639,2026-11-06
+si,sin,Sinhala,සිංහල,Sinh,ltr,false,false,,SRC_ISO_639,2026-11-06
+ne,nep,Nepali,नेपाली,Deva,ltr,false,false,,SRC_ISO_639,2026-11-06
+ps,pus,Pashto,پښتو,Arab,rtl,false,false,,SRC_ISO_639,2026-11-06
+ku,kur,Kurdish,Kurdî,Latn/Arab,ltr,false,false,,SRC_ISO_639,2026-11-06
+sd,snd,Sindhi,سنڌي,Arab,rtl,false,false,,SRC_ISO_639,2026-11-06
+my,mya,Burmese,မြန်မာ,Mymr,ltr,false,false,,SRC_ISO_639,2026-11-06
+km,khm,Khmer,ខ្មែរ,Khmr,ltr,false,false,,SRC_ISO_639,2026-11-06
+yue,yue,Chinese (Cantonese),粵語,Hant,ltr,false,false,,SRC_ISO_639,2026-11-06

@@ -1,0 +1,532 @@
+[
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "SA",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Primary-language market candidate; do not infer a percentage without a current source.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "AE",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Primary-language market candidate; expatriate language mix requires separate evidence.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "EG",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Primary-language market candidate.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "IQ",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Primary-language market candidate.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "JO",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Primary-language market candidate.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "LB",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Primary-language market candidate.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "KW",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Primary-language market candidate.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "QA",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Primary-language market candidate.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "BH",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Primary-language market candidate.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "OM",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Primary-language market candidate.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "YE",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Primary-language market candidate.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "MA",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Primary-language market candidate; multilingual share needs a defined source.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "DZ",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Primary-language market candidate; multilingual share needs a defined source.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "TN",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Primary-language market candidate; multilingual share needs a defined source.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "LY",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Primary-language market candidate.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "SD",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Primary-language market candidate; current demographic coverage may be affected by data gaps.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "FR",
+"relationship": "diaspora_origin_proxy",
+"diaspora": true,
+"confidence": "low",
+"note": "Research Arabic language census/community data separately; migrant origin is a proxy only.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "DE",
+"relationship": "diaspora_origin_proxy",
+"diaspora": true,
+"confidence": "low",
+"note": "Research Arabic language census/community data separately; migrant origin is a proxy only.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "GB",
+"relationship": "diaspora_origin_proxy",
+"diaspora": true,
+"confidence": "low",
+"note": "Research Arabic language census/community data separately; migrant origin is a proxy only.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "NL",
+"relationship": "diaspora_origin_proxy",
+"diaspora": true,
+"confidence": "low",
+"note": "Research Arabic language census/community data separately; migrant origin is a proxy only.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "BE",
+"relationship": "diaspora_origin_proxy",
+"diaspora": true,
+"confidence": "low",
+"note": "Research Arabic language census/community data separately; migrant origin is a proxy only.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "SE",
+"relationship": "diaspora_origin_proxy",
+"diaspora": true,
+"confidence": "low",
+"note": "Research Arabic language census/community data separately; migrant origin is a proxy only.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "CH",
+"relationship": "diaspora_origin_proxy",
+"diaspora": true,
+"confidence": "low",
+"note": "Research Arabic language census/community data separately; migrant origin is a proxy only.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "CA",
+"relationship": "diaspora_origin_proxy",
+"diaspora": true,
+"confidence": "low",
+"note": "Research Arabic language census/community data separately; migrant origin is a proxy only.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "US",
+"relationship": "diaspora_origin_proxy",
+"diaspora": true,
+"confidence": "low",
+"note": "Research Arabic language census/community data separately; migrant origin is a proxy only.",
+"shareSource": null
+},
+{
+"code": "ar",
+"language": "Arabic",
+"iso2": "AU",
+"relationship": "diaspora_origin_proxy",
+"diaspora": true,
+"confidence": "low",
+"note": "Research Arabic language census/community data separately; migrant origin is a proxy only.",
+"shareSource": null
+},
+{
+"code": "en",
+"language": "English",
+"iso2": "US",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Language share must define first-language versus speaks-English proficiency.",
+"shareSource": null
+},
+{
+"code": "en",
+"language": "English",
+"iso2": "GB",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Language share must define first-language versus speaks-English proficiency.",
+"shareSource": null
+},
+{
+"code": "en",
+"language": "English",
+"iso2": "CA",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Country has multiple official languages; use a clear language denominator.",
+"shareSource": null
+},
+{
+"code": "en",
+"language": "English",
+"iso2": "AU",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Language share must define home language versus proficiency.",
+"shareSource": null
+},
+{
+"code": "en",
+"language": "English",
+"iso2": "NZ",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Language share must define home language versus proficiency.",
+"shareSource": null
+},
+{
+"code": "en",
+"language": "English",
+"iso2": "SG",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Multilingual market; do not assume all English speakers have equal ad response.",
+"shareSource": null
+},
+{
+"code": "en",
+"language": "English",
+"iso2": "ZA",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Multilingual market; define the census measure.",
+"shareSource": null
+},
+{
+"code": "fr",
+"language": "French",
+"iso2": "FR",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Research local first-language and additional-language use separately.",
+"shareSource": null
+},
+{
+"code": "fr",
+"language": "French",
+"iso2": "BE",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Language share differs by region; use regional data where possible.",
+"shareSource": null
+},
+{
+"code": "fr",
+"language": "French",
+"iso2": "CH",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Language share differs by canton; avoid one national percentage without definition.",
+"shareSource": null
+},
+{
+"code": "fr",
+"language": "French",
+"iso2": "CA",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Focus on French-speaking regions and census language measures.",
+"shareSource": null
+},
+{
+"code": "de",
+"language": "German",
+"iso2": "DE",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Research country-specific first-language/spoken-language measures.",
+"shareSource": null
+},
+{
+"code": "de",
+"language": "German",
+"iso2": "CH",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Language share differs by canton.",
+"shareSource": null
+},
+{
+"code": "de",
+"language": "German",
+"iso2": "AT",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Research current source and exact language definition.",
+"shareSource": null
+},
+{
+"code": "es",
+"language": "Spanish",
+"iso2": "ES",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Regional languages also matter.",
+"shareSource": null
+},
+{
+"code": "es",
+"language": "Spanish",
+"iso2": "US",
+"relationship": "spoken_language",
+"diaspora": false,
+"confidence": "low",
+"note": "Use census self-reported home-language data and denominator.",
+"shareSource": null
+},
+{
+"code": "zh",
+"language": "Chinese",
+"iso2": "SG",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Clarify Mandarin vs Chinese-language grouping.",
+"shareSource": null
+},
+{
+"code": "zh",
+"language": "Chinese",
+"iso2": "HK",
+"relationship": "daily_use_or_official",
+"diaspora": false,
+"confidence": "low",
+"note": "Language distinction needed: Cantonese",
+"shareSource": null
+},
+{
+"code": "hi",
+"language": "Hindi",
+"iso2": "IN",
+"relationship": "spoken_language",
+"diaspora": false,
+"confidence": "low",
+"note": "Use census language tables; India is multilingual and percentage depends on mother tongue/second language.",
+"shareSource": null
+},
+{
+"code": "ur",
+"language": "Urdu",
+"iso2": "PK",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Use census and spoken-language data; Urdu lingua-franca reach differs from mother tongue.",
+"shareSource": null
+},
+{
+"code": "ru",
+"language": "Russian",
+"iso2": "RU",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Research speaker/use definitions and relevant source markets separately.",
+"shareSource": null
+},
+{
+"code": "tr",
+"language": "Turkish",
+"iso2": "TR",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Research diaspora candidates separately.",
+"shareSource": null
+},
+{
+"code": "pt",
+"language": "Portuguese",
+"iso2": "PT",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Research Brazil separately if the target is global Portuguese coverage.",
+"shareSource": null
+},
+{
+"code": "id",
+"language": "Indonesian",
+"iso2": "ID",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Distinguish Bahasa Indonesia from local languages.",
+"shareSource": null
+},
+{
+"code": "bn",
+"language": "Bengali",
+"iso2": "BD",
+"relationship": "official_or_dominant",
+"diaspora": false,
+"confidence": "low",
+"note": "Research diaspora candidates separately.",
+"shareSource": null
+},
+{
+"code": "pa",
+"language": "Punjabi",
+"iso2": "IN",
+"relationship": "spoken_language",
+"diaspora": false,
+"confidence": "low",
+"note": "Specify script/dialect and country census definition.",
+"shareSource": null
+},
+{
+"code": "pa",
+"language": "Punjabi",
+"iso2": "PK",
+"relationship": "spoken_language",
+"diaspora": false,
+"confidence": "low",
+"note": "Specify dialect and census definition.",
+"shareSource": null
+}
+]

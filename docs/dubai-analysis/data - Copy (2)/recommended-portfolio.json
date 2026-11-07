@@ -1,0 +1,42 @@
+{
+  "portfolio_id": "prophunters_initial_recommended_v1",
+  "name": "Recommended starting portfolio",
+  "currency": "AED",
+  "created_from_research_date": "2026-11-06",
+  "selection_method": "Evidence-backed starting candidates with client CPL benchmark coverage. Equal allocation is a neutral test setup, not an optimized budget recommendation.",
+  "default_allocation_method": "equal_share_across_selected_countries",
+  "default_allocation_is_optimized": false,
+  "default_selected_countries": [
+    {"country_iso2": "IN", "country_name": "India", "reason": "High reported international Dubai property-interest signal and a client-supplied South Asia & Africa regional CPL reference. The CPL is a regional proxy, not a measured India-only CPL.", "demand_signal_source_id": "SRC_DXBINTERACT_SECONDARY_2026", "cpl_source_id": "SRC_CLIENT_BENCHMARK_2026_11", "evidence_status": "directional_demand_plus_client_regional_proxy"},
+    {"country_iso2": "PK", "country_name": "Pakistan", "reason": "Reported international Dubai property-interest signal and a client-supplied South Asia & Africa regional CPL reference. The CPL is a regional proxy, not a measured Pakistan-only CPL.", "demand_signal_source_id": "SRC_DXBINTERACT_SECONDARY_2026", "cpl_source_id": "SRC_CLIENT_BENCHMARK_2026_11", "evidence_status": "directional_demand_plus_client_regional_proxy"},
+    {"country_iso2": "US", "country_name": "United States", "reason": "Strong reported international Dubai property-interest signal and a client-supplied North America regional CPL reference. The CPL is a regional proxy.", "demand_signal_source_id": "SRC_DXBINTERACT_SECONDARY_2026", "cpl_source_id": "SRC_CLIENT_BENCHMARK_2026_11", "evidence_status": "directional_demand_plus_client_regional_proxy"},
+    {"country_iso2": "CA", "country_name": "Canada", "reason": "Reported international Dubai property-interest signal and a client-supplied North America regional CPL reference. The CPL is a regional proxy.", "demand_signal_source_id": "SRC_DXBINTERACT_SECONDARY_2026", "cpl_source_id": "SRC_CLIENT_BENCHMARK_2026_11", "evidence_status": "directional_demand_plus_client_regional_proxy"},
+    {"country_iso2": "AU", "country_name": "Australia", "reason": "Reported international Dubai property-interest signal and a client-supplied Oceania regional CPL reference. The CPL is a regional proxy.", "demand_signal_source_id": "SRC_DXBINTERACT_SECONDARY_2026", "cpl_source_id": "SRC_CLIENT_BENCHMARK_2026_11", "evidence_status": "directional_demand_plus_client_regional_proxy"},
+    {"country_iso2": "FR", "country_name": "France", "reason": "Reported international Dubai property-interest signal and a client-supplied Europe learning/mature CPL comparison. The CPL is a regional proxy.", "demand_signal_source_id": "SRC_DXBINTERACT_SECONDARY_2026", "cpl_source_id": "SRC_CLIENT_BENCHMARK_2026_11", "evidence_status": "directional_demand_plus_client_regional_proxy"},
+    {"country_iso2": "DE", "country_name": "Germany", "reason": "Reported international Dubai property-interest signal and a client-supplied Europe learning/mature CPL comparison. The CPL is a regional proxy.", "demand_signal_source_id": "SRC_DXBINTERACT_SECONDARY_2026", "cpl_source_id": "SRC_CLIENT_BENCHMARK_2026_11", "evidence_status": "directional_demand_plus_client_regional_proxy"},
+    {"country_iso2": "NL", "country_name": "Netherlands", "reason": "Reported international Dubai property-interest signal and a client-supplied Europe learning/mature CPL comparison. The CPL is a regional proxy.", "demand_signal_source_id": "SRC_DXBINTERACT_SECONDARY_2026", "cpl_source_id": "SRC_CLIENT_BENCHMARK_2026_11", "evidence_status": "directional_demand_plus_client_regional_proxy"},
+    {"country_iso2": "AE", "country_name": "United Arab Emirates", "reason": "Client-supplied UAE campaign CPL range is available. Treat the market as a local benchmark market; the cited international-interest ranking excludes UAE-based demand.", "demand_signal_source_id": null, "cpl_source_id": "SRC_CLIENT_BENCHMARK_2026_11", "evidence_status": "client_benchmark_only"}
+  ],
+  "test_next_candidates": [
+    {"country_iso2": "GB", "country_name": "United Kingdom", "reason": "Strong reported Dubai property-interest signal and inclusion in Knight Frank's HNWI research, but no country-specific CPL is supplied in the client benchmark table. Obtain a UK client CPL or enter a labelled test assumption before a lead forecast."},
+    {"country_iso2": "SA", "country_name": "Saudi Arabia", "reason": "Strong reported interest and strong HNWI survey intent, but no Saudi-specific CPL is supplied. Add after validating cost and agent language coverage."},
+    {"country_iso2": "EG", "country_name": "Egypt", "reason": "Reported Dubai property-interest signal; requires country-specific CPL, purchasing-capacity and serviceability research."},
+    {"country_iso2": "SG", "country_name": "Singapore", "reason": "Reported Dubai property-interest signal and inclusion in Knight Frank East Asia survey coverage; requires country-specific CPL and segment-fit validation."},
+    {"country_iso2": "TR", "country_name": "Türkiye", "reason": "Reported Dubai property-interest signal; validate currency, affordability, language and cost before activation."},
+    {"country_iso2": "JO", "country_name": "Jordan", "reason": "Reported Dubai property-interest signal; validate audience size, CPL and Arabic/English serviceability."},
+    {"country_iso2": "ZA", "country_name": "South Africa", "reason": "Reported Dubai property-interest signal; validate affordability, CPL and supported sales language."}
+  ],
+  "benchmark_supported_watchlist": [
+    {"country_iso2": "CH", "country_name": "Switzerland", "reason": "Client Europe CPL benchmark is available, but no demand share is included in the current DXBinteract-derived seed ranking."},
+    {"country_iso2": "LU", "country_name": "Luxembourg", "reason": "Client Europe CPL benchmark is available, but separate Dubai-demand evidence is pending."},
+    {"country_iso2": "NO", "country_name": "Norway", "reason": "Client Europe CPL benchmark is available, but separate Dubai-demand evidence is pending."},
+    {"country_iso2": "NZ", "country_name": "New Zealand", "reason": "Client Oceania CPL benchmark is available, but separate Dubai-demand evidence is pending."}
+  ],
+  "important_notes": [
+    "The 2026 interest figures are secondary reports describing DXBinteract digital property-interest/search signals, not transactions, buyers, leads or conversion rates.",
+    "Client CPLs are regional blended benchmarks inherited as proxies; they are not country-specific measured CPLs.",
+    "The initial equal allocation is a neutral starting scenario only. It is not an optimized media plan or evidence of equal market opportunity.",
+    "Agent-language coverage is not yet supplied. Language serviceability must be configured before final recommendations are presented as fully serviceable.",
+    "Countries without a defensible CPL must not receive numeric lead projections unless the client enters an explicit planning CPL assumption."
+  ]
+}

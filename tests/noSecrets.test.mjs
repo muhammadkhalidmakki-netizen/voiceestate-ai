@@ -91,9 +91,16 @@ test(".env.example lists variable NAMES only (no values)", () => {
   for (const line of lines) {
     assert.match(line, /^[A-Z][A-Z0-9_]*=$/, "must be NAME= with an empty value");
   }
-  // only the public, browser-safe demo variables are allowed
+  // only the public, browser-safe demo variables, plus the server-only
+  // Prophunters sign-in variables (read on the server, never NEXT_PUBLIC_)
   const names = lines.map((l) => l.slice(0, -1)).sort();
-  assert.deepEqual(names, ["NEXT_PUBLIC_VAPI_ASSISTANT_ID", "NEXT_PUBLIC_VAPI_PUBLIC_KEY"]);
+  assert.deepEqual(names, [
+    "NEXT_PUBLIC_VAPI_ASSISTANT_ID",
+    "NEXT_PUBLIC_VAPI_PUBLIC_KEY",
+    "PROPHUNTERS_PASSWORD",
+    "PROPHUNTERS_SESSION_SECRET",
+    "PROPHUNTERS_USERNAME",
+  ]);
 });
 
 test("no NEXT_PUBLIC variable is named like a secret", () => {
@@ -134,10 +141,10 @@ test("the demo .env.local does not use the production assistant or any prod ID",
   for (const t of tokens) {
     assert.ok(!env.includes(t), ".env.local contains a production identifier");
   }
-  // and it must only carry the two public demo variables
+  // and it must only carry the two public demo variables and the server-only Prophunters sign-in variables
   const names = env.split(/\r?\n/).filter((l) => l.trim() && !l.trim().startsWith("#")).map((l) => l.split("=")[0].trim());
   for (const n of names) {
-    assert.match(n, /^NEXT_PUBLIC_VAPI_(PUBLIC_KEY|ASSISTANT_ID)$/, `unexpected variable in .env.local: ${n}`);
+    assert.match(n, /^(NEXT_PUBLIC_VAPI_(PUBLIC_KEY|ASSISTANT_ID)|PROPHUNTERS_(USERNAME|PASSWORD|SESSION_SECRET))$/, `unexpected variable in .env.local: ${n}`);
   }
 });
 

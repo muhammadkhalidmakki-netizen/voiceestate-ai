@@ -1,0 +1,214 @@
+{
+  "model_version": "buyer-opportunity-v2",
+  "status": "starting framework: all weights are editable planning choices, not externally validated",
+  "is_probability_of_sale": false,
+  "disclaimer": "Both scores are relative indicators for prioritising markets. Neither is a probability of sale, a lead forecast or an ROI estimate.",
+  "buyer_opportunity": {
+    "meaning": "Relative attractiveness of a country as a source of Dubai off-plan buyers. Independent of advertising cost.",
+    "weights": {
+      "demand": 0.25,
+      "purchasing_power": 0.2,
+      "investment_capability": 0.15,
+      "motivations": 0.15,
+      "conditions": 0.1,
+      "affluent_audience": 0.1,
+      "language": 0.05
+    },
+    "factors": {
+      "demand": {
+        "input": "DXBinteract-reported international search-interest share (secondary report). Search interest is not transactions.",
+        "normalisation": "sqrt(share / max share in dataset)",
+        "evidence_confidence": 0.7
+      },
+      "purchasing_power": {
+        "input": "Percentile rank of GDP per capita PPP (World Bank).",
+        "normalisation": "percentile / 100",
+        "evidence_confidence": 0.8
+      },
+      "investment_capability": {
+        "input": "Mean percentile of outbound FDI % GDP and private credit % GDP (World Bank), halved for sanctions or reported capital controls.",
+        "normalisation": "index / 100",
+        "evidence_confidence": 0.5
+      },
+      "motivations": {
+        "input": "Country-specific, documented motivation evidence. None exists yet; market-wide findings are not assigned to nationalities.",
+        "normalisation": "documented categories / 3, capped at 1",
+        "evidence_confidence": 0.6
+      },
+      "conditions": {
+        "input": "Mean of: GDP growth, inflation, political stability (WGI), currency move vs USD. Only indicators dated 2024 or later; halved when sanctions are possible.",
+        "normalisation": "index / 100",
+        "evidence_confidence": 0.7
+      },
+      "affluent_audience": {
+        "input": "Modelled affluent population (income above international $60,000 PPP; lognormal fit to GDP per capita PPP and a wealth-skewed Gini, same rule for every country), log-scaled between a floor and full reach, plus a discounted diaspora-pool bonus for selected languages.",
+        "normalisation": "(log10(affluent) - log10(floor)) / (log10(full_reach) - log10(floor)), clamped 0..1; diaspora adds up to diaspora_bonus_max of the remaining headroom",
+        "affluent_full_reach": 100000000,
+        "diaspora_bonus_max": 0.5,
+        "evidence_confidence": 0.4,
+        "affluent_floor": 10000
+      },
+      "language": {
+        "input": "Best selected agent language vs the market's primary languages (CLDR), or diaspora-only reach.",
+        "normalisation": "min(1, share / primary_full_share_pct) x proficiency weight",
+        "evidence_confidence": 0.6
+      }
+    },
+    "aggregation": {
+      "score": "sum(w x s over available factors) / sum(w over available factors) x 100",
+      "evidence_confidence_K": "sum(w x confidence over available factors) / sum(all w)",
+      "missing_factor_rule": "A missing factor is excluded and lowers K. It is never filled with zero.",
+      "min_available_weight_share": 0.5,
+      "below_threshold_label": "Insufficient evidence"
+    }
+  },
+  "acquisition_efficiency": {
+    "meaning": "How easily and cheaply a market can be tested. Kept separate from buyer potential and never allowed to override it.",
+    "weights": {
+      "cpl": 0.4,
+      "reachable_audience": 0.2,
+      "language_suitability": 0.15,
+      "testing_requirement": 0.15,
+      "search_demand": 0.1
+    },
+    "factors": {
+      "cpl": {
+        "input": "Base CPL (client proxy or modelled); the ceiling when only an upper bound exists.",
+        "normalisation": "clamp((ln(ref_high) - ln(cpl)) / (ln(ref_high) - ln(ref_low)), 0, 1)",
+        "cpl_ref_low_aed": 20,
+        "cpl_ref_high_aed": 120,
+        "evidence_confidence_by_cpl_status": {
+          "regional_proxy": 0.8,
+          "modelled": 0.4,
+          "user_assumption": 0.5
+        },
+        "evidence_confidence_for_ceiling_only": 0.4
+      },
+      "reachable_audience": {
+        "input": "Online population = population x internet users %, log-scaled.",
+        "normalisation": "log10(online) / log10(online_full_reach)",
+        "online_full_reach": 100000000,
+        "evidence_confidence": 0.7
+      },
+      "language_suitability": {
+        "input": "Reachable language-matched pool (language_opportunity).",
+        "evidence_confidence": 0.6
+      },
+      "testing_requirement": {
+        "input": "Minimum practical test budget for the market (lower is easier).",
+        "normalisation": "clamp(1 - ln(min_budget / easy_budget) / ln(hard_budget / easy_budget), 0, 1)",
+        "easy_budget_aed": 1000,
+        "hard_budget_aed": 4000,
+        "evidence_confidence": 0.5
+      },
+      "search_demand": {
+        "input": "International search-interest share (same signal as buyer demand). Competition data is unavailable and excluded.",
+        "evidence_confidence": 0.7
+      }
+    },
+    "min_available_weight_share": 0.5
+  },
+  "selection": {
+    "objective": "Maximise quality-weighted leads per AED: more leads, from better buyer markets, within the budget. Sales are then illustrative (leads x one global close rate).",
+    "quality_index": "q = (buyer score with the missing-factor prior / 100) x (0.5 + 0.5 x buyer evidence K)",
+    "quality_emphasis": 3,
+    "utility_per_aed": "(q ^ quality_emphasis / CPL) x (floor + weight x other efficiency) x 100; CPL = base if known, else the upper CPL",
+    "other_efficiency": {
+      "floor": 0.85,
+      "weight": 0.15,
+      "factors": "reachable audience, language suitability, testing requirement, search demand"
+    },
+    "rank_missing_factor_prior": 0.4,
+    "rank_missing_factor_prior_note": "Ranking only. A buyer factor with no data counts at 40% of a perfect score (unknown is not zero, and not strong either). The reported score still excludes missing factors; evidence confidence reports how much was missing.",
+    "why_quality_is_squared": "Cheap leads must not win on price alone. Squaring quality means a market must be both affordable and a real buyer market. Quality emphasis is configurable (1 = leads matter as much as quality, 3 = quality dominates)."
+  },
+  "language": {
+    "default_languages_when_none_selected": [
+      "en"
+    ],
+    "proficiency_weight": {
+      "fluent": 1.0,
+      "professional": 1.0,
+      "conversational": 0.5
+    },
+    "primary_full_share_pct": 50,
+    "min_serviceability_to_recommend": 0.15,
+    "diaspora_only_serviceability": 0.2,
+    "diaspora_pool_discount": 0.8,
+    "diaspora_pool_full_reach": 1000000,
+    "pool_full_reach": 100000000,
+    "pool_serviceability": {
+      "pool_zero": 20000,
+      "pool_full": 4000000,
+      "max_serviceability": 0.6,
+      "rationale": "A language can be worth serving in a country where it is a minority but spoken by millions (Punjabi in India is about 2.8% of the population but tens of millions of people). Serviceability is therefore the larger of the share-based value and a pool-based value: (log10(speakers) - 6) / 1.5, 0 at 1 million speakers and 1 at about 32 million, capped at 0.6 because a minority language is harder to target than a majority one."
+    }
+  },
+  "allocation": {
+    "desired_test_leads_per_market": 20,
+    "min_market_budget_floor_aed": 1000,
+    "uncertainty_premium_on_upper_cpl": {
+      "regional_proxy": 0.0,
+      "user_assumption": 0.0,
+      "modelled": 0.15
+    },
+    "max_markets": 10,
+    "max_single_market_share": 0.45,
+    "concentration_exponent": 1,
+    "max_share_of_budget_reserved_for_minimums": 0.7,
+    "rationale": "A controlled test needs roughly 20 leads to see whether a market produces usable enquiries at all, valued at the upper CPL so the budget still reaches 20 leads if the cost is at the pessimistic end. Modelled CPLs carry an extra 15% because they are not observed. The floor stops tiny tests in very cheap markets. At most 70% of the budget is committed to minimums so the strongest markets can still receive more. These are planning thresholds, not statistical power calculations.",
+    "note": "The engine tries 1..max_markets (top markets by utility), spreads the budget by marginal value (minimum test budgets first, then the best remaining use of each AED, with the per-market cap), and keeps the size that gives the highest total value. No fixed number of markets.",
+    "scale_efficiency": {
+      "base_efficient_spend_aed": 2000,
+      "size_floor": 0.5,
+      "size_span": 1.0,
+      "beyond_efficiency": 0.5,
+      "rationale": "Planning assumption, not a measurement: in one market the first slice of spend reaches the best-matched audience, and further spend there is less efficient (audience saturation, rising CPL). Each market's efficient spend = 2,000 x (0.5 + its affluent-audience score), so a large buyer market absorbs more than a small one. Spend beyond that keeps adding value ever more slowly (the next dirham is worth limit / (limit + extra) of a first-slice dirham, a logarithmic curve). This is what makes bigger budgets spread across more markets without any fixed country count."
+    },
+    "min_markets_when_affordable": 2,
+    "min_markets_rationale": "Never put the whole budget into one market when two proper tests are affordable: one market is a single point of failure and gives no comparison. Only applies when the budget covers two minimum test budgets."
+  },
+  "eligibility": {
+    "require_cpl": true,
+    "exclude_ad_restricted_markets": true,
+    "min_serviceability_exempt_if_demand_evidence": true,
+    "serviceability_exemption_languages": [
+      "en"
+    ],
+    "serviceability_exemption_note": "A market with a Dubai demand signal may be considered despite low general-population language share only when English is among the selected agent languages, because CLDR describes the general population and English is the common language of international property investors. Not applied to other languages."
+  },
+  "close_rate": {
+    "default": 0.015,
+    "editable": true,
+    "status": "illustrative global provisional raw-lead-to-sale rate, not a client benchmark. The same rate is applied to every market. The original client discussion used about 2%; the owner later instructed 1.5% as the default in this project. The repo's research docs contain no close rate. No country-specific close rate exists."
+  },
+  "sales_pipeline": {
+    "steps": [
+      "country budget",
+      "estimated leads (spend / CPL)",
+      "qualified leads (rate unavailable: not applied)",
+      "eventual sales (leads x close rate)"
+    ],
+    "qualified_lead_rate": null,
+    "meta_15_google_20_rates": "undefined; not used",
+    "contribution_basis": "share of modelled eventual sales from the conservative (upper-CPL) lead forecast, never derived from opportunity scores"
+  },
+  "future_inputs": "Country-level qualified-lead rates and sales counts from client-cpl-input-template.csv can replace the CPL and conversion assumptions without changing the score structure.",
+  "modelled_cpl_safety_margin": {
+    "value": 0.2,
+    "applies_to": "low, base and high of modelled CPL ranges when used in the dashboard forecast and the recommendation engine",
+    "not_applied_to": "client regional benchmarks, the AED 30 ceiling, or CPLs the user types in",
+    "rationale": "Modelled CPLs are not observed, so they are raised 20% to err towards fewer leads. A planning margin, not a statistical interval; the underlying CSV is unchanged."
+  },
+  "language_anchors": {
+    "enabled": true,
+    "markets_per_language": 2,
+    "min_language_reach_pct": 40,
+    "min_serviceability": 0.5,
+    "home_markets": [
+      "AE"
+    ],
+    "max_share_of_budget_for_anchors": 0.6,
+    "rationale": "When you pick an agent language, that language's own main markets must be visible: for each explicitly selected language the best-value eligible markets where it is the main language (reach of at least 40%) are always included, up to 2 per language. The UAE is the home market and is included whenever a selected language is spoken there at that level (Arabic). Anchors only take as many markets as fit within 60% of the budget at their minimum test budgets, and never apply when no language was selected (English-only default)."
+  }
+}
