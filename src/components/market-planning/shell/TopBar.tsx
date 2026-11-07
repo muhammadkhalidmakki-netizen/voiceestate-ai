@@ -40,11 +40,15 @@ function useActiveSection(): string {
   return active;
 }
 
+const PALETTE = ["#3b7bff", "#12b76a", "#f59a23", "#8b6cf0", "#e5484d", "#1fb0c4"];
+const accountColor = (name: string) => PALETTE[[...name].reduce((a, c) => a + c.charCodeAt(0), 0) % PALETTE.length];
+
 export default function TopBar({
   onNavigate,
   items = SECTIONS as unknown as NavItem[],
   activeId,
   extraEnd,
+  account,
 }: {
   onNavigate: (id: string) => void;
   /** Navigation items. Defaults to the section links used by /dubai/analysis. */
@@ -53,6 +57,8 @@ export default function TopBar({
   activeId?: string;
   /** Extra controls rendered before the search and account buttons. */
   extraEnd?: React.ReactNode;
+  /** Who is signed in: shown on the account button and at the top of its menu. */
+  account?: { name: string; admin: boolean };
 }) {
   const scrolled = useActiveSection();
   const active = activeId ?? scrolled;
@@ -110,11 +116,28 @@ export default function TopBar({
         </button>
 
         <Popover.Root>
-          <Popover.Trigger className={s.avatar} aria-label="Account and appearance">
-            <User size={18} strokeWidth={1.9} aria-hidden="true" />
+          <Popover.Trigger className={s.avatar} aria-label={account ? `Account: ${account.name}` : "Account and appearance"} style={account ? { background: accountColor(account.name), color: "#ffffff" } : undefined}>
+            {account ? <b className={s.initial}>{account.name.charAt(0).toUpperCase()}</b> : <User size={18} strokeWidth={1.9} aria-hidden="true" />}
           </Popover.Trigger>
           <Popover.Portal container={portalContainer()}>
             <Popover.Content className={s.popover} align="end" sideOffset={10}>
+              {account ? (
+                <div className={s.who}>
+                  <span className={s.whoDot} style={{ background: accountColor(account.name) }} aria-hidden="true">
+                    {account.name.charAt(0).toUpperCase()}
+                  </span>
+                  <span className={s.whoText}>
+                    <b>{account.name}</b>
+                    <small>{account.admin ? "Administrator" : "Client"}</small>
+                  </span>
+                </div>
+              ) : null}
+              {account?.admin ? (
+                <a className={s.menuLink} href="/dubai/admin">
+                  <User size={16} aria-hidden="true" />
+                  Manage users
+                </a>
+              ) : null}
               <p className={s.popTitle}>Workspace</p>
               <label className={s.switchRow}>
                 <span className={s.switchLabel}>
