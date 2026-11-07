@@ -1,7 +1,9 @@
 // Saved plans, independent of where they are stored. The storage (Cloudflare KV in production, a local file in
 // development) is passed in, so the rules (names, size limits, ids) are the same everywhere and can be tested.
 
-export type PlanMeta = { id: string; name: string; updatedAt: string };
+export type PlanMeta = { id: string; name: string; updatedAt: string; /** The user who owns the plan. Missing on plans saved before there were separate users (admin only). */ owner?: string };
+/** Who is asking. Without it nothing is filtered (used by tests). An admin sees every plan. */
+export type Viewer = { user: string; admin: boolean };
 export type PlanRecord = PlanMeta & { plan: unknown };
 
 /** What a storage backend must do. Every method is async so KV, files or a database all fit. */
@@ -37,50 +39,53 @@ const planBytes = (plan: unknown): number => {
   }
 };
 
+const canSee = (r: PlanMeta, who?: Viewer) => !who || who.admin || (r.owner ?? "") === who.user;
+
 const byNewest = (a: PlanMeta, b: PlanMeta) => b.updatedAt.localeCompare(a.updatedAt);
 
 export function createPlanService(store: PlanStore, now: () => Date = () => new Date(), newId: () => string = () => crypto.randomUUID()) {
   return {
     storage: store.kind,
 
-    async list(): Promise<Result<PlanMeta[]>> {
-      return { ok: true, value: (await store.list()).sort(byNewest) };
+    async list(who?: Viewer): Promise<Result<PlanMeta[]>> {
+      return { ok: true, value: (await store.list()).filter((p) => canSee(p, who)).sort(byNewest) };
     },
 
-    async get(id: string): Promise<Result<PlanRecord>> {
+    async get(id: string, who?: Viewer): Promise<Result<PlanRecord>> {
       if (!isPlanId(id)) return fail(400, "That plan id is not valid.");
       const r = await store.get(id);
-      return r ? { ok: true, value: r } : fail(404, "That plan was not found. It may have been deleted.");
+      return r && canSee(r, who) ? { ok: true, value: r } : fail(404, "That plan was not found. It may have been deleted.");
     },
 
-    async create(input: { name?: unknown; plan?: unknown }): Promise<Result<PlanMeta>> {
+    async create(input: { name?: unknown; plan?: unknown }, who?: Viewer): Promise<Result<PlanMeta>> {
       const name = cleanName(input.name);
       if (!name) return fail(400, "Give the plan a name.");
       if (input.plan === null || typeof input.plan !== "object") return fail(400, "There is no plan to save.");
       if (planBytes(input.plan) > MAX_PLAN_BYTES) return fail(413, "That plan is too large to save.");
-      if ((await store.list()).length >= MAX_PLANS) return fail(409, `You can keep up to ${MAX_PLANS} plans. Delete one first.`);
-      const record: PlanRecord = { id: newId(), name, updatedAt: now().toISOString(), plan: input.plan };
+      if ((await store.list()).filter((p) => canSee(p, who)).length >= MAX_PLANS) return fail(409, `You can keep up to ${MAX_PLANS} plans. Delete one first.`);
+      const record: PlanRecord = { id: newId(), name, updatedAt: now().toISOString(), plan: input.plan, ...(who ? { owner: who.user } : {}) };
       await store.put(record);
-      return { ok: true, value: { id: record.id, name: record.name, updatedAt: record.updatedAt } };
+      return { ok: true, value: { id: record.id, name: record.name, updatedAt: record.updatedAt, owner: record.owner } };
     },
 
-    async update(id: string, input: { name?: unknown; plan?: unknown }): Promise<Result<PlanMeta>> {
+    async update(id: string, input: { name?: unknown; plan?: unknown }, who?: Viewer): Promise<Result<PlanMeta>> {
       if (!isPlanId(id)) return fail(400, "That plan id is not valid.");
       const existing = await store.get(id);
-      if (!existing) return fail(404, "That plan was not found. It may have been deleted.");
+      if (!existing || !canSee(existing, who)) return fail(404, "That plan was not found. It may have been deleted.");
       const name = input.name === undefined ? existing.name : cleanName(input.name);
       if (!name) return fail(400, "Give the plan a name.");
       const plan = input.plan === undefined ? existing.plan : input.plan;
       if (plan === null || typeof plan !== "object") return fail(400, "There is no plan to save.");
       if (planBytes(plan) > MAX_PLAN_BYTES) return fail(413, "That plan is too large to save.");
-      const record: PlanRecord = { id, name, updatedAt: now().toISOString(), plan };
+      const record: PlanRecord = { id, name, updatedAt: now().toISOString(), plan, ...(existing.owner ? { owner: existing.owner } : {}) };
       await store.put(record);
-      return { ok: true, value: { id, name, updatedAt: record.updatedAt } };
+      return { ok: true, value: { id, name, updatedAt: record.updatedAt, owner: record.owner } };
     },
 
-    async remove(id: string): Promise<Result<true>> {
+    async remove(id: string, who?: Viewer): Promise<Result<true>> {
       if (!isPlanId(id)) return fail(400, "That plan id is not valid.");
-      if (!(await store.get(id))) return fail(404, "That plan was not found. It may have been deleted.");
+      const found = await store.get(id);
+      if (!found || !canSee(found, who)) return fail(404, "That plan was not found. It may have been deleted.");
       await store.remove(id);
       return { ok: true, value: true };
     },

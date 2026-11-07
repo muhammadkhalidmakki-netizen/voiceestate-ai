@@ -15,7 +15,6 @@ export const SESSION_COOKIE = "ph_session";
 export const SESSION_PATH = "/dubai";
 export const SESSION_TTL_SECONDS = 60 * 60 * 8; // 8 hours
 const MIN_SECRET_LENGTH = 32;
-const TOKEN_VERSION = "v1";
 
 const encoder = new TextEncoder();
 
@@ -83,11 +82,15 @@ export async function credentialsMatch(
   return userOk && passOk;
 }
 
+export type Session = { username: string; admin: boolean };
+
+/** Token: v2.<username>.<a|u>.<expires>.<signature>. Usernames are limited to [a-z0-9._-], so they are safe inside it. */
 export async function createSessionToken(
   secret: string,
+  who: Session,
   nowSeconds = Math.floor(Date.now() / 1000),
 ): Promise<string> {
-  const payload = `${TOKEN_VERSION}.${nowSeconds + SESSION_TTL_SECONDS}`;
+  const payload = `v2.${who.username}.${who.admin ? "a" : "u"}.${nowSeconds + SESSION_TTL_SECONDS}`;
   return `${payload}.${await sign(secret, payload)}`;
 }
 
@@ -95,20 +98,29 @@ export async function verifySessionToken(
   secret: string,
   token: string | undefined,
   nowSeconds = Math.floor(Date.now() / 1000),
-): Promise<boolean> {
-  if (!token) return false;
+): Promise<Session | null> {
+  if (!token) return null;
   const parts = token.split(".");
-  if (parts.length !== 3 || parts[0] !== TOKEN_VERSION) return false;
-  const expires = Number(parts[1]);
-  if (!Number.isInteger(expires) || expires <= nowSeconds) return false;
-  const expected = await sign(secret, `${parts[0]}.${parts[1]}`);
-  return safeEqual(expected, parts[2]);
+  // The username may itself contain dots: signature is last, expiry second to last, role third to last.
+  if (parts.length < 5 || parts[0] !== "v2") return null;
+  const sig = parts[parts.length - 1];
+  const expires = Number(parts[parts.length - 2]);
+  const role = parts[parts.length - 3];
+  const username = parts.slice(1, parts.length - 3).join(".");
+  if (!Number.isInteger(expires) || expires <= nowSeconds || (role !== "a" && role !== "u") || !username) return null;
+  const expected = await sign(secret, `v2.${username}.${role}.${expires}`);
+  return safeEqual(expected, sig) ? { username, admin: role === "a" } : null;
+}
+
+/** Who is signed in, or null. */
+export async function getSession(): Promise<Session | null> {
+  const config = getAuthConfig();
+  if (!config) return null;
+  const store = await cookies();
+  return verifySessionToken(config.secret, store.get(SESSION_COOKIE)?.value);
 }
 
 /** True only when the request carries a valid, unexpired session cookie. */
 export async function hasValidSession(): Promise<boolean> {
-  const config = getAuthConfig();
-  if (!config) return false;
-  const store = await cookies();
-  return verifySessionToken(config.secret, store.get(SESSION_COOKIE)?.value);
+  return (await getSession()) !== null;
 }

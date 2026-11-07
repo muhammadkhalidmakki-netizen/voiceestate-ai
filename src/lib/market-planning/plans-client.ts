@@ -1,6 +1,6 @@
 // Browser side of saved plans: talks to /dubai/api/plans. Plans live on the server (Cloudflare KV), not in this browser.
 
-export type PlanMeta = { id: string; name: string; updatedAt: string };
+export type PlanMeta = { id: string; name: string; updatedAt: string; owner?: string };
 export type PlanRecord = PlanMeta & { plan: unknown };
 
 const BASE = "/dubai/api/plans";
@@ -31,7 +31,7 @@ async function call<T>(path: string, init?: RequestInit): Promise<T> {
   return body as T;
 }
 
-export const listPlans = () => call<{ plans: PlanMeta[]; storage: "cloudflare" | "local" }>("");
+export const listPlans = () => call<{ plans: PlanMeta[]; storage: "cloudflare" | "local"; admin?: boolean }>("");
 export const getPlan = (id: string) => call<{ plan: PlanRecord }>(`/${encodeURIComponent(id)}`).then((r) => r.plan);
 export const createPlan = (name: string, plan: unknown) => call<{ plan: PlanMeta }>("", { method: "POST", body: JSON.stringify({ name, plan }) }).then((r) => r.plan);
 export const updatePlan = (id: string, input: { name?: string; plan?: unknown }) => call<{ plan: PlanMeta }>(`/${encodeURIComponent(id)}`, { method: "PUT", body: JSON.stringify(input) }).then((r) => r.plan);

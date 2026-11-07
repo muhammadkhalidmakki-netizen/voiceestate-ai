@@ -36,7 +36,7 @@ const NAV: NavItem[] = [
   { id: "language", label: "Languages", Icon: Languages },
 ];
 
-export default function PlannerV2() {
+export default function PlannerV2({ isAdmin = false }: { isAdmin?: boolean } = {}) {
   const [state, rawDispatch] = useReducer(reducer, undefined, initialState);
   const { dispatch, history: undoHistory, restore } = useUndo(state, rawDispatch);
   const [detail, setDetail] = useState<Detail>(null);
@@ -135,7 +135,16 @@ export default function PlannerV2() {
     <PlannerProvider value={view}>
       <div className={v.theme}>
         <main className={s.page}>
-          <TopBar items={NAV} activeId={navActive} onNavigate={navigate} extraEnd={<Actions notify={notify} />} />
+          <TopBar items={NAV} activeId={navActive} onNavigate={navigate} extraEnd={
+              <>
+                {isAdmin ? (
+                  <a className={v.ghostBtn} href="/dubai/admin" title="Create and manage users">
+                    <span className={v.btnText}>Users</span>
+                  </a>
+                ) : null}
+                <Actions notify={notify} />
+              </>
+            } />
 
           <div ref={heroRef}>
             <Hero countUp salesTile />

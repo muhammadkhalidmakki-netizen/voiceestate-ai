@@ -10,7 +10,7 @@ export default defineConfig({
     env: {
       ASSETS: bindings.assets(),
       // Saved plans for the Dubai planner (shared by everyone who signs in; survives browser changes).
-      PLANS: bindings.kv(),
+      PLANS: bindings.kv({ id: "1b36334c77064cac8c7907319688d632" }),
     },
   }),
 });

@@ -37,6 +37,7 @@ export default function SavedPlansMenu({ notify, compact = false }: { notify: (m
   const [storage, setStorage] = useState<"cloudflare" | "local">("cloudflare");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [admin, setAdmin] = useState(false);
   const [name, setName] = useState("");
   const current: CurrentPlan | null = useCurrentPlan();
 
@@ -65,6 +66,7 @@ export default function SavedPlansMenu({ notify, compact = false }: { notify: (m
       const r = await listPlans();
       setPlans(r.plans);
       setStorage(r.storage);
+      setAdmin(!!r.admin);
     } catch (e) {
       setPlans([]);
       setError(e instanceof PlansError ? e.message : "Could not load your plans.");
@@ -258,7 +260,7 @@ export default function SavedPlansMenu({ notify, compact = false }: { notify: (m
                       {p.name}
                       {current?.id === p.id ? <span className={h.editingBadge}>Editing</span> : null}
                     </span>
-                    <span className={v.savedMeta}>{when(p.updatedAt)}</span>
+                    <span className={v.savedMeta}>{when(p.updatedAt)}{admin ? ` · ${p.owner ?? "admin"}` : ""}</span>
                   </button>
                   <button type="button" className={v.smallIcon} aria-label={`Delete ${p.name}`} onClick={() => void remove(p)} disabled={busy}>
                     <Trash2 size={15} aria-hidden="true" />

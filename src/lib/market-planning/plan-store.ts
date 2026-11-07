@@ -24,7 +24,7 @@ function kvStore(kv: KvLike): PlanStore {
         const page = await kv.list({ prefix: PREFIX, cursor });
         for (const k of page.keys) {
           const m = k.metadata as Partial<PlanMeta> | undefined;
-          if (m?.name && m.updatedAt) out.push({ id: k.name.slice(PREFIX.length), name: m.name, updatedAt: m.updatedAt });
+          if (m?.name && m.updatedAt) out.push({ id: k.name.slice(PREFIX.length), name: m.name, updatedAt: m.updatedAt, owner: m.owner });
         }
         cursor = page.list_complete ? undefined : page.cursor;
       } while (cursor);
@@ -35,7 +35,7 @@ function kvStore(kv: KvLike): PlanStore {
       return r ?? null;
     },
     async put(record) {
-      const meta: PlanMeta = { id: record.id, name: record.name, updatedAt: record.updatedAt };
+      const meta: PlanMeta = { id: record.id, name: record.name, updatedAt: record.updatedAt, owner: record.owner };
       await kv.put(PREFIX + record.id, JSON.stringify(record), { metadata: meta });
     },
     async remove(id) {
@@ -64,7 +64,7 @@ async function fileStore(): Promise<PlanStore> {
   return {
     kind: "local",
     async list() {
-      return (await read()).map(({ id, name, updatedAt }) => ({ id, name, updatedAt }));
+      return (await read()).map(({ id, name, updatedAt, owner }) => ({ id, name, updatedAt, owner }));
     },
     async get(id) {
       return (await read()).find((r) => r.id === id) ?? null;
@@ -79,18 +79,24 @@ async function fileStore(): Promise<PlanStore> {
   };
 }
 
+/** The KV namespace when running in the Worker, else null. Shared with the users store. */
+export async function getKv(): Promise<KvLike | null> {
+  try {
+    const mod = (await import(/* webpackIgnore: true */ /* turbopackIgnore: true */ "cloudflare:workers" as string)) as { env?: { PLANS?: KvLike } };
+    return mod.env?.PLANS ?? null;
+  } catch {
+    return null;
+  }
+}
+export type { KvLike };
+
 let cached: Promise<PlanService | null> | null = null;
 
 /** The plans service for this environment, or null when no storage is available (the API then says so). */
 export function getPlanService(): Promise<PlanService | null> {
   cached ??= (async () => {
-    try {
-      // `cloudflare:workers` exists only inside the Worker; outside it this import throws and we fall back.
-      const mod = (await import(/* webpackIgnore: true */ /* turbopackIgnore: true */ "cloudflare:workers" as string)) as { env?: { PLANS?: KvLike } };
-      if (mod.env?.PLANS) return createPlanService(kvStore(mod.env.PLANS));
-    } catch {
-      /* not running in a Worker */
-    }
+    const kv = await getKv();
+    if (kv) return createPlanService(kvStore(kv));
     if (process.env.NODE_ENV !== "production") return createPlanService(await fileStore());
     return null;
   })();
