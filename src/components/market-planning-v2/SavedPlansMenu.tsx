@@ -89,9 +89,9 @@ export default function SavedPlansMenu({ notify, compact = false }: { notify: (m
     try {
       const made = await createPlan(label, toStored(state));
       setCurrentPlan({ id: made.id, name: made.name, snapshot: snap(state) });
+      setPlans((l) => [made, ...(l ?? []).filter((p) => p.id !== made.id)]);
       setName("");
       notify(`Saved “${made.name}”`);
-      await refresh();
     } catch (e) {
       fail(e);
     } finally {
@@ -106,8 +106,8 @@ export default function SavedPlansMenu({ notify, compact = false }: { notify: (m
     try {
       await updatePlan(current.id, { plan: toStored(state) });
       setCurrentPlan({ ...current, snapshot: snap(state) });
+      setPlans((l) => (l ?? []).map((x) => (x.id === current.id ? { ...x, updatedAt: new Date().toISOString() } : x)));
       notify(`Saved changes to “${current.name}”`);
-      await refresh();
     } catch (e) {
       if (e instanceof PlansError && e.status === 404) {
         setCurrentPlan(null);
@@ -151,8 +151,8 @@ export default function SavedPlansMenu({ notify, compact = false }: { notify: (m
     try {
       await deletePlan(p.id);
       if (current?.id === p.id) setCurrentPlan(null);
+      setPlans((l) => (l ?? []).filter((x) => x.id !== p.id));
       notify(`Deleted “${p.name}”`);
-      await refresh();
     } catch (e) {
       fail(e);
     } finally {

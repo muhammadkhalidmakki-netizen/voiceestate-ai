@@ -15,21 +15,29 @@ type KvLike = {
 const PREFIX = "plan:";
 
 function kvStore(kv: KvLike): PlanStore {
+  // KV key listings can lag a minute or more behind writes, so saving and deleting would not show up straight away.
+  // Reading a single key is immediate, so the list of plans is kept in one index key that is updated on every change.
+  const INDEX = "planindex";
+  const readIndex = async (): Promise<PlanMeta[]> => {
+    const v = (await kv.get(INDEX, "json")) as PlanMeta[] | null;
+    if (Array.isArray(v)) return v;
+    // First use: build the index once from the plans saved before it existed.
+    const out: PlanMeta[] = [];
+    let cursor: string | undefined;
+    do {
+      const page = await kv.list({ prefix: PREFIX, cursor });
+      for (const k of page.keys) {
+        const m = k.metadata as Partial<PlanMeta> | undefined;
+        if (m?.name && m.updatedAt) out.push({ id: k.name.slice(PREFIX.length), name: m.name, updatedAt: m.updatedAt, owner: m.owner });
+      }
+      cursor = page.list_complete ? undefined : page.cursor;
+    } while (cursor);
+    await kv.put(INDEX, JSON.stringify(out));
+    return out;
+  };
   return {
     kind: "cloudflare",
-    async list() {
-      const out: PlanMeta[] = [];
-      let cursor: string | undefined;
-      do {
-        const page = await kv.list({ prefix: PREFIX, cursor });
-        for (const k of page.keys) {
-          const m = k.metadata as Partial<PlanMeta> | undefined;
-          if (m?.name && m.updatedAt) out.push({ id: k.name.slice(PREFIX.length), name: m.name, updatedAt: m.updatedAt, owner: m.owner });
-        }
-        cursor = page.list_complete ? undefined : page.cursor;
-      } while (cursor);
-      return out;
-    },
+    list: readIndex,
     async get(id) {
       const r = (await kv.get(PREFIX + id, "json")) as PlanRecord | null;
       return r ?? null;
@@ -37,9 +45,12 @@ function kvStore(kv: KvLike): PlanStore {
     async put(record) {
       const meta: PlanMeta = { id: record.id, name: record.name, updatedAt: record.updatedAt, owner: record.owner };
       await kv.put(PREFIX + record.id, JSON.stringify(record), { metadata: meta });
+      const idx = (await readIndex()).filter((p) => p.id !== record.id);
+      await kv.put(INDEX, JSON.stringify([meta, ...idx]));
     },
     async remove(id) {
       await kv.delete(PREFIX + id);
+      await kv.put(INDEX, JSON.stringify((await readIndex()).filter((p) => p.id !== id)));
     },
   };
 }

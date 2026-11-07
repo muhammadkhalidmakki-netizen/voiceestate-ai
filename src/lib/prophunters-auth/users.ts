@@ -72,21 +72,36 @@ function store(): Promise<UserStore | null> {
   cached ??= (async () => {
     const kv = await getKv();
     if (kv) {
+      // KV listings can lag a minute behind writes, but reading a key is immediate, so the usernames are also kept in one index key.
+      const INDEX = "userindex";
+      const readIndex = async (): Promise<string[]> => {
+        const v = (await kv.get(INDEX, "json")) as string[] | null;
+        return Array.isArray(v) ? v : [];
+      };
       return {
         get: async (u) => ((await kv.get(PREFIX + u, "json")) as StoredUser | null) ?? null,
-        put: async (u) => kv.put(PREFIX + u.username, JSON.stringify(u)),
-        remove: async (u) => kv.delete(PREFIX + u),
+        put: async (u) => {
+          await kv.put(PREFIX + u.username, JSON.stringify(u));
+          const idx = await readIndex();
+          if (!idx.includes(u.username)) await kv.put(INDEX, JSON.stringify([...idx, u.username]));
+        },
+        remove: async (u) => {
+          await kv.delete(PREFIX + u);
+          await kv.put(INDEX, JSON.stringify((await readIndex()).filter((x) => x !== u)));
+        },
         list: async () => {
-          const out: StoredUser[] = [];
+          const names = new Set(await readIndex());
           let cursor: string | undefined;
           do {
             const page = await kv.list({ prefix: PREFIX, cursor });
-            for (const k of page.keys) {
-              const u = (await kv.get(k.name, "json")) as StoredUser | null;
-              if (u) out.push(u);
-            }
+            for (const k of page.keys) names.add(k.name.slice(PREFIX.length));
             cursor = page.list_complete ? undefined : page.cursor;
           } while (cursor);
+          const out: StoredUser[] = [];
+          for (const n of names) {
+            const u = (await kv.get(PREFIX + n, "json")) as StoredUser | null;
+            if (u) out.push(u);
+          }
           return out;
         },
       } satisfies UserStore;
