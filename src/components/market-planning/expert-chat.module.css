@@ -258,5 +258,9 @@
 }
 
 @media (max-width: 719px) {
-  .aboveDock { bottom: calc(108px + env(safe-area-inset-bottom)); }
+  .aboveDock { bottom: calc(66px + env(safe-area-inset-bottom)); gap: 8px; }
+  .dock .fab { width: 48px; height: 48px; }
+  .dock .fabDot { width: 12px; height: 12px; border-width: 2px; }
+  .dock .fabPhoto { box-shadow: 0 0 0 2px #ffffff, 0 0 0 3.5px #25d366, 0 10px 20px -10px rgba(10, 30, 90, 0.55); }
+  .dock .nudge { font-size: 0.75rem; padding: 7px 12px; border-radius: 12px 12px 4px 12px; }
 }

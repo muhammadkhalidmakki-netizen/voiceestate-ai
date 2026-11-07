@@ -2098,3 +2098,8 @@ li:has(> .selMore) {
   .dlgBody .chartCaption { font-size: 0.6875rem; line-height: 1.45; }
   @keyframes dlgSheet { from { transform: translateY(100%); } }
 }
+
+/* Phone: the sales list must not trap the page scroll, and its right side clears the nav strip */
+@media (max-width: 719px) {
+  .timeline { max-height: 300px; overscroll-behavior: auto; -webkit-overflow-scrolling: touch; touch-action: pan-y; padding-right: 40px; }
+}
