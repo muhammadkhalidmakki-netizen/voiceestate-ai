@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Pencil, RotateCcw, SlidersHorizontal, X } from "lucide-react";
 import { usePlanner } from "../planner-context";
 import AnimatedNumber from "../AnimatedNumber";
@@ -11,7 +11,6 @@ import BudgetSettings from "../settings/BudgetSettings";
 import MarketSettings from "../settings/MarketSettings";
 import SplitSettings from "../settings/SplitSettings";
 import LanguageSettings from "../settings/LanguageSettings";
-import ChannelSettings from "../settings/ChannelSettings";
 import { LANGUAGE_OPTIONS } from "@/lib/market-planning/catalog";
 import { parseAmount } from "@/lib/market-planning/format";
 import s from "./hero.module.css";
@@ -37,9 +36,11 @@ function Gear({ label, onClick }: { label: string; onClick: () => void }) {
  * Nothing here is stored: it is read from the planner state, so it changes the moment any setting does.
  */
 export default function SelectionSummary({ countUp = true }: { countUp?: boolean }) {
-  const { state, plan, rows, pct, dispatch, channel, openDetail, customized, readOnly } = usePlanner();
+  const { state, plan, rows, pct, dispatch, channel, customized, readOnly } = usePlanner();
   const [panel, setPanel] = useState<Panel>(null);
   const [showAll, setShowAll] = useState(false);
+  const [dragging, setDragging] = useState(false);
+  const barRef = useRef<HTMLDivElement>(null);
   const isBudget = state.mode === "budget";
   const amount = parseAmount(state.amountText);
   const markets = [...rows].sort((a, b) => b.share - a.share);
@@ -163,11 +164,11 @@ export default function SelectionSummary({ countUp = true }: { countUp?: boolean
       <div className={s.selRow}>
         <div className={s.selRowHead}>
           <span className={s.selLabel}>Channels</span>
-          <Gear label="Change the Meta and Google split" onClick={() => setPanel("channels")} />
+          {readOnly ? null : <span className={s.selHint}>Drag the handle to change the split</span>}
         </div>
-        <div className={s.selSplit} role="group" aria-label="Meta and Google share of the budget">
+        <div ref={barRef} className={`${s.selSplit} ${dragging ? s.selSplitDrag : ""}`} role="group" aria-label="Meta and Google share of the budget">
           {metaPct > 0 ? (
-            <button type="button" className={s.selSegMeta} style={{ width: `${metaPct}%` }} onClick={() => openDetail({ kind: "channel", channel: "meta" })} aria-label={`Meta Ads, ${metaPct} percent of the budget: open details`} title="Meta Ads: open details">
+            <div className={`${s.selSegMeta} ${googlePct === 0 ? s.selSegFull : ""}`} style={{ width: `${metaPct}%` }}>
               {metaPct >= 14 ? <MetaLogo size={18} white /> : null}
               {metaPct >= 14 ? <span className={s.selSegPct}>{metaPct}%</span> : null}
               {metaPct >= 30 ? (
@@ -175,10 +176,10 @@ export default function SelectionSummary({ countUp = true }: { countUp?: boolean
                   <LiveRange range={channel.meta} kind="aed" fallback="—" fromZero={countUp} />
                 </span>
               ) : null}
-            </button>
+            </div>
           ) : null}
           {googlePct > 0 ? (
-            <button type="button" className={s.selSegGoogle} style={{ width: `${googlePct}%` }} onClick={() => openDetail({ kind: "channel", channel: "google" })} aria-label={`Google Ads, ${googlePct} percent of the budget: open details`} title="Google Ads: open details">
+            <div className={`${s.selSegGoogle} ${metaPct === 0 ? s.selSegFull : ""}`} style={{ width: `${googlePct}%` }}>
               {googlePct >= 14 ? (
                 <span className={s.selSegG}>
                   <GoogleLogo size={14} />
@@ -190,8 +191,45 @@ export default function SelectionSummary({ countUp = true }: { countUp?: boolean
                   <LiveRange range={channel.google} kind="aed" fallback="—" fromZero={countUp} />
                 </span>
               ) : null}
-            </button>
+            </div>
           ) : null}
+          {readOnly ? null : (
+            <button
+              type="button"
+              role="slider"
+              className={s.selHandle}
+              style={{ left: `${metaPct}%` }}
+              aria-label="Share of the budget for Meta Ads (the rest goes to Google Ads)"
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={metaPct}
+              aria-valuetext={`Meta ${metaPct} percent, Google ${googlePct} percent`}
+              onPointerDown={(e) => {
+                (e.currentTarget as HTMLButtonElement).setPointerCapture(e.pointerId);
+                setDragging(true);
+              }}
+              onPointerMove={(e) => {
+                if (!dragging || !barRef.current) return;
+                const r = barRef.current.getBoundingClientRect();
+                const pctNow = Math.min(100, Math.max(0, ((e.clientX - r.left) / r.width) * 100));
+                dispatch({ type: "setMeta", share: Math.round(pctNow / 5) * 5 / 100 });
+              }}
+              onPointerUp={() => setDragging(false)}
+              onPointerCancel={() => setDragging(false)}
+              onKeyDown={(e) => {
+                const step = e.shiftKey ? 1 : 5;
+                if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
+                  e.preventDefault();
+                  dispatch({ type: "setMeta", share: Math.max(0, metaPct - step) / 100 });
+                } else if (e.key === "ArrowRight" || e.key === "ArrowUp") {
+                  e.preventDefault();
+                  dispatch({ type: "setMeta", share: Math.min(100, metaPct + step) / 100 });
+                }
+              }}
+            >
+              <span aria-hidden="true">⋮</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -199,7 +237,6 @@ export default function SelectionSummary({ countUp = true }: { countUp?: boolean
       <MarketSettings open={panel === "markets"} onOpenChange={close("markets")} onSplit={() => setPanel("split")} />
       <SplitSettings open={panel === "split"} onOpenChange={close("split")} onBack={() => setPanel("markets")} />
       <LanguageSettings open={panel === "languages"} onOpenChange={close("languages")} />
-      <ChannelSettings open={panel === "channels"} onOpenChange={close("channels")} />
     </section>
   );
 }
