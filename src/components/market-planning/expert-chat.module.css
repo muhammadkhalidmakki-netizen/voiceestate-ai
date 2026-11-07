@@ -10,10 +10,10 @@
 }
 
 .photoBg {
-  background-image: url("/branding/muhammad-khalid-makki.jpg");
+  background-image: url("/branding/muhammad-khalid-makki-avatar.jpg");
   background-repeat: no-repeat;
-  background-size: 190% auto;
-  background-position: 53% 12%;
+  background-size: cover;
+  background-position: center;
 }
 
 .fab {
