@@ -2043,3 +2043,5 @@ li:has(> .selMore) {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
+
+.selX[hidden] { display: none; }

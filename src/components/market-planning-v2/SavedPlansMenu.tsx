@@ -2,11 +2,11 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as Popover from "@radix-ui/react-popover";
-import { BookmarkPlus, ChevronDown, CloudUpload, FilePlus2, Save, Trash2 } from "lucide-react";
+import { BookmarkPlus, Check, ChevronDown, CloudUpload, Copy, CopyPlus, FilePlus2, Globe, Lock, Save, Share2, Trash2 } from "lucide-react";
 import { usePlanner } from "../market-planning/planner-context";
 import { portalContainer } from "../market-planning/shell/theme";
 import { stateFromUnknown, toStored } from "./plan-state-io";
-import { PlansError, createPlan, deletePlan, getPlan, listPlans, updatePlan, type PlanMeta } from "@/lib/market-planning/plans-client";
+import { PlansError, createPlan, deletePlan, getPlan, listPlans, setShare, updatePlan, type PlanMeta } from "@/lib/market-planning/plans-client";
 import { setCurrentPlan, useCurrentPlan, type CurrentPlan } from "./plan-current";
 import v from "./v2.module.css";
 import h from "./insights-home.module.css";
@@ -38,6 +38,7 @@ export default function SavedPlansMenu({ notify, compact = false }: { notify: (m
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [admin, setAdmin] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [name, setName] = useState("");
   const current: CurrentPlan | null = useCurrentPlan();
 
@@ -184,6 +185,33 @@ export default function SavedPlansMenu({ notify, compact = false }: { notify: (m
     }
   };
 
+  const linkOf = (token?: string) => (token && typeof window !== "undefined" ? `${window.location.origin}/dubai/share/${token}` : "");
+
+  const toggleShare = async (p: PlanMeta, on: boolean) => {
+    if (!on && !window.confirm(`Make “${p.name}” private? The shared link stops working for everyone who has it.`)) return;
+    setBusy(true);
+    setError(null);
+    try {
+      const tok = await setShare(p.id, on);
+      setPlans((l) => (l ?? []).map((x) => (x.id === p.id ? { ...x, shareToken: tok ?? undefined } : x)));
+      notify(on ? `“${p.name}” is public: anyone with the link can view it` : `“${p.name}” is private again`);
+    } catch (e) {
+      fail(e);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const copyLink = async (link: string) => {
+    try {
+      await navigator.clipboard.writeText(link);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      window.prompt("Copy this link:", link);
+    }
+  };
+
   const label = current ? current.name : "Saved plans";
 
   return (
@@ -192,6 +220,7 @@ export default function SavedPlansMenu({ notify, compact = false }: { notify: (m
         <BookmarkPlus size={16} aria-hidden="true" />
         <span className={`${compact ? "" : v.btnText} ${h.planName}`}>{label}</span>
         {current && dirty ? <span className={h.dirtyDot} title="Unsaved changes" /> : null}
+        {current ? <span className={h.editingTag}>Editing</span> : null}
         <ChevronDown size={16} aria-hidden="true" className={v.btnText} />
       </Popover.Trigger>
       <Popover.Portal container={portalContainer()}>
@@ -211,16 +240,7 @@ export default function SavedPlansMenu({ notify, compact = false }: { notify: (m
               <FilePlus2 size={14} aria-hidden="true" /> New plan
             </button>
           </div>
-          {current ? (
-            <div className={h.saveBtns}>
-              <button type="button" className={`${v.pillBtn} ${v.pillBtnPrimary}`} onClick={saveChanges} disabled={busy || !dirty}>
-                <Save size={14} aria-hidden="true" /> Save
-              </button>
-              <button type="button" className={v.pillBtn} onClick={() => void saveNew(`${current.name} copy`)} disabled={busy}>
-                Save as copy
-              </button>
-            </div>
-          ) : (
+          {current ? null : (
             <div className={v.saveRow}>
               <input className={v.nameInput} placeholder={`Plan ${(plans?.length ?? 0) + 1}`} maxLength={40} value={name} onChange={(e) => setName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && void saveNew(name.trim() || `Plan ${(plans?.length ?? 0) + 1}`)} aria-label="Plan name" />
               <button type="button" className={`${v.pillBtn} ${v.pillBtnPrimary}`} onClick={() => void saveNew(name.trim() || `Plan ${(plans?.length ?? 0) + 1}`)} disabled={busy}>
@@ -262,6 +282,53 @@ export default function SavedPlansMenu({ notify, compact = false }: { notify: (m
                     </span>
                     <span className={v.savedMeta}>{when(p.updatedAt)}{admin ? ` · ${p.owner ?? "admin"}` : ""}</span>
                   </button>
+                  {current?.id === p.id ? (
+                    <>
+                      <button type="button" className={`${h.rowIcon} ${dirty ? h.rowIconPrimary : ""}`} onClick={() => void saveChanges()} disabled={busy || !dirty} aria-label={dirty ? `Save changes to ${p.name}` : `${p.name} is saved`} title={dirty ? "Save changes" : "All changes saved"}>
+                        {dirty ? <Save size={15} aria-hidden="true" /> : <Check size={15} aria-hidden="true" />}
+                      </button>
+                      <button type="button" className={h.rowIcon} onClick={() => void saveNew(`${p.name} copy`)} disabled={busy} aria-label={`Save a copy of ${p.name}`} title="Save as a new copy">
+                        <CopyPlus size={15} aria-hidden="true" />
+                      </button>
+                    </>
+                  ) : null}
+                  <Popover.Root>
+                    <Popover.Trigger className={`${h.shareIcon} ${p.shareToken ? h.shareIconOn : ""}`} aria-label={`Share ${p.name}: ${p.shareToken ? "public" : "private"}`} title={p.shareToken ? "Public: anyone with the link can view" : "Private: share this plan"}>
+                      <Share2 size={15} aria-hidden="true" />
+                    </Popover.Trigger>
+                    <Popover.Portal container={portalContainer()}>
+                      <Popover.Content className={h.sharePop} align="end" sideOffset={8} collisionPadding={12}>
+                        <div className={h.shareHead}>
+                          <span className={h.shareTitle}>
+                            {p.shareToken ? <Globe size={15} aria-hidden="true" /> : <Lock size={15} aria-hidden="true" />}
+                            {p.shareToken ? "Anyone with the link" : "Only you"}
+                          </span>
+                          <div className={h.shareSeg} role="group" aria-label="Who can view this plan">
+                            <button type="button" className={!p.shareToken ? h.shareOn : ""} aria-pressed={!p.shareToken} onClick={() => p.shareToken && void toggleShare(p, false)} disabled={busy}>
+                              Private
+                            </button>
+                            <button type="button" className={p.shareToken ? h.shareOn : ""} aria-pressed={!!p.shareToken} onClick={() => !p.shareToken && void toggleShare(p, true)} disabled={busy || (current?.id === p.id && dirty)}>
+                              Public
+                            </button>
+                          </div>
+                        </div>
+                        {p.shareToken ? (
+                          <>
+                            <div className={h.shareLink}>
+                              <input readOnly value={linkOf(p.shareToken)} aria-label="Public link" onFocus={(e) => e.currentTarget.select()} />
+                              <button type="button" onClick={() => void copyLink(linkOf(p.shareToken))}>
+                                {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
+                                {copied ? "Copied" : "Copy"}
+                              </button>
+                            </div>
+                            <p className={h.shareHint}>View only, no sign-in needed. Shows the latest saved version.</p>
+                          </>
+                        ) : (
+                          <p className={h.shareHint}>{current?.id === p.id && dirty ? "Save your changes first, then you can make this plan public." : "Make it public to get a link anyone can view without signing in."}</p>
+                        )}
+                      </Popover.Content>
+                    </Popover.Portal>
+                  </Popover.Root>
                   <button type="button" className={v.smallIcon} aria-label={`Delete ${p.name}`} onClick={() => void remove(p)} disabled={busy}>
                     <Trash2 size={15} aria-hidden="true" />
                   </button>

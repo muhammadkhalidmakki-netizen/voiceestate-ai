@@ -1414,3 +1414,18 @@
 }
 
 .madeBy { display: flex; justify-content: center; padding: 28px 0 8px; }
+
+.sharedBadge {
+  display: inline-flex;
+  align-items: center;
+  max-width: 340px;
+  padding: 8px 14px;
+  overflow: hidden;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  color: var(--mp-blue-deep);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background: var(--mp-surface);
+  border-radius: 999px;
+}

@@ -2,7 +2,8 @@
 
 import HistoryMenu from "./HistoryMenu";
 import SavedPlansMenu from "./SavedPlansMenu";
-import { Download, Link2, RotateCcw } from "lucide-react";
+import ShareButton from "./ShareButton";
+import { Download, RotateCcw } from "lucide-react";
 import { usePlanner } from "../market-planning/planner-context";
 import { COUNTRY_BY_ISO, matureCpl } from "@/lib/market-planning/catalog";
 import { cplSourceLabel, fmtAedRange, fmtCpl, fmtLeadsRange } from "@/lib/market-planning/format";
@@ -42,8 +43,6 @@ export async function copyPlanLink(state: Parameters<typeof toStored>[0], notify
 
 export function Actions({ notify }: { notify: (m: string) => void }) {
   const { state, dispatch, plan, rows, pct, customized, effectiveCloseRate } = usePlanner();
-  const share = () => copyPlanLink(state, notify);
-
   const exportCsv = () => {
     const sales = eventualSales(plan.leads, effectiveCloseRate);
     const lines: Array<Array<string | number | null>> = [
@@ -89,6 +88,7 @@ export function Actions({ notify }: { notify: (m: string) => void }) {
     <>
       <HistoryMenu />
       <SavedPlansMenu notify={notify} />
+      <ShareButton notify={notify} />
 
       <button
         type="button"
@@ -100,9 +100,6 @@ export function Actions({ notify }: { notify: (m: string) => void }) {
       >
         <RotateCcw size={15} aria-hidden="true" />
         <span className={v.btnText}>Reset</span>
-      </button>
-      <button type="button" className={v.ghostBtn} onClick={share} aria-label="Copy share link" title="Copy a link to this plan">
-        <Link2 size={15} aria-hidden="true" />
       </button>
       <button type="button" className={v.ghostBtn} onClick={exportCsv} aria-label="Download the plan data as CSV" title="Download the plan data as a CSV file">
         <Download size={15} aria-hidden="true" />

@@ -49,6 +49,7 @@ export default function TopBar({
   activeId,
   extraEnd,
   account,
+  hideAccount = false,
 }: {
   onNavigate: (id: string) => void;
   /** Navigation items. Defaults to the section links used by /dubai/analysis. */
@@ -59,6 +60,8 @@ export default function TopBar({
   extraEnd?: React.ReactNode;
   /** Who is signed in: shown on the account button and at the top of its menu. */
   account?: { name: string; admin: boolean };
+  /** A shared plan has no signed-in person: no account menu. */
+  hideAccount?: boolean;
 }) {
   const scrolled = useActiveSection();
   const active = activeId ?? scrolled;
@@ -101,7 +104,7 @@ export default function TopBar({
       <div className={s.end}>
         {extraEnd}
 
-        <Popover.Root>
+        {hideAccount ? null : <Popover.Root>
           <Popover.Trigger className={s.avatar} aria-label={account ? `Account: ${account.name}` : "Account and appearance"} style={account ? { background: accountColor(account.name), color: "#ffffff" } : undefined}>
             {account ? <b className={s.initial}>{account.name.charAt(0).toUpperCase()}</b> : <User size={18} strokeWidth={1.9} aria-hidden="true" />}
           </Popover.Trigger>
@@ -147,7 +150,7 @@ export default function TopBar({
               </form>
             </Popover.Content>
           </Popover.Portal>
-        </Popover.Root>
+        </Popover.Root>}
       </div>
 
       <Dialog.Root open={palette} onOpenChange={setPalette}>

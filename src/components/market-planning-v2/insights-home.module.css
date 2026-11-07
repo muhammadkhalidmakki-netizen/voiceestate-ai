@@ -1573,3 +1573,38 @@
 .saveBtns { display: flex; gap: 6px; margin-bottom: 10px; }
 .planCompact { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 0 12px; font: inherit; font-size: 0.8125rem; font-weight: 800; color: var(--mp-ink); background: var(--mp-tint); border: 0; border-radius: 999px; cursor: pointer; }
 .planCompact:hover { background: var(--mp-blue-soft); }
+
+/* ---------- Public sharing ---------- */
+.shareBox { display: grid; gap: 8px; margin-bottom: 10px; padding: 12px; background: var(--mp-tint); border-radius: 14px; }
+.shareHead { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.shareTitle { display: inline-flex; align-items: center; gap: 6px; font-size: 0.875rem; font-weight: 800; }
+.shareSeg { display: inline-flex; padding: 3px; background: var(--mp-surface); border-radius: 999px; }
+.shareSeg button { padding: 5px 14px; font: inherit; font-size: 0.8125rem; font-weight: 800; color: var(--mp-ink-2); background: transparent; border: 0; border-radius: 999px; cursor: pointer; }
+.shareSeg button:disabled { opacity: 0.5; cursor: default; }
+.shareSeg .shareOn { color: #fff; background: var(--mp-navy); }
+.shareLink { display: flex; gap: 6px; }
+.shareLink input { flex: 1; min-width: 0; padding: 8px 10px; font: inherit; font-size: 0.8125rem; color: var(--mp-ink); background: var(--mp-surface); border: 1px solid var(--mp-line-strong); border-radius: 10px; }
+.shareLink button { display: inline-flex; align-items: center; gap: 5px; padding: 0 14px; font: inherit; font-size: 0.8125rem; font-weight: 800; color: #fff; background: var(--mp-blue); border: 0; border-radius: 10px; cursor: pointer; }
+.shareHint { margin: 0; font-size: 0.75rem; line-height: 1.4; color: var(--mp-ink-3); }
+
+.shareIcon { display: grid; place-items: center; flex: none; width: 30px; height: 30px; color: var(--mp-ink-3); background: transparent; border: 0; border-radius: 50%; cursor: pointer; }
+.shareIcon:hover { color: var(--mp-blue-deep); background: var(--mp-blue-soft); }
+.shareIconOn { color: #14633f; background: color-mix(in srgb, #12b76a 18%, var(--mp-surface)); }
+.sharePop { z-index: 120; display: grid; gap: 8px; width: 300px; max-width: calc(100vw - 24px); padding: 12px; color: var(--mp-ink); background: var(--mp-surface); border: 1px solid var(--mp-line); border-radius: 16px; box-shadow: 0 18px 40px -16px rgba(20, 40, 120, 0.5); }
+
+.rowIcon { display: grid; place-items: center; flex: none; width: 30px; height: 30px; color: var(--mp-ink-3); background: transparent; border: 0; border-radius: 50%; cursor: pointer; }
+.rowIcon:hover:not(:disabled) { color: var(--mp-blue-deep); background: var(--mp-blue-soft); }
+.rowIcon:disabled { color: #14633f; cursor: default; }
+.rowIconPrimary { color: #fff; background: var(--mp-blue); }
+.rowIconPrimary:hover:not(:disabled) { color: #fff; background: var(--mp-blue-deep); }
+
+.shareDisabled, .shareDisabled:hover {
+  color: var(--mp-ink-3) !important;
+  background: color-mix(in srgb, var(--mp-surface) 35%, transparent) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+.editingTag { padding: 1px 8px; font-size: 0.6875rem; font-weight: 800; letter-spacing: 0.03em; color: #fff; background: var(--mp-blue); border-radius: 999px; }

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "r
 import { AnimatePresence, motion } from "motion/react";
 import { Languages, Scale, Table2 } from "lucide-react";
 import { PlannerProvider, type Detail, type Focus, type PlannerView } from "../market-planning/planner-context";
-import { initialState, reducer } from "../market-planning/planner-state";
+import { initialState, reducer, type PlannerState } from "../market-planning/planner-state";
 import { buildDerived } from "../market-planning/planner-view";
 import DetailDrawer from "../market-planning/DetailDrawer";
 import LiveBar from "../market-planning/LiveBar";
@@ -22,6 +22,8 @@ import v from "./v2.module.css";
 // The current plan is kept in this browser so a refresh or restart does not start from scratch.
 const AUTOSAVE_KEY = "mp2_current_plan_v2";
 
+const noopDispatch = () => {};
+
 const TABS = [
   { id: "breakdown", label: "Market breakdown", Icon: Table2 },
   { id: "comparison", label: "Market comparison", Icon: Scale },
@@ -37,9 +39,12 @@ const NAV: NavItem[] = [
   { id: "language", label: "Languages", Icon: Languages },
 ];
 
-export default function PlannerV2({ isAdmin = false, greetingName }: { isAdmin?: boolean; greetingName?: string } = {}) {
-  const [state, rawDispatch] = useReducer(reducer, undefined, initialState);
-  const { dispatch, history: undoHistory, restore } = useUndo(state, rawDispatch);
+export default function PlannerV2({ isAdmin = false, greetingName, shared }: { isAdmin?: boolean; greetingName?: string; /** A plan opened from a public link: view only. */ shared?: { name: string; state: PlannerState } } = {}) {
+  const readOnly = !!shared;
+  const [state, rawDispatch] = useReducer(reducer, shared?.state, (init: PlannerState | undefined) => init ?? initialState());
+  const undo = useUndo(state, rawDispatch);
+  const dispatch = readOnly ? noopDispatch : undo.dispatch;
+  const { history: undoHistory, restore } = undo;
   const [detail, setDetail] = useState<Detail>(null);
   const [focusRaw, setFocus] = useState<Focus>(null);
   const [tab, setTab] = useState<TabId>("breakdown");
@@ -67,6 +72,7 @@ export default function PlannerV2({ isAdmin = false, greetingName }: { isAdmin?:
 
   // On first load: a shared link wins; otherwise bring back the last plan from this browser.
   useEffect(() => {
+    if (readOnly) return;
     const m = /^#plan=([A-Za-z0-9_-]+)$/.exec(window.location.hash);
     const timer = setTimeout(() => {
       if (m) {
@@ -90,17 +96,17 @@ export default function PlannerV2({ isAdmin = false, greetingName }: { isAdmin?:
       restored.current = true;
     }, 0);
     return () => clearTimeout(timer);
-  }, [notify, dispatch]);
+  }, [notify, dispatch, readOnly]);
 
   // Save every change (after the first restore has run, so it never overwrites it with defaults).
   useEffect(() => {
-    if (!restored.current) return;
+    if (readOnly || !restored.current) return;
     try {
       localStorage.setItem(AUTOSAVE_KEY, JSON.stringify(toStored(state)));
     } catch {
       /* storage blocked: the planner still works, it just will not be remembered */
     }
-  }, [state]);
+  }, [state, readOnly]);
 
   const openDetail = useCallback((d: Exclude<Detail, null>) => setDetail(d), []);
   const closeDetail = useCallback(() => setDetail(null), []);
@@ -131,29 +137,40 @@ export default function PlannerV2({ isAdmin = false, greetingName }: { isAdmin?:
         : derived.rows.some((r) => r.iso2 === focusRaw.iso2))
         ? focusRaw
         : null;
-    return { state, dispatch, ...derived, detail, openDetail, closeDetail, focus, setFocus, history: undoHistory, restore };
-  }, [state, dispatch, detail, focusRaw, openDetail, closeDetail, undoHistory, restore]);
+    return { state, dispatch, ...derived, detail, openDetail, closeDetail, focus, setFocus, history: undoHistory, restore, readOnly };
+  }, [state, dispatch, detail, focusRaw, openDetail, closeDetail, undoHistory, restore, readOnly]);
 
   return (
     <PlannerProvider value={view}>
       <div className={v.theme}>
         <main className={s.page}>
-          <TopBar items={NAV} activeId={navActive} onNavigate={navigate} account={greetingName ? { name: greetingName, admin: isAdmin } : undefined} extraEnd={
-              <>
+          <TopBar
+            items={readOnly ? NAV.filter((n) => n.id !== "language") : NAV}
+            activeId={navActive}
+            onNavigate={navigate}
+            hideAccount={readOnly}
+            account={greetingName ? { name: greetingName, admin: isAdmin } : undefined}
+            extraEnd={
+              readOnly ? (
+                <span className={v.sharedBadge} title="This is a shared plan. You can look around but not change it.">
+                  Shared plan · view only{shared?.name ? ` · ${shared.name}` : ""}
+                </span>
+              ) : (
                 <Actions notify={notify} />
-              </>
-            } />
+              )
+            }
+          />
 
           <div ref={heroRef}>
             <Hero countUp salesTile />
           </div>
 
-          <LiveBar hidden={heroVisible} notify={notify} />
+          {readOnly ? null : <LiveBar hidden={heroVisible} notify={notify} />}
 
           <div id="v2-workspace" className={v.workspace}>
             <div className={v.right}>
               <div className={v.tabs} role="tablist" aria-label="Workspace">
-                {TABS.map(({ id, label, Icon }) => {
+                {TABS.filter((t) => !(readOnly && t.id === "language")).map(({ id, label, Icon }) => {
                   const on = tab === id;
                   return (
                     <button

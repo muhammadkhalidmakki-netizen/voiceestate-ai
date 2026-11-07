@@ -51,6 +51,8 @@ export type PlannerView = {
   focus: Focus;
   setFocus: (f: Focus) => void;
   /** The last few changes, newest first, and a way to go back to before one of them. */
+  /** A shared plan opened by link: nothing can be changed. */
+  readOnly?: boolean;
   history?: Array<{ id: number; label: string; at: number }>;
   restore?: (id: number) => void;
 };

@@ -43,10 +43,19 @@ function kvStore(kv: KvLike): PlanStore {
       return r ?? null;
     },
     async put(record) {
-      const meta: PlanMeta = { id: record.id, name: record.name, updatedAt: record.updatedAt, owner: record.owner };
+      const meta: PlanMeta = { id: record.id, name: record.name, updatedAt: record.updatedAt, owner: record.owner, shareToken: record.shareToken };
       await kv.put(PREFIX + record.id, JSON.stringify(record), { metadata: meta });
       const idx = (await readIndex()).filter((p) => p.id !== record.id);
       await kv.put(INDEX, JSON.stringify([meta, ...idx]));
+    },
+    async getShare(token) {
+      return ((await kv.get("share:" + token, "json")) as string | null) ?? null;
+    },
+    async putShare(token, id) {
+      await kv.put("share:" + token, JSON.stringify(id));
+    },
+    async removeShare(token) {
+      await kv.delete("share:" + token);
     },
     async remove(id) {
       await kv.delete(PREFIX + id);
@@ -75,7 +84,7 @@ async function fileStore(): Promise<PlanStore> {
   return {
     kind: "local",
     async list() {
-      return (await read()).map(({ id, name, updatedAt, owner }) => ({ id, name, updatedAt, owner }));
+      return (await read()).map(({ id, name, updatedAt, owner, shareToken }) => ({ id, name, updatedAt, owner, shareToken }));
     },
     async get(id) {
       return (await read()).find((r) => r.id === id) ?? null;
@@ -87,6 +96,11 @@ async function fileStore(): Promise<PlanStore> {
     async remove(id) {
       await write((await read()).filter((r) => r.id !== id));
     },
+    async getShare(token) {
+      return (await read()).find((r) => r.shareToken === token)?.id ?? null;
+    },
+    async putShare() {},
+    async removeShare() {},
   };
 }
 

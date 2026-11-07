@@ -11,6 +11,9 @@ function memoryStore() {
     async get(id) { return m.get(id) ?? null; },
     async put(r) { m.set(r.id, r); },
     async remove(id) { m.delete(id); },
+    async getShare(tok) { return [...m.values()].find((r) => r.shareToken === tok)?.id ?? null; },
+    async putShare() {},
+    async removeShare() {},
     m,
   };
 }

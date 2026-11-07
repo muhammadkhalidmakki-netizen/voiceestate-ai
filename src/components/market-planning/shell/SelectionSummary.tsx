@@ -21,6 +21,8 @@ const MAX_MARKETS = 8;
 type Panel = null | "budget" | "markets" | "split" | "languages" | "channels";
 
 function Gear({ label, onClick }: { label: string; onClick: () => void }) {
+  const { readOnly } = usePlanner();
+  if (readOnly) return null;
   return (
     <button type="button" className={s.selEdit} aria-label={label} title={label} onClick={onClick}>
       <Pencil size={13} aria-hidden="true" />
@@ -35,7 +37,7 @@ function Gear({ label, onClick }: { label: string; onClick: () => void }) {
  * Nothing here is stored: it is read from the planner state, so it changes the moment any setting does.
  */
 export default function SelectionSummary({ countUp = true }: { countUp?: boolean }) {
-  const { state, plan, rows, pct, dispatch, channel, openDetail, customized } = usePlanner();
+  const { state, plan, rows, pct, dispatch, channel, openDetail, customized, readOnly } = usePlanner();
   const [panel, setPanel] = useState<Panel>(null);
   const [showAll, setShowAll] = useState(false);
   const isBudget = state.mode === "budget";
@@ -53,7 +55,7 @@ export default function SelectionSummary({ countUp = true }: { countUp?: boolean
       <header className={s.selHead}>
         <h2 className={s.selTitle}>Your selections</h2>
         <span className={s.selHeadEnd}>
-          <button
+          {readOnly ? null : <button
             type="button"
             className={`${s.selReset} ${customized ? s.selResetOn : ""}`}
             disabled={!customized}
@@ -63,7 +65,7 @@ export default function SelectionSummary({ countUp = true }: { countUp?: boolean
           >
             <RotateCcw size={13} aria-hidden="true" />
             Reset
-          </button>
+          </button>}
           <span className={s.selLive}>
             <span className={s.selPulse} aria-hidden="true" />
             Live
@@ -110,6 +112,7 @@ export default function SelectionSummary({ countUp = true }: { countUp?: boolean
                 type="button"
                 className={s.selX}
                 aria-label={`Remove ${r.country.name}`}
+                hidden={readOnly}
                 disabled={markets.length <= 1}
                 onClick={() => dispatch({ type: "toggleMarket", iso2: r.iso2 })}
               >
@@ -125,10 +128,10 @@ export default function SelectionSummary({ countUp = true }: { countUp?: boolean
             </li>
           ) : null}
         </ul>
-        <button type="button" className={s.selAction} onClick={() => setPanel("split")}>
+        {readOnly ? null : <button type="button" className={s.selAction} onClick={() => setPanel("split")}>
           <SlidersHorizontal size={14} aria-hidden="true" />
           Budget by market
-        </button>
+        </button>}
       </div>
 
       <div className={s.selRow}>
@@ -146,6 +149,7 @@ export default function SelectionSummary({ countUp = true }: { countUp?: boolean
                 type="button"
                 className={s.selX}
                 aria-label={`Remove ${langLabel(code)}`}
+                hidden={readOnly}
                 disabled={langCodes.length <= 1}
                 onClick={() => dispatch({ type: "toggleLanguage", code })}
               >

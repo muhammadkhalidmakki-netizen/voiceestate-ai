@@ -41,7 +41,7 @@ if (createSessionToken) {
 
 function memoryStore() {
   const m = new Map();
-  return { kind: "local", list: async () => [...m.values()].map(({ id, name, updatedAt, owner }) => ({ id, name, updatedAt, owner })), get: async (id) => m.get(id) ?? null, put: async (r) => void m.set(r.id, r), remove: async (id) => void m.delete(id) };
+  return { kind: "local", list: async () => [...m.values()].map(({ id, name, updatedAt, owner }) => ({ id, name, updatedAt, owner })), get: async (id) => m.get(id) ?? null, put: async (r) => void m.set(r.id, r), remove: async (id) => void m.delete(id), getShare: async (tok) => [...m.values()].find((r) => r.shareToken === tok)?.id ?? null, putShare: async () => {}, removeShare: async () => {} };
 }
 let n = 0;
 const svc = () => createPlanService(memoryStore(), () => new Date(), () => `plan-id-${String(++n).padStart(6, "0")}`);
@@ -77,4 +77,25 @@ test("an update keeps the original owner", async () => {
   const p = (await s.create({ name: "Mine", plan: PLAN }, A)).value;
   await s.update(p.id, { plan: { mode: "leads" } }, ADMIN);
   assert.equal((await s.get(p.id, A)).value.owner, "alice");
+});
+
+test("public sharing: off by default, on gives a secret link that shows only the plan, off ends it, others cannot toggle it", async () => {
+  const s = svc();
+  const p = (await s.create({ name: "Shareable", plan: { mode: "budget", amountText: "10000" } }, A)).value;
+  assert.equal((await s.shared("a".repeat(32))).status, 404);
+  assert.equal((await s.setShare(p.id, true, B)).status, 404); // not Bob's plan
+  const on = await s.setShare(p.id, true, A);
+  assert.ok(on.ok && /^[a-f0-9]{64}$/.test(on.value.shareToken));
+  assert.equal((await s.setShare(p.id, true, A)).value.shareToken, on.value.shareToken); // same link while on
+  const seen = await s.shared(on.value.shareToken);
+  assert.ok(seen.ok);
+  assert.deepEqual(Object.keys(seen.value).sort(), ["name", "plan", "updatedAt"]); // no owner, no id, no token
+  // editing the plan keeps the link and shows the new version
+  await s.update(p.id, { plan: { mode: "budget", amountText: "25000" } }, A);
+  assert.equal((await s.shared(on.value.shareToken)).value.plan.amountText, "25000");
+  // off: the link stops working
+  assert.equal((await s.setShare(p.id, false, A)).value.shareToken, null);
+  assert.equal((await s.shared(on.value.shareToken)).status, 404);
+  // a new link after turning it back on is different
+  assert.notEqual((await s.setShare(p.id, true, A)).value.shareToken, on.value.shareToken);
 });

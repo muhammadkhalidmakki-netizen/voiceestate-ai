@@ -1,6 +1,6 @@
 // Browser side of saved plans: talks to /dubai/api/plans. Plans live on the server (Cloudflare KV), not in this browser.
 
-export type PlanMeta = { id: string; name: string; updatedAt: string; owner?: string };
+export type PlanMeta = { id: string; name: string; updatedAt: string; owner?: string; shareToken?: string };
 export type PlanRecord = PlanMeta & { plan: unknown };
 
 const BASE = "/dubai/api/plans";
@@ -36,3 +36,4 @@ export const getPlan = (id: string) => call<{ plan: PlanRecord }>(`/${encodeURIC
 export const createPlan = (name: string, plan: unknown) => call<{ plan: PlanMeta }>("", { method: "POST", body: JSON.stringify({ name, plan }) }).then((r) => r.plan);
 export const updatePlan = (id: string, input: { name?: string; plan?: unknown }) => call<{ plan: PlanMeta }>(`/${encodeURIComponent(id)}`, { method: "PUT", body: JSON.stringify(input) }).then((r) => r.plan);
 export const deletePlan = (id: string) => call<{ ok: true }>(`/${encodeURIComponent(id)}`, { method: "DELETE" });
+export const setShare = (id: string, on: boolean) => call<{ shareToken: string | null }>(`/${encodeURIComponent(id)}/share`, { method: "PUT", body: JSON.stringify({ public: on }) }).then((r) => r.shareToken);
