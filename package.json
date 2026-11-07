@@ -12,6 +12,7 @@
     "build:vinext": "vite build",
     "start:vinext": "vite preview",
     "deploy:vinext": "vinext-cloudflare deploy",
+    "deploy": "cf deploy --secrets-file .deploy-secrets.env",
     "demo:on": "node scripts/demo-switch.mjs on",
     "demo:off": "node scripts/demo-switch.mjs off",
     "demo:status": "node scripts/demo-switch.mjs status",

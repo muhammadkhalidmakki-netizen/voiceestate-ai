@@ -1412,3 +1412,5 @@
     justify-content: center;
   }
 }
+
+.madeBy { display: flex; justify-content: center; padding: 28px 0 8px; }

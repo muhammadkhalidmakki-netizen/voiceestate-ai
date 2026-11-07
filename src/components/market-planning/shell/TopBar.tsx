@@ -66,17 +66,6 @@ export default function TopBar({
   const [theme, setTheme] = useTheme();
   const { openDetail, state, rows } = usePlanner();
 
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
-        e.preventDefault();
-        setPalette((o) => !o);
-      }
-    };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, []);
-
   const go = useCallback(
     (id: string) => {
       setPalette(false);
@@ -111,9 +100,6 @@ export default function TopBar({
 
       <div className={s.end}>
         {extraEnd}
-        <button type="button" className={s.circle} onClick={() => setPalette(true)} aria-label="Search countries and sections (Ctrl K)">
-          <Search size={18} strokeWidth={1.9} aria-hidden="true" />
-        </button>
 
         <Popover.Root>
           <Popover.Trigger className={s.avatar} aria-label={account ? `Account: ${account.name}` : "Account and appearance"} style={account ? { background: accountColor(account.name), color: "#ffffff" } : undefined}>

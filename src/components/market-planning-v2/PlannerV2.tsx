@@ -14,6 +14,7 @@ import { decodePlan } from "@/lib/market-planning/plan-io";
 import { Actions, stateFromUnknown, toStored } from "./Header";
 import { MarketBreakdownTab, MarketComparisonTab } from "./MarketInsightsTab";
 import LanguageExplorerTab from "./LanguageExplorerTab";
+import ExpertChat from "../market-planning/ExpertChat";
 import { useUndo } from "../market-planning/undo-history";
 import s from "../market-planning/market-planning.module.css";
 import v from "./v2.module.css";
@@ -119,6 +120,8 @@ export default function PlannerV2({ isAdmin = false, greetingName }: { isAdmin?:
     [goTab],
   );
 
+  const chatContext = `My plan: AED ${state.amountText || "?"} a month, markets: ${Object.keys(state.shares).join(", ") || "none yet"}, languages: ${Object.keys(state.languages).join(", ")}.`;
+
   const view = useMemo<PlannerView>(() => {
     const derived = buildDerived(state);
     const focus: Focus =
@@ -191,6 +194,7 @@ export default function PlannerV2({ isAdmin = false, greetingName }: { isAdmin?:
           </div>
         </main>
         <DetailDrawer />
+        <ExpertChat context={chatContext} />
         <AnimatePresence>
           {toast ? (
             <motion.div className={v.toast} role="status" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}>

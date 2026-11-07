@@ -51,3 +51,6 @@ next-env.d.ts
 
 # local development data (saved plans when running without Cloudflare)
 /.data/
+
+# server secrets uploaded on deploy (never commit)
+/.deploy-secrets.env
